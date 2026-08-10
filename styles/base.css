@@ -1,0 +1,60 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+
+:root {
+	--bg-main: #0a0a0a;
+	--bg-nav: #0f0f0f;
+
+	--bg-nav-button-hover: #1f1f1f;
+	--nav-button-padding: 1rem;
+	--nav-button-inside-gap: .5rem;
+
+}
+
+body {
+	background-color: var(--bg-main);
+	color: white;
+
+	font-family: "Roboto", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: normal;
+	font-style: normal;
+	font-variation-settings: "wdth" 100;
+}
+
+nav {
+	background-color: var(--bg-nav);
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+nav > div {
+	display: flex;
+	flex-direction: row;
+}
+
+nav > :last-child {
+	margin-left: auto;
+}
+
+
+.nav-button {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: var(--nav-button-inside-gap);
+	padding: 0 var(--nav-button-padding) 0 var(--nav-button-padding);
+}
+
+.nav-button:hover
+{
+	background-color: var(--bg-nav-button-hover);
+	cursor: pointer;
+}
+
+.nav-logo {
+	/* padding-right: calc(var(--nav-button-padding) + 1rem); */
+}
