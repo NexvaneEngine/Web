@@ -4,18 +4,43 @@ body {
 }
 
 :root {
-	--bg-main: #0a0a0a;
-	--bg-nav: #0f0f0f;
+	color-scheme: light dark;
 
-	--bg-nav-button-hover: #1f1f1f;
+	/* Hierarchy: Main BG (brightest in light) -> Nav -> Dropdown -> Hover (darkest in light) */
+	--bg-main: light-dark(#FFFFFF, #0a0a0a);
+	--bg-nav: light-dark(#F9F9F9, #0f0f0f);
+	--bg-dropdown: light-dark(#F1F1F1, #151515);
+	--bg-nav-button-hover: light-dark(#E5E5E5, #1f1f1f);
+	
+	/* High-contrast colors for text and primary actions */
+	--bg-accent: light-dark(#0044CC, #0033AA); /* Slightly brighter blue in light mode for readability */
+	--fg: light-dark(var(--fg-dark), var(--fg-light));        /* Soft off-black to reduce eye strain in light mode */
+	--fg-inv: light-dark(var(--fg-light), var(--fg-dark));        /* Soft off-black to reduce eye strain in light mode */
+
+	--fg-light: #EAEAEA;        /* Soft off-black to reduce eye strain in light mode */
+	--fg-dark: #1A1A1A;        /* Soft off-black to reduce eye strain in light mode */
+	
 	--nav-button-padding: 1rem;
 	--nav-button-inside-gap: .5rem;
+}
 
+/* --- ADD THIS TO MANUALLY OVERRIDE THE SYSTEM --- */
+:root[data-theme="light"] {
+	color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+	color-scheme: dark;
+}
+
+/* Optional: Smooth background color fading when switching */
+body, nav, main, div, a, .dropdown-content {
+	transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 body {
 	background-color: var(--bg-main);
-	color: white;
+	color: var(--fg);
 
 	font-family: "Roboto", sans-serif;
 	font-optical-sizing: auto;
@@ -29,32 +54,115 @@ nav {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
+	user-select: none;
 }
 
-nav > div {
+nav>div {
 	display: flex;
 	flex-direction: row;
 }
 
-nav > :last-child {
+nav> :last-child {
 	margin-left: auto;
 }
-
 
 .nav-button {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	gap: var(--nav-button-inside-gap);
-	padding: 0 var(--nav-button-padding) 0 var(--nav-button-padding);
+	padding: 0 var(--nav-button-padding);
+
+	/* ADDED: Required to position the dropdown relative to the button */
+	position: relative;
 }
 
-.nav-button:hover
-{
+.nav-button:hover {
 	background-color: var(--bg-nav-button-hover);
 	cursor: pointer;
 }
 
+.nav-button-icon {
+	margin-right: .5rem;
+}
+
 .nav-logo {
 	/* padding-right: calc(var(--nav-button-padding) + 1rem); */
+}
+
+/* --- DROPDOWN CSS --- */
+
+.dropdown-content {
+	/* Hidden by default */
+	display: none;
+	flex-direction: column;
+
+	/* Positioned exactly below the nav bar */
+	position: absolute;
+	top: 100%;
+	left: 0;
+
+	background-color: var(--bg-dropdown);
+	min-width: 200px;
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.5);
+	z-index: 100;
+}
+
+/* Aligns the right-side dropdown menus so they don't overflow the screen */
+.dropdown-right {
+	left: auto;
+	right: 0;
+}
+
+/* Show the dropdown when hovering over the parent .nav-button */
+.nav-button:hover .dropdown-content {
+	display: flex;
+}
+
+/* Style the links inside the dropdown */
+.dropdown-content a {
+	color: var(--fg);
+	padding: 1rem var(--nav-button-padding);
+	text-decoration: none;
+	font-size: 0.95rem;
+}
+
+/* Hover effect for the links */
+.dropdown-content a:hover {
+	background-color: var(--bg-nav-button-hover);
+}
+
+/* --- BANNER --- */
+.banner {
+	height: 70vh;
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.banner > p {
+	padding: 0;
+	margin: 0;
+	user-select: none;
+	color: var(--fg-light);
+}
+
+.darkened-banner {
+	background-color: rgba(0, 0, 0, 0.5);
+	background-blend-mode: darken;
+}
+
+.banner-title {
+	font-weight: bolder;
+	font-size: 5rem;
+}
+
+.banner-subheading {
+	font-weight: bold;
+	font-size: 2rem;
 }
