@@ -14,8 +14,12 @@ body {
 	--bg-hover: light-dark(#E5E5E5, #1f1f1f);
 	
 	/* High-contrast colors for text and primary actions */
-	--bg-accent: light-dark(#0977d7, #0977d7); 
-	--fg: light-dark(var(--fg-dark), var(--fg-light));        
+	--fg: light-dark(var(--fg-dark), var(--fg-light));
+
+	--bg-accent: light-dark(#0977d7, #0977d7);
+	--bg-accent-hover: color-mix(in srgb, var(--bg-accent), black 25%);
+	--bg-accent-click: color-mix(in srgb, var(--bg-accent), black 45%);
+
 	--fg-inv: light-dark(var(--fg-light), var(--fg-dark));    
 
 	--fg-light: #EAEAEA;        
@@ -80,6 +84,12 @@ nav>div {
 
 nav> :last-child {
 	margin-left: auto;
+}
+
+.nav-logo-img {
+	content: light-dark(url("/img/logo/light.png"), url("/img/logo/dark.png"));
+	height: 2rem;
+	width: auto;
 }
 
 .nav-button {
@@ -218,11 +228,20 @@ nav> :last-child {
 .card-bottom {
 	padding: var(--card-bottom-padding);
 	gap: var(--card-bottom-padding);
+	/* Add flexbox properties */
+	display: flex;
+	flex-direction: column;
+}
+
+.card-text {
+	margin: 0;
+	line-height: 1.5;
 }
 
 .card-title {
 	font-size: 1.5rem;
 	font-weight: bold;
+	margin: 1rem 0 1rem 0;
 }
 
 /*--- BUTTONS ---*/
@@ -234,4 +253,20 @@ nav> :last-child {
 	padding: var(--button-padding);
 	border-radius: var(--button-border-radius);
 	text-align: center;
+	/* Push the button to the bottom */
+	margin-top: auto; 
+}
+
+.button:hover {
+	background-color: var(--bg-accent-hover);
+	color: var(--fg);
+}
+
+.button:active {
+	background-color: var(--bg-accent-click);
+}
+
+h1 {
+	font-size: 2.5rem;
+	align-self: center;
 }

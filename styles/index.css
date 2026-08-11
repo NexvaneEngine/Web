@@ -10,6 +10,30 @@
 	background-image: url("https://images.unsplash.com/photo-1555066931-4365d14bab8c?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y29kaW5nJTIwbGFwdG9wfGVufDB8fDB8fHww");
 }
 
+#card-image-editor {
+	background-image: url("/img/engine/editor.png");
+}
+
+#card-image-neptune {
+	background-image: url("https://www.santanderopenacademy.com/content/dam/becasmicrosites/01-soa-blog/scripting_1.jpg");
+}
+
+#card-image-assets {
+	background-image: url("https://preview.redd.it/windows-11-folder-icons-going-to-weird-with-black-background-v0-fpristcs3bb71.png?width=640&crop=smart&auto=webp&s=405e440549d8133b05af90a3152ca547deee28b5");
+}
+
+#card-image-network {
+	background-image: url("https://plus.unsplash.com/premium_photo-1733306493254-52b143296396?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Y29tcHV0ZXIlMjBuZXR3b3JrfGVufDB8fDB8fHww");
+}
+
+#card-image-packages {
+	background-image: url("https://wholesalersinsouthafrica.co.za/wp-content/uploads/2022/10/Computer-Wholesale-Products.jpg");
+}
+
+#card-image-vis {
+	background-image: url("https://forum.godotengine.org/uploads/default/optimized/3X/a/c/ac924dc4d835d9c5ebf510fece20176b33ace617_2_690x395.png");
+}
+
 #card-image-windows {
 	background-color: var(--fg);
 	-webkit-mask: url("/img/icons/windows.svg") center / var(--card-icon-size) no-repeat;
@@ -26,4 +50,16 @@
 	background-color: var(--fg);
 	-webkit-mask: url("/img/icons/git.svg") center / var(--card-icon-size) no-repeat;
 	mask: url("/img/icons/git.svg") center / var(--card-icon-size) no-repeat;
+}
+
+#card-image-manual-api {
+	background-color: var(--fg);
+	-webkit-mask: url("/img/icons/manual-api.svg") center / var(--card-icon-size) no-repeat;
+	mask: url("/img/icons/manual-api.svg") center / var(--card-icon-size) no-repeat;
+}
+
+#card-image-manual-user {
+	background-color: var(--fg);
+	-webkit-mask: url("/img/icons/manual-user.svg") center / var(--card-icon-size) no-repeat;
+	mask: url("/img/icons/manual-user.svg") center / var(--card-icon-size) no-repeat;
 }
