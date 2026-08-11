@@ -22,6 +22,11 @@ body {
 	
 	--nav-button-padding: 1rem;
 	--nav-button-inside-gap: .5rem;
+
+	--content-pad: 3.5rem;
+	--card-container-gap: 1rem;
+	--card-bottom-padding: .5rem;
+	--card-border-radius: .5rem;
 }
 
 /* --- ADD THIS TO MANUALLY OVERRIDE THE SYSTEM --- */
@@ -33,9 +38,16 @@ body {
 	color-scheme: dark;
 }
 
-/* Optional: Smooth background color fading when switching */
 body, nav, main, div, a, .dropdown-content {
 	transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.padded {
+	display: flex;
+	flex-direction: column;
+	padding-top: var(--content-pad);
+	padding-left: var(--content-pad);
+	padding-right: var(--content-pad);
 }
 
 body {
@@ -72,8 +84,6 @@ nav> :last-child {
 	align-items: center;
 	gap: var(--nav-button-inside-gap);
 	padding: 0 var(--nav-button-padding);
-
-	/* ADDED: Required to position the dropdown relative to the button */
 	position: relative;
 }
 
@@ -165,4 +175,44 @@ nav> :last-child {
 .banner-subheading {
 	font-weight: bold;
 	font-size: 2rem;
+}
+
+/*--- CARDS ---*/
+
+.card-container {
+	display: grid;
+	gap: var(--card-container-gap);
+}
+
+.card {
+	padding: .5rem;
+	display: grid;
+	grid-template-rows: repeat(2, 1fr);
+	grid-template-columns: 1fr;
+	height: 75vh;
+	background-color: var(--bg-dropdown);
+	border-radius: var(--card-border-radius);
+	transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.card:hover {
+	background-color: var(--bg-nav-button-hover);
+	cursor: pointer;
+	user-select: none;
+	transform: scale(1.01);
+}
+
+.card-top {
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.card-bottom {
+	padding: var(--card-bottom-padding);
+}
+
+.card-title {
+	font-size: 1.5rem;
+	font-weight: bold;
 }
