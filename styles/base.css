@@ -1,32 +1,37 @@
 body {
 	margin: 0;
 	padding: 0;
+	box-sizing: border-box;
 }
 
 :root {
 	color-scheme: light dark;
 
-	/* Hierarchy: Main BG (brightest in light) -> Nav -> Dropdown -> Hover (darkest in light) */
-	--bg-main: light-dark(#FFFFFF, #0a0a0a);
-	--bg-nav: light-dark(#F9F9F9, #0f0f0f);
-	--bg-dropdown: light-dark(#F1F1F1, #151515);
-	--bg-nav-button-hover: light-dark(#E5E5E5, #1f1f1f);
+	/* Renamed for semantic hierarchy: Base -> Surface -> Elevated -> Hover */
+	--bg-base: light-dark(#FFFFFF, #0a0a0a);
+	--bg-surface: light-dark(#F9F9F9, #0f0f0f);
+	--bg-elevated: light-dark(#F1F1F1, #151515);
+	--bg-hover: light-dark(#E5E5E5, #1f1f1f);
 	
 	/* High-contrast colors for text and primary actions */
-	--bg-accent: light-dark(#0044CC, #0033AA); /* Slightly brighter blue in light mode for readability */
-	--fg: light-dark(var(--fg-dark), var(--fg-light));        /* Soft off-black to reduce eye strain in light mode */
-	--fg-inv: light-dark(var(--fg-light), var(--fg-dark));        /* Soft off-black to reduce eye strain in light mode */
+	--bg-accent: light-dark(#0977d7, #0977d7); 
+	--fg: light-dark(var(--fg-dark), var(--fg-light));        
+	--fg-inv: light-dark(var(--fg-light), var(--fg-dark));    
 
-	--fg-light: #EAEAEA;        /* Soft off-black to reduce eye strain in light mode */
-	--fg-dark: #1A1A1A;        /* Soft off-black to reduce eye strain in light mode */
+	--fg-light: #EAEAEA;        
+	--fg-dark: #1A1A1A;        
 	
 	--nav-button-padding: 1rem;
 	--nav-button-inside-gap: .5rem;
 
 	--content-pad: 3.5rem;
+	--padded-gap: 3rem; /* NEW: Vertical margin between elements in padded */
 	--card-container-gap: 1rem;
 	--card-bottom-padding: .5rem;
 	--card-border-radius: .5rem;
+
+	--button-padding: 1rem;
+	--button-border-radius: .6rem;
 }
 
 /* --- ADD THIS TO MANUALLY OVERRIDE THE SYSTEM --- */
@@ -45,13 +50,12 @@ body, nav, main, div, a, .dropdown-content {
 .padded {
 	display: flex;
 	flex-direction: column;
-	padding-top: var(--content-pad);
-	padding-left: var(--content-pad);
-	padding-right: var(--content-pad);
+	padding: var(--content-pad); /* Condenses top/right/bottom/left */
+	gap: var(--padded-gap); /* Adds gap between each card container */
 }
 
 body {
-	background-color: var(--bg-main);
+	background-color: var(--bg-base);
 	color: var(--fg);
 
 	font-family: "Roboto", sans-serif;
@@ -62,7 +66,7 @@ body {
 }
 
 nav {
-	background-color: var(--bg-nav);
+	background-color: var(--bg-surface);
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -88,16 +92,12 @@ nav> :last-child {
 }
 
 .nav-button:hover {
-	background-color: var(--bg-nav-button-hover);
+	background-color: var(--bg-hover);
 	cursor: pointer;
 }
 
 .nav-button-icon {
 	margin-right: .5rem;
-}
-
-.nav-logo {
-	/* padding-right: calc(var(--nav-button-padding) + 1rem); */
 }
 
 /* --- DROPDOWN CSS --- */
@@ -112,7 +112,7 @@ nav> :last-child {
 	top: 100%;
 	left: 0;
 
-	background-color: var(--bg-dropdown);
+	background-color: var(--bg-elevated);
 	min-width: 200px;
 	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.5);
 	z-index: 100;
@@ -139,7 +139,7 @@ nav> :last-child {
 
 /* Hover effect for the links */
 .dropdown-content a:hover {
-	background-color: var(--bg-nav-button-hover);
+	background-color: var(--bg-hover);
 }
 
 /* --- BANNER --- */
@@ -182,21 +182,28 @@ nav> :last-child {
 .card-container {
 	display: grid;
 	gap: var(--card-container-gap);
+	justify-content: center; /* Centers the grid tracks horizontally */
+	
+	/* 
+	  1. 'auto-fit' collapses empty columns (unlike auto-fill) so it can center.
+	  2. The max size is set to calc(33.333% - 0.7rem) so they perfectly 
+	     match the size of the cards in the 3-column row, but still adjust dynamically.
+	*/
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), calc(33.333% - 0.7rem)));
 }
-
 .card {
 	padding: .5rem;
 	display: grid;
 	grid-template-rows: repeat(2, 1fr);
 	grid-template-columns: 1fr;
 	height: 75vh;
-	background-color: var(--bg-dropdown);
+	background-color: var(--bg-elevated);
 	border-radius: var(--card-border-radius);
 	transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
 .card:hover {
-	background-color: var(--bg-nav-button-hover);
+	background-color: var(--bg-hover);
 	cursor: pointer;
 	user-select: none;
 	transform: scale(1.01);
@@ -210,9 +217,21 @@ nav> :last-child {
 
 .card-bottom {
 	padding: var(--card-bottom-padding);
+	gap: var(--card-bottom-padding);
 }
 
 .card-title {
 	font-size: 1.5rem;
 	font-weight: bold;
+}
+
+/*--- BUTTONS ---*/
+.button {
+	color: var(--fg-inv);
+	font-weight: bold;
+	background-color: var(--bg-accent);
+	text-decoration: none;
+	padding: var(--button-padding);
+	border-radius: var(--button-border-radius);
+	text-align: center;
 }

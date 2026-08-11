@@ -117,27 +117,31 @@
 
 				<div class="card-container" id="card-container-downloads">
 					<div class="card">
-						<div class="card-top" id="card-image-a"></div>
+						<div class="card-top" id="card-image-windows"></div>
 						<div class="card-bottom">
-							<p class="card-title">Innovative design</p>
-							<p>Nexvane's Component and Scene system gives you power and flexibility to create anything</p>
+							<p class="card-title">Windows</p>
+							<p>Download Nexvane for Windows 10 and 11 with a x64 architecture.</p>
+							<div class="button" href="download/windows.html">Download</div>
 						</div>
 					</div>
 					<div class="card">
-						<div class="card-top" id="card-image-a"></div>
+						<div class="card-top" id="card-image-linux"></div>
 						<div class="card-bottom">
-							<p class="card-title">Innovative design</p>
-							<p>Nexvane's Component and Scene system gives you power and flexibility to create anything</p>
+							<p class="card-title">Linux</p>
+							<p>Download Nexvane for Linux with a x64 architecture. Compatible with Arch, Fedora and Debian.</p>
+							<div class="button" href="download/windows.html">Download</div>
 						</div>
 					</div>
 					<div class="card">
-						<div class="card-top" id="card-image-a"></div>
+						<div class="card-top" id="card-image-git"></div>
 						<div class="card-bottom">
-							<p class="card-title">Innovative design</p>
-							<p>Nexvane's Component and Scene system gives you power and flexibility to create anything</p>
+							<p class="card-title">Source</p>
+							<p>Download Nexvane's source code hosted in GitHub.</p>
+							<div class="button" href="download/windows.html">Download</div>
 						</div>
 					</div>
 				</div>
+
 				<div class="card-container" id="card-container-docs">
 					<div class="card">
 						<div class="card-top" id="card-image-a"></div>
@@ -163,21 +167,14 @@
 		const toggleBtn = document.getElementById('theme-toggle');
 		const root = document.documentElement;
 
-		// 1. Determine starting theme: checked saved preference, then system preference
 		const savedTheme = localStorage.getItem('theme');
 		const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
 		let currentTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
-
-		// 2. Apply the starting theme on load
 		root.setAttribute('data-theme', currentTheme);
 
-		// 3. Handle manual clicks
 		toggleBtn.addEventListener('click', () => {
-			// Switch the theme state
 			currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-			// Apply to HTML tag and save to storage
 			root.setAttribute('data-theme', currentTheme);
 			localStorage.setItem('theme', currentTheme);
 		});
