@@ -3,72 +3,55 @@ body {
 	padding: 0;
 	box-sizing: border-box;
 }
-
 :root {
 	color-scheme: light dark;
-
-	/* Renamed for semantic hierarchy: Base -> Surface -> Elevated -> Hover */
 	--bg-base: light-dark(#FFFFFF, #0a0a0a);
 	--bg-surface: light-dark(#F9F9F9, #0f0f0f);
 	--bg-elevated: light-dark(#F1F1F1, #151515);
 	--bg-hover: light-dark(#E5E5E5, #1f1f1f);
-	
-	/* High-contrast colors for text and primary actions */
-	--fg: light-dark(var(--fg-dark), var(--fg-light));
 
+	--fg: light-dark(var(--fg-dark), var(--fg-light));
 	--bg-accent: light-dark(#0977d7, #0977d7);
 	--bg-accent-hover: color-mix(in srgb, var(--bg-accent), black 25%);
 	--bg-accent-click: color-mix(in srgb, var(--bg-accent), black 45%);
+	--fg-inv: light-dark(var(--fg-light), var(--fg-dark));
+	--fg-light: #EAEAEA;
+	--fg-dark: #1A1A1A;
 
-	--fg-inv: light-dark(var(--fg-light), var(--fg-dark));    
-
-	--fg-light: #EAEAEA;        
-	--fg-dark: #1A1A1A;        
-	
 	--nav-button-padding: 1rem;
 	--nav-button-inside-gap: .5rem;
-
 	--content-pad: 3.5rem;
-	--padded-gap: 3rem; /* NEW: Vertical margin between elements in padded */
+	--padded-gap: 3rem;
 	--card-container-gap: 1rem;
 	--card-bottom-padding: .5rem;
 	--card-border-radius: .5rem;
-
 	--button-padding: 1rem;
 	--button-border-radius: .6rem;
 }
-
-/* --- ADD THIS TO MANUALLY OVERRIDE THE SYSTEM --- */
 :root[data-theme="light"] {
 	color-scheme: light;
 }
-
 :root[data-theme="dark"] {
 	color-scheme: dark;
 }
-
 body, nav, main, div, a, .dropdown-content {
 	transition: background-color 0.2s ease, color 0.2s ease;
 }
-
 .padded {
 	display: flex;
 	flex-direction: column;
-	padding: var(--content-pad); /* Condenses top/right/bottom/left */
-	gap: var(--padded-gap); /* Adds gap between each card container */
+	padding: var(--content-pad);
+	gap: var(--padded-gap);
 }
-
 body {
 	background-color: var(--bg-base);
 	color: var(--fg);
-
 	font-family: "Roboto", sans-serif;
 	font-optical-sizing: auto;
 	font-weight: normal;
 	font-style: normal;
 	font-variation-settings: "wdth" 100;
 }
-
 nav {
 	background-color: var(--bg-surface);
 	display: flex;
@@ -76,20 +59,49 @@ nav {
 	justify-content: space-between;
 	user-select: none;
 }
-
 nav>div {
 	display: flex;
 	flex-direction: row;
 }
-
 nav> :last-child {
 	margin-left: auto;
 }
 
+/* --- LOGO CROSSFADE ---
+   .nav-logo-light stays in normal document flow, so it sets
+   .nav-logo-img's width/height naturally (inline-flex hugs its content).
+   .nav-logo-dark is absolutely positioned directly on top of it,
+   pinned to the same top-left corner, so it perfectly overlaps
+   instead of floating free with no box to constrain it. */
 .nav-logo-img {
-	content: light-dark(url("/img/logo/light.png"), url("/img/logo/dark.png"));
+	position: relative;
+	height: 2rem;
+	display: inline-flex;
+	align-items: center;
+}
+.nav-logo-img img {
 	height: 2rem;
 	width: auto;
+	transition: opacity 0.2s ease;
+	will-change: opacity;
+	backface-visibility: hidden;
+	pointer-events: none;
+}
+.nav-logo-light {
+	opacity: 1;
+	position: relative; /* stays in flow, defines the box size */
+}
+.nav-logo-dark {
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0;
+}
+:root[data-theme="dark"] .nav-logo-light {
+	opacity: 0;
+}
+:root[data-theme="dark"] .nav-logo-dark {
+	opacity: 1;
 }
 
 .nav-button {
@@ -100,105 +112,75 @@ nav> :last-child {
 	padding: 0 var(--nav-button-padding);
 	position: relative;
 }
-
 .nav-button:hover {
 	background-color: var(--bg-hover);
 	cursor: pointer;
 }
-
 .nav-button-icon {
 	margin-right: .5rem;
 }
-
 /* --- DROPDOWN CSS --- */
-
 .dropdown-content {
-	/* Hidden by default */
 	display: none;
 	flex-direction: column;
-
-	/* Positioned exactly below the nav bar */
 	position: absolute;
 	top: 100%;
 	left: 0;
-
 	background-color: var(--bg-elevated);
 	min-width: 200px;
 	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.5);
 	z-index: 100;
 }
-
-/* Aligns the right-side dropdown menus so they don't overflow the screen */
 .dropdown-right {
 	left: auto;
 	right: 0;
 }
-
-/* Show the dropdown when hovering over the parent .nav-button */
 .nav-button:hover .dropdown-content {
 	display: flex;
 }
-
-/* Style the links inside the dropdown */
 .dropdown-content a {
 	color: var(--fg);
 	padding: 1rem var(--nav-button-padding);
 	text-decoration: none;
 	font-size: 0.95rem;
 }
-
-/* Hover effect for the links */
 .dropdown-content a:hover {
 	background-color: var(--bg-hover);
 }
-
 /* --- BANNER --- */
 .banner {
 	height: 70vh;
 	background-position: center;
 	background-size: cover;
 	background-repeat: no-repeat;
-
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
-
 .banner > p {
 	padding: 0;
 	margin: 0;
 	user-select: none;
 	color: var(--fg-light);
 }
-
 .darkened-banner {
 	background-color: rgba(0, 0, 0, 0.5);
 	background-blend-mode: darken;
 }
-
 .banner-title {
 	font-weight: bolder;
 	font-size: 5rem;
 }
-
 .banner-subheading {
 	font-weight: bold;
 	font-size: 2rem;
 }
-
 /*--- CARDS ---*/
-
 .card-container {
 	display: grid;
 	gap: var(--card-container-gap);
-	justify-content: center; /* Centers the grid tracks horizontally */
-	
-	/* 
-	  1. 'auto-fit' collapses empty columns (unlike auto-fill) so it can center.
-	  2. The max size is set to calc(33.333% - 0.7rem) so they perfectly 
-	     match the size of the cards in the 3-column row, but still adjust dynamically.
-	*/
+	justify-content: center;
 	grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), calc(33.333% - 0.7rem)));
 }
 .card {
@@ -211,39 +193,32 @@ nav> :last-child {
 	border-radius: var(--card-border-radius);
 	transition: transform 0.2s ease, background-color 0.2s ease;
 }
-
 .card:hover {
 	background-color: var(--bg-hover);
 	cursor: pointer;
 	user-select: none;
 	transform: scale(1.01);
 }
-
 .card-top {
 	background-position: center;
 	background-size: cover;
 	background-repeat: no-repeat;
 }
-
 .card-bottom {
 	padding: var(--card-bottom-padding);
 	gap: var(--card-bottom-padding);
-	/* Add flexbox properties */
 	display: flex;
 	flex-direction: column;
 }
-
 .card-text {
 	margin: 0;
 	line-height: 1.5;
 }
-
 .card-title {
 	font-size: 1.5rem;
 	font-weight: bold;
 	margin: 1rem 0 1rem 0;
 }
-
 /*--- BUTTONS ---*/
 .button {
 	color: var(--fg-inv);
@@ -253,19 +228,15 @@ nav> :last-child {
 	padding: var(--button-padding);
 	border-radius: var(--button-border-radius);
 	text-align: center;
-	/* Push the button to the bottom */
-	margin-top: auto; 
+	margin-top: auto;
 }
-
 .button:hover {
 	background-color: var(--bg-accent-hover);
 	color: var(--fg);
 }
-
 .button:active {
 	background-color: var(--bg-accent-click);
 }
-
 h1 {
 	font-size: 2.5rem;
 	align-self: center;
