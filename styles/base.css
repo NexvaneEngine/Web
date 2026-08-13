@@ -11,12 +11,16 @@ body {
 	--bg-hover: light-dark(#E5E5E5, #1f1f1f);
 
 	--fg: light-dark(var(--fg-dark), var(--fg-light));
+	--fg-mute: light-dark(var(--fg-mute-dark), var(--fg-mute-light));
 	--bg-accent: light-dark(#0977d7, #0977d7);
 	--bg-accent-hover: color-mix(in srgb, var(--bg-accent), black 25%);
 	--bg-accent-click: color-mix(in srgb, var(--bg-accent), black 45%);
 	--fg-inv: light-dark(var(--fg-light), var(--fg-dark));
+	--fg-mute-inv: light-dark(var(--fg-mute-light), var(--fg-mute-dark));
 	--fg-light: #EAEAEA;
 	--fg-dark: #1A1A1A;
+	--fg-mute-light: #5A5A5A;
+	--fg-mute-dark: #DADADA;
 
 	--nav-button-padding: 1rem;
 	--nav-button-inside-gap: .5rem;
@@ -53,6 +57,9 @@ body {
 	font-variation-settings: "wdth" 100;
 }
 nav {
+	top: 0;
+	z-index: 10000;
+	position: sticky;
 	background-color: var(--bg-surface);
 	display: flex;
 	flex-direction: row;
@@ -240,4 +247,27 @@ nav> :last-child {
 h1 {
 	font-size: 2.5rem;
 	align-self: center;
+}
+
+/*--- FOOTER ---*/
+footer
+{
+	background-color: var(--bg-surface);
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.dashed-text-div
+{
+	color: var(--fg-mute);
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
+}
+
+.dashed-text-div > * + *::before
+{
+	content: "-";
+	margin-right: 1rem;
 }
