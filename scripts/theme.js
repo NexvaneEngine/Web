@@ -7,7 +7,8 @@ const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matc
 let currentTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
 root.setAttribute('data-theme', currentTheme);
 
-toggleBtn.addEventListener('click', () => {
+toggleBtn.addEventListener('click', (event) => {
+	event.preventDefault();
 	currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
 	root.setAttribute('data-theme', currentTheme);
 	localStorage.setItem('theme', currentTheme);

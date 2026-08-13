@@ -38,9 +38,11 @@ body {
 :root[data-theme="dark"] {
 	color-scheme: dark;
 }
-body, nav, main, div, a, .dropdown-content {
+
+* {
 	transition: background-color 0.2s ease, color 0.2s ease;
 }
+
 .padded {
 	display: flex;
 	flex-direction: column;
@@ -89,7 +91,6 @@ nav> :last-child {
 .nav-logo-img img {
 	height: 2rem;
 	width: auto;
-	transition: opacity 0.2s ease;
 	will-change: opacity;
 	backface-visibility: hidden;
 	pointer-events: none;
