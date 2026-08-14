@@ -5,15 +5,16 @@
  *
  *   <nx-sidebar label="User Manual">
  *     <nx-sidebar-node label="Getting Started" icon="bi-rocket-takeoff" open>
- *       <nx-sidebar-leaf label="Installation" href="/docs/manual.html#install"></nx-sidebar-leaf>
- *       <nx-sidebar-leaf label="Quick Start" href="/docs/manual.html#quickstart"></nx-sidebar-leaf>
+ *       <nx-sidebar-leaf label="Installation" href="manual.html#install"></nx-sidebar-leaf>
+ *       <nx-sidebar-leaf label="Quick Start" href="manual.html#quickstart"></nx-sidebar-leaf>
  *     </nx-sidebar-node>
- *     <nx-sidebar-leaf label="FAQ" icon="bi-question-circle" href="/docs/manual.html#faq"></nx-sidebar-leaf>
+ *     <nx-sidebar-leaf label="FAQ" href="manual.html#faq"></nx-sidebar-leaf>
  *   </nx-sidebar>
  *
  * - <nx-sidebar-leaf> is a clickable link. It reuses the `.nav-button`
  *   class so it looks/feels exactly like the navbar buttons, and marks
- *   itself active when its href matches the current page.
+ *   itself active when its href matches the current page (and, for
+ *   in-page anchors, the current hash too).
  * - <nx-sidebar-node> is expandable/collapsible: clicking (or pressing
  *   Enter/Space on) its header toggles its children. Nodes can nest
  *   other nodes and leafs freely.
@@ -44,10 +45,15 @@
 			const aside = document.createElement('aside');
 			aside.className = 'sidebar';
 
+			// IMPORTANT: the toggle button must stay OUTSIDE the <aside>
+			// panel it opens - the panel itself is what's hidden
+			// off-canvas on mobile, so a toggle nested inside it would be
+			// hidden along with it and could never be tapped to open.
 			const toggle = document.createElement('button');
 			toggle.type = 'button';
 			toggle.className = 'nav-button sidebar-toggle';
 			toggle.setAttribute('aria-label', 'Toggle sidebar');
+			toggle.setAttribute('aria-expanded', 'false');
 			toggle.innerHTML = `<i class="bi bi-list"></i><p>${title || 'Menu'}</p>`;
 
 			const nav = document.createElement('nav');
@@ -62,11 +68,10 @@
 			}
 
 			existingChildren.forEach((el) => nav.appendChild(el));
+			aside.appendChild(nav);
 
 			const backdrop = document.createElement('div');
 			backdrop.className = 'sidebar-backdrop';
-
-			aside.appendChild(nav);
 
 			this.innerHTML = '';
 			this.appendChild(toggle);

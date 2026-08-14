@@ -2,11 +2,19 @@
  * <nx-navbar></nx-navbar>
  *
  * Drop this tag into any page to get the site navbar. It renders the
- * exact same markup/classes as the original hand-written <nav>, so all
+ * same markup/classes as the original hand-written <nav>, so all
  * existing CSS in base.css keeps working untouched. The host element
  * itself is `display: contents` (see components.css), so the real
  * <nav> landmark behaves as if it were a direct child of <body>
  * (sticky positioning, layout, accessibility tree all unaffected).
+ *
+ * PATHS: every href/src below is written relative, root-style (e.g.
+ * "img/logo/light.png", "docs/manual.html") with NO leading slash.
+ * A page nested in a subfolder (e.g. docs/manual.html) must set
+ * <base href="../"> in its <head> so these resolve back to the
+ * project root - see docs/manual.html for an example. This keeps the
+ * site working whether it's opened straight off disk (file://) or
+ * served from any web server, at any root.
  *
  * It also owns:
  *  - the mobile hamburger menu (click-to-open panel + accordion dropdowns)
@@ -34,8 +42,8 @@
 		<div class="nav-top">
 			<div class="nav-button nav-logo">
 				<div class="nav-logo-img">
-					<img class="nav-logo-light" src="/img/logo/light.png" alt="Nexvane logo">
-					<img class="nav-logo-dark" src="/img/logo/dark.png" alt="Nexvane logo">
+					<img class="nav-logo-light" src="img/logo/light.png" alt="Nexvane logo">
+					<img class="nav-logo-dark" src="img/logo/dark.png" alt="Nexvane logo">
 				</div>
 				<p><b>Nexvane</b></p>
 			</div>
@@ -49,26 +57,26 @@
 				<div class="nav-button dropdown">
 					<p>Download <i class="bi bi-chevron-down" style="font-size: 0.8em;"></i></p>
 					<div class="dropdown-content">
-						<a href="/download/windows.html"><i class="bi bi-windows nav-button-icon"></i>Windows</a>
-						<a href="/download/linux.html"><i class="bi bi-tux nav-button-icon"></i>Linux</a>
-						<a href="/download/source.html"><i class="bi bi-git nav-button-icon"></i>Source</a>
+						<a href="download/windows.html"><i class="bi bi-windows nav-button-icon"></i>Windows</a>
+						<a href="download/linux.html"><i class="bi bi-tux nav-button-icon"></i>Linux</a>
+						<a href="download/source.html"><i class="bi bi-git nav-button-icon"></i>Source</a>
 					</div>
 				</div>
 
 				<div class="nav-button dropdown">
 					<p>Documentation <i class="bi bi-chevron-down" style="font-size: 0.8em;"></i></p>
 					<div class="dropdown-content">
-						<a href="/docs/manual.html"><i class="bi bi-person-fill-down nav-button-icon"></i>User Manual</a>
-						<a href="/docs/api.html"><i class="bi bi-journal-code nav-button-icon"></i>API Reference</a>
+						<a href="docs/manual.html"><i class="bi bi-person-fill-down nav-button-icon"></i>User Manual</a>
+						<a href="docs/api.html"><i class="bi bi-journal-code nav-button-icon"></i>API Reference</a>
 					</div>
 				</div>
 
 				<div class="nav-button dropdown">
 					<p>About <i class="bi bi-chevron-down" style="font-size: 0.8em;"></i></p>
 					<div class="dropdown-content">
-						<a href="/about/engine.html"><i class="bi bi-joystick nav-button-icon"></i>Nexvane</a>
-						<a href="/about/fotosop.html"><i class="bi bi-building-fill nav-button-icon"></i>Fotosop</a>
-						<a href="/about/acrux.html"><i class="bi bi-building-fill nav-button-icon"></i>Acrux</a>
+						<a href="about/engine.html"><i class="bi bi-joystick nav-button-icon"></i>Nexvane</a>
+						<a href="about/fotosop.html"><i class="bi bi-building-fill nav-button-icon"></i>Fotosop</a>
+						<a href="about/acrux.html"><i class="bi bi-building-fill nav-button-icon"></i>Acrux</a>
 					</div>
 				</div>
 			</div>
@@ -78,8 +86,8 @@
 					<i class="bi bi-person-circle"></i>
 					<p>Username <i class="bi bi-chevron-down" style="font-size: 0.8em;"></i></p>
 					<div class="dropdown-content dropdown-right">
-						<a href="/profile.html"><i class="bi bi-person-fill nav-button-icon"></i>Profile</a>
-						<a href="/settings.html"><i class="bi bi-gear-fill nav-button-icon"></i>Settings</a>
+						<a href="profile.html"><i class="bi bi-person-fill nav-button-icon"></i>Profile</a>
+						<a href="settings.html"><i class="bi bi-gear-fill nav-button-icon"></i>Settings</a>
 						<a href="#"><i class="bi bi-box-arrow-right nav-button-icon"></i>Log Out</a>
 					</div>
 				</div>
