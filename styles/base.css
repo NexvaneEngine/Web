@@ -65,17 +65,22 @@ nav {
 	background-color: var(--bg-surface);
 	display: flex;
 	flex-direction: row;
-	justify-content: flex-start;
+	justify-content: space-between;
 	user-select: none;
 }
-nav>div {
-	display: flex;
-	flex-direction: row;
-}
+/* .nav-topbar, .nav-links and .nav-right are structural wrappers only.
+   On desktop they stay display:contents so their children behave exactly
+   like direct flex children of <nav>, reproducing the original layout
+   pixel-for-pixel. They only become real boxes on mobile (see media query). */
+.nav-topbar,
+.nav-links,
 .nav-right {
+	display: contents;
+}
+.nav-right > :first-child {
 	margin-left: auto;
 }
-.nav-toggle {
+.nav-hamburger {
 	display: none;
 }
 
@@ -276,54 +281,97 @@ footer
 	margin-right: 1rem;
 }
 
-/* ============================================================
-   RESPONSIVENESS
-   The design itself (colors, spacing scale, components) is left
-   as-is; these rules only change how it reflows on smaller
-   viewports.
-   ============================================================ */
-@media (max-width: 900px) {
+/* =========================================================
+   RESPONSIVE / MOBILE OVERRIDES
+   Everything above this point defines the desktop (and base)
+   appearance and is left untouched. Everything below only
+   applies at smaller viewport widths and adapts layout,
+   spacing and the nav into a collapsible mobile menu.
+   ========================================================= */
+
+@media (max-width: 860px) {
+	:root {
+		--content-pad: 1.25rem;
+		--padded-gap: 2rem;
+		--nav-button-padding: 1.25rem;
+	}
+
+	/* --- NAV --- */
 	nav {
-		flex-wrap: wrap;
+		flex-direction: column;
+		align-items: stretch;
 	}
-	.nav-bar-row {
+	.nav-topbar,
+	.nav-links,
+	.nav-right {
 		display: flex;
+	}
+	.nav-topbar {
 		flex-direction: row;
-		align-items: center;
 		justify-content: space-between;
+		align-items: center;
 		width: 100%;
-	}
-	.nav-toggle {
-		display: flex;
 	}
 	.nav-links,
 	.nav-right {
-		display: none;
 		flex-direction: column;
 		width: 100%;
+		max-height: 0;
+		overflow: hidden;
+		transition: max-height 0.25s ease;
+	}
+	.nav-right > :first-child {
 		margin-left: 0;
 	}
 	nav.nav-open .nav-links,
 	nav.nav-open .nav-right {
+		max-height: 1000px;
+	}
+	.nav-hamburger {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: none;
+		border: none;
+		color: var(--fg);
+		font-size: 1.4rem;
+		font-family: inherit;
+		padding: 0 var(--nav-button-padding);
+		height: 100%;
+		cursor: pointer;
+	}
+	.nav-hamburger:hover {
+		background-color: var(--bg-hover);
+	}
+	.nav-button {
+		width: 100%;
+		box-sizing: border-box;
+		padding-top: .9rem;
+		padding-bottom: .9rem;
+	}
+	/* Hover-triggered dropdowns don't work well on touch; disable hover
+	   opening on mobile and rely on the .open class toggled by nav.js */
+	.nav-button:hover .dropdown-content {
+		display: none;
+	}
+	.nav-button.dropdown.open .dropdown-content {
 		display: flex;
 	}
-	.dropdown-content {
-		display: none !important;
+	.dropdown-content,
+	.dropdown-right {
 		position: static;
 		box-shadow: none;
-		padding-left: 2.5rem;
 		min-width: 0;
+		width: 100%;
+		background-color: var(--bg-hover);
 	}
-	.dropdown.dropdown-open .dropdown-content {
-		display: flex !important;
+	.dropdown-content a {
+		padding-left: calc(var(--nav-button-padding) * 2);
 	}
 
-	:root {
-		--content-pad: 1.5rem;
-		--padded-gap: 2rem;
-	}
+	/* --- BANNER --- */
 	.banner {
-		height: 50vh;
+		height: 45vh;
 	}
 	.banner-title {
 		font-size: 2.75rem;
@@ -331,14 +379,34 @@ footer
 	.banner-subheading {
 		font-size: 1.25rem;
 	}
-	.card {
-		height: auto;
-	}
-	.card-top {
-		min-height: 220px;
-	}
+
+	/* --- HEADINGS --- */
 	h1 {
-		font-size: 1.85rem;
+		font-size: 1.9rem;
+	}
+
+	/* --- CARDS --- */
+	.card {
+		height: 60vh;
+	}
+	.card-title {
+		font-size: 1.25rem;
+		margin: .75rem 0;
+	}
+
+	/* --- FOOTER --- */
+	.dashed-text-div {
+		flex-direction: column;
+		align-items: center;
+		gap: .35rem;
+		text-align: center;
+	}
+	.dashed-text-div > * + *::before {
+		content: none;
+		margin-right: 0;
+	}
+	footer {
+		padding: 1.5rem 0;
 	}
 }
 
@@ -347,9 +415,15 @@ footer
 		--content-pad: 1rem;
 	}
 	.banner-title {
-		font-size: 2rem;
+		font-size: 2.1rem;
 	}
 	.banner-subheading {
-		font-size: 1rem;
+		font-size: 1.05rem;
+	}
+	.card {
+		height: 55vh;
+	}
+	h1 {
+		font-size: 1.6rem;
 	}
 }
