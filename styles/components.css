@@ -1,0 +1,85 @@
+/* ===== Layout helper for pages that use <nx-sidebar> next to <main> ===== */
+.page-with-sidebar {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+}
+.page-with-sidebar > main {
+	flex: 1;
+	min-width: 0;
+}
+
+/* ===== Sidebar (<nx-sidebar>, <nx-sidebar-node>, <nx-sidebar-leaf>) =====
+   Nodes/leafs reuse the .nav-button class so their look and hover/click
+   feel matches the navbar exactly - only layout (vertical list, indent,
+   chevron rotation) is added on top. */
+.sidebar {
+	display: flex;
+	flex-direction: column;
+	width: 260px;
+	flex: 0 0 260px;
+	background-color: var(--bg-surface);
+	border-right: 1px solid var(--bg-hover);
+	position: sticky;
+	top: var(--nav-height, 0px);
+	align-self: flex-start;
+	height: calc(100vh - var(--nav-height, 0px));
+	overflow-y: auto;
+	padding: .5rem 0;
+}
+.sidebar-toggle {
+	display: none;
+	margin: .5rem;
+	border-radius: var(--button-border-radius);
+	justify-content: flex-start;
+}
+.sidebar-nav {
+	display: flex;
+	flex-direction: column;
+	gap: .15rem;
+	padding: 0 .5rem;
+}
+.sidebar-title {
+	padding: .5rem var(--nav-button-padding);
+	margin: 0;
+	font-size: .8rem;
+	font-weight: bold;
+	text-transform: uppercase;
+	letter-spacing: .05em;
+	color: var(--fg-mute);
+}
+.sidebar-node-header,
+.sidebar-leaf-link {
+	border-radius: var(--button-border-radius);
+	justify-content: flex-start;
+}
+.sidebar-leaf-link.active {
+	background-color: var(--bg-accent);
+	color: var(--fg-inv);
+}
+.sidebar-chevron {
+	margin-left: auto;
+	transition: transform 0.2s ease;
+}
+.sidebar-node.open > .sidebar-node-header .sidebar-chevron {
+	transform: rotate(90deg);
+}
+.sidebar-node-children {
+	display: none;
+	flex-direction: column;
+	gap: .15rem;
+	padding-left: 1.25rem;
+}
+.sidebar-node.open > .sidebar-node-children {
+	display: flex;
+}
+.sidebar-backdrop {
+	display: none;
+	position: fixed;
+	inset: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 8000;
+}
+.sidebar-backdrop.visible {
+	display: block;
+}

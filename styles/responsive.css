@@ -1,0 +1,114 @@
+/*
+ * Responsive adjustments. Nothing here changes colors, fonts or the
+ * general visual language - it only changes how things reflow on
+ * narrower viewports (nav becomes a hamburger menu, the sidebar
+ * becomes a drawer, cards/banner scale down).
+ */
+
+@media (max-width: 900px) {
+
+	/* --- NAVBAR: hover dropdowns -> hamburger + tap accordion --- */
+	.nav-hamburger {
+		display: flex;
+	}
+	.nav-links {
+		display: none;
+		flex-direction: column;
+		position: absolute;
+		top: 100%;
+		left: 0;
+		right: 0;
+		background-color: var(--bg-surface);
+		box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.5);
+	}
+	nav.nav-open .nav-links {
+		display: flex;
+	}
+	.nav-group {
+		flex-direction: column;
+	}
+	.nav-group-secondary {
+		border-top: 1px solid var(--bg-hover);
+	}
+	/* nav-button stays a row (icon + label unchanged) but is allowed to
+	   wrap, and the dropdown-content is forced onto its own full-width
+	   line - avoids restructuring nav-button's internal markup just
+	   for the mobile case. */
+	.nav-links .nav-button.dropdown {
+		flex-wrap: wrap;
+	}
+	.dropdown-content {
+		position: static;
+		flex-basis: 100%;
+		width: 100%;
+		box-shadow: none;
+		background-color: var(--bg-base);
+		min-width: 0;
+	}
+	/* Touch has no hover, so dropdowns open on tap (.open, toggled in
+	   nx-navbar.js) instead of on hover. */
+	.nav-button.dropdown:hover .dropdown-content {
+		display: none;
+	}
+	.nav-button.dropdown.open > .dropdown-content {
+		display: flex;
+	}
+
+	/* --- CONTENT SPACING --- */
+	:root {
+		--content-pad: 1.25rem;
+		--padded-gap: 2rem;
+	}
+
+	/* --- BANNER --- */
+	.banner {
+		height: 45vh;
+	}
+	.banner-title {
+		font-size: 2.75rem;
+	}
+	.banner-subheading {
+		font-size: 1.25rem;
+	}
+
+	/* --- CARDS --- */
+	.card-container {
+		grid-template-columns: 1fr;
+	}
+	.card {
+		height: auto;
+	}
+	.card-top {
+		aspect-ratio: 16 / 9;
+	}
+
+	/* --- SIDEBAR: static column -> off-canvas drawer --- */
+	.page-with-sidebar {
+		flex-direction: column;
+	}
+	.sidebar-toggle {
+		display: flex;
+	}
+	.sidebar {
+		position: fixed;
+		top: var(--nav-height, 0px);
+		left: 0;
+		bottom: 0;
+		z-index: 9000;
+		width: 80vw;
+		max-width: 320px;
+		height: auto;
+		transform: translateX(-100%);
+		box-shadow: 4px 0 16px rgba(0, 0, 0, 0.5);
+		border-right: none;
+	}
+	.sidebar.sidebar-open {
+		transform: translateX(0);
+	}
+}
+
+@media (min-width: 901px) {
+	.sidebar-toggle {
+		display: none;
+	}
+}

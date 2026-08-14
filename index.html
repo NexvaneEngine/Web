@@ -1,5 +1,8 @@
 <html>
 	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -7,65 +10,16 @@
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
 		<link rel="stylesheet" href="styles/base.css"/>
+		<link rel="stylesheet" href="styles/components.css"/>
 		<link rel="stylesheet" href="styles/index.css"/>
+		<link rel="stylesheet" href="styles/responsive.css"/>
+
+		<!-- Applied early to avoid a light/dark flash on load -->
+		<script src="/scripts/theme.js"></script>
 	</head>
 
 	<body>
-		<nav>
-			<div>
-				<div class="nav-button nav-logo">
-					<div class="nav-logo-img">
-						<img class="nav-logo-light" src="/img/logo/light.png" alt="Nexvane logo">
-						<img class="nav-logo-dark" src="/img/logo/dark.png" alt="Nexvane logo">
-					</div>
-					<p><b>Nexvane</b></p>
-				</div>
-				<div class="nav-button dropdown">
-					<p>Download <i class="bi bi-chevron-down" style="font-size: 0.8em;"></i></p>
-					<div class="dropdown-content">
-						<a href="/download/windows.html"><i class="bi bi-windows nav-button-icon"></i>Windows</a>
-						<a href="/download/linux.html"><i class="bi bi-tux nav-button-icon"></i>Linux</a>
-						<a href="/download/source.html"><i class="bi bi-git nav-button-icon"></i>Source</a>
-					</div>
-				</div>
-                
-				<div class="nav-button dropdown">
-					<p>Documentation <i class="bi bi-chevron-down" style="font-size: 0.8em;"></i></p>
-					<div class="dropdown-content">
-						<a href="/docs/manual.html"><i class="bi bi-person-fill-down nav-button-icon"></i>User Manual</a>
-						<a href="/docs/api.html"><i class="bi bi-journal-code nav-button-icon"></i>API Reference</a>
-					</div>
-				</div>
-                
-				<div class="nav-button dropdown">
-					<p>About <i class="bi bi-chevron-down" style="font-size: 0.8em;"></i></p>
-					<div class="dropdown-content">
-						<a href="/about/engine.html"><i class="bi bi-joystick nav-button-icon"></i>Nexvane</a>
-						<a href="/about/fotosop.html"><i class="bi bi-building-fill nav-button-icon"></i>Fotosop</a>
-						<a href="/about/acrux.html"><i class="bi bi-building-fill nav-button-icon"></i>Acrux</a>
-					</div>
-				</div>
-			</div>
-
-			<div>
-				<div class="nav-button dropdown">
-					<i class="bi bi-person-circle"></i>
-					<p>Username <i class="bi bi-chevron-down" style="font-size: 0.8em;"></i></p>
-					<div class="dropdown-content dropdown-right">
-						<a href="/profile.html"><i class="bi bi-person-fill nav-button-icon"></i>Profile</a>
-						<a href="/settings.html"><i class="bi bi-gear-fill nav-button-icon"></i>Settings</a>
-						<a href="#"><i class="bi bi-box-arrow-right nav-button-icon"></i>Log Out</a>
-					</div>
-				</div>
-				<div class="nav-button dropdown">
-					<i class="bi bi-gear-fill"></i>
-					<div class="dropdown-content dropdown-right">
-						<a href="#" id="theme-toggle"><i class="bi bi-moon-fill nav-button-icon"></i>Dark Mode</a>
-						<a href="#"><i class="bi bi-translate nav-button-icon"></i>Language</a>
-					</div>
-				</div>
-			</div>
-		</nav>
+		<nx-navbar></nx-navbar>
 
 		<main>
 			<div class="banner darkened-banner" id="index-banner">
@@ -171,15 +125,10 @@
 			</div>
 		</main>
 
-		<footer>
-			<div class="dashed-text-div">
-				<p>Nexvane Engine</p>
-				<p>Acrux &amp; Fotosop</p>
-				<p>(c) 2026</p>
-			</div>
-		</footer>
-
+		<nx-footer></nx-footer>
 	</body>
 
-	<script src="/scripts/theme.js"></script>
+	<script src="/scripts/components/nx-navbar.js"></script>
+	<script src="/scripts/components/nx-footer.js"></script>
+	<script src="/scripts/components/nx-sidebar.js"></script>
 </html>

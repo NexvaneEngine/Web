@@ -58,6 +58,9 @@ body {
 	font-style: normal;
 	font-variation-settings: "wdth" 100;
 }
+nx-navbar, nx-footer, nx-sidebar {
+	display: contents;
+}
 nav {
 	top: 0;
 	z-index: 10000;
@@ -65,15 +68,31 @@ nav {
 	background-color: var(--bg-surface);
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
 	user-select: none;
 }
-nav>div {
+.nav-top {
 	display: flex;
 	flex-direction: row;
 }
-nav> :last-child {
-	margin-left: auto;
+.nav-hamburger {
+	display: none;
+	align-items: center;
+	justify-content: center;
+	padding: 0 var(--nav-button-padding);
+	cursor: pointer;
+}
+.nav-hamburger:hover {
+	background-color: var(--bg-hover);
+}
+.nav-links {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	flex: 1;
+}
+.nav-group {
+	display: flex;
+	flex-direction: row;
 }
 
 /* --- LOGO CROSSFADE ---
