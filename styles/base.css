@@ -401,13 +401,20 @@ footer
 	}
 
 	/* --- CARDS ---
-	   A single column avoids the CSS Grid "orphan" case where a
-	   leftover card in an incomplete last row sits flush left instead
-	   of centered. */
+	   CSS Grid's auto-fit centers the whole track group, but a leftover
+	   card in an incomplete last row still sits in the first track
+	   (flush left) rather than being centered itself. Flexbox with
+	   wrap + justify-content:center centers each row's items
+	   individually, so a lone leftover card sits centered instead of
+	   left-aligned, while still keeping 2-3 cards per row when they fit. */
 	.card-container {
-		grid-template-columns: 1fr;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
 	}
 	.card {
+		flex: 0 1 min(100%, 320px);
+		box-sizing: border-box;
 		height: 60vh;
 	}
 	.card-title {
