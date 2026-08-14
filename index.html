@@ -1,8 +1,5 @@
 <html>
 	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -12,14 +9,15 @@
 		<link rel="stylesheet" href="styles/base.css"/>
 		<link rel="stylesheet" href="styles/components.css"/>
 		<link rel="stylesheet" href="styles/index.css"/>
-		<link rel="stylesheet" href="styles/responsive.css"/>
 
-		<!-- Applied early to avoid a light/dark flash on load -->
-		<script src="scripts/theme.js"></script>
+		<!-- Reusable components: drop the tags anywhere, script include
+		     registers the custom element. -->
+		<script src="/components/nex-navbar.js"></script>
+		<script src="/components/nex-footer.js"></script>
 	</head>
 
 	<body>
-		<nx-navbar></nx-navbar>
+		<nex-navbar></nex-navbar>
 
 		<main>
 			<div class="banner darkened-banner" id="index-banner">
@@ -125,10 +123,9 @@
 			</div>
 		</main>
 
-		<nx-footer></nx-footer>
+		<nex-footer></nex-footer>
+
 	</body>
 
-	<script src="scripts/components/nx-navbar.js"></script>
-	<script src="scripts/components/nx-footer.js"></script>
-	<script src="scripts/components/nx-sidebar.js"></script>
+	<script src="/scripts/theme.js"></script>
 </html>

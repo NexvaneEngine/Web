@@ -1,91 +1,84 @@
 <html>
 	<head>
-		<meta charset="UTF-8">
-		<!--
-			This page lives one folder below the project root (docs/manual.html).
-			<base href="../"> means every relative URL below - and every
-			relative URL that nx-navbar/nx-sidebar insert dynamically - is
-			resolved against the project root, so we can write paths exactly
-			the same way index.html does ("styles/...", "img/...", etc.)
-			instead of hand-prefixing everything with "../". Any future page
-			nested one level deep (docs/api.html, download/windows.html, ...)
-			can copy this same line.
-		-->
-		<base href="../">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
-		<link rel="stylesheet" href="styles/base.css"/>
-		<link rel="stylesheet" href="styles/components.css"/>
-		<link rel="stylesheet" href="styles/responsive.css"/>
+		<link rel="stylesheet" href="/styles/base.css"/>
+		<link rel="stylesheet" href="/styles/components.css"/>
 
-		<!-- Applied early to avoid a light/dark flash on load -->
-		<script src="scripts/theme.js"></script>
+		<script src="/components/nex-navbar.js"></script>
+		<script src="/components/nex-footer.js"></script>
+		<script src="/components/nex-sidebar.js"></script>
 	</head>
 
 	<body>
-		<nx-navbar></nx-navbar>
+		<nex-navbar></nex-navbar>
 
-		<div class="page-with-sidebar">
-			<!-- This is a *second, independent instance* of <nx-sidebar> - same
-			     component/behaviour as any other, different content. Add as
-			     many nx-sidebar-node / nx-sidebar-leaf entries as the page needs. -->
-			<nx-sidebar label="User Manual">
-				<nx-sidebar-node label="Getting Started" icon="bi-rocket-takeoff" open>
-					<nx-sidebar-leaf label="Installation" href="docs/manual.html#installation"></nx-sidebar-leaf>
-					<nx-sidebar-leaf label="Quick Start" href="docs/manual.html#quick-start"></nx-sidebar-leaf>
-					<nx-sidebar-leaf label="Project Setup" href="docs/manual.html#project-setup"></nx-sidebar-leaf>
-				</nx-sidebar-node>
+		<main>
+			<div class="docs-layout">
+				<nex-sidebar label="User Manual">
+					<nex-node label="Getting Started" icon="bi-rocket-takeoff-fill" open>
+						<nex-leaf label="Installation" icon="bi-download" href="/docs/manual.html#installation"></nex-leaf>
+						<nex-leaf label="Quick Start" icon="bi-lightning-fill" href="/docs/manual.html#quick-start"></nex-leaf>
+					</nex-node>
 
-				<nx-sidebar-node label="Editor" icon="bi-window">
-					<nx-sidebar-leaf label="Scene Hierarchy" href="docs/manual.html#scene-hierarchy"></nx-sidebar-leaf>
-					<nx-sidebar-leaf label="Asset Browser" href="docs/manual.html#asset-browser"></nx-sidebar-leaf>
-					<nx-sidebar-node label="Inspector" icon="bi-sliders">
-						<nx-sidebar-leaf label="Components" href="docs/manual.html#components"></nx-sidebar-leaf>
-						<nx-sidebar-leaf label="Materials" href="docs/manual.html#materials"></nx-sidebar-leaf>
-					</nx-sidebar-node>
-				</nx-sidebar-node>
+					<nex-node label="Editor" icon="bi-joystick">
+						<nex-leaf label="Interface Overview" href="/docs/manual.html#editor-overview"></nex-leaf>
+						<nex-leaf label="Scene Hierarchy" href="/docs/manual.html#scene-hierarchy"></nex-leaf>
+						<nex-node label="Assets" icon="bi-box-seam">
+							<nex-leaf label="Importing Assets" href="/docs/manual.html#importing-assets"></nex-leaf>
+							<nex-leaf label="Static Typing" href="/docs/manual.html#static-typing"></nex-leaf>
+						</nex-node>
+					</nex-node>
 
-				<nx-sidebar-node label="Scripting" icon="bi-code-slash">
-					<nx-sidebar-leaf label="C++ Scripting" href="docs/manual.html#cpp-scripting"></nx-sidebar-leaf>
-					<nx-sidebar-leaf label="Neptune DSL" href="docs/manual.html#neptune-dsl"></nx-sidebar-leaf>
-					<nx-sidebar-leaf label="Visual Scripting" href="docs/manual.html#visual-scripting"></nx-sidebar-leaf>
-				</nx-sidebar-node>
+					<nex-leaf label="Networking" icon="bi-hdd-network-fill" href="/docs/manual.html#networking"></nex-leaf>
 
-				<nx-sidebar-node label="Networking" icon="bi-diagram-3">
-					<nx-sidebar-leaf label="Authoritative Server" href="docs/manual.html#authoritative-server"></nx-sidebar-leaf>
-					<nx-sidebar-leaf label="Entity Ownership" href="docs/manual.html#entity-ownership"></nx-sidebar-leaf>
-				</nx-sidebar-node>
+					<nex-node label="Package System" icon="bi-box-seam-fill">
+						<nex-leaf label="Installing Packages" href="/docs/manual.html#installing-packages"></nex-leaf>
+						<nex-leaf label="Publishing a Package" href="/docs/manual.html#publishing-a-package"></nex-leaf>
+					</nex-node>
 
-				<nx-sidebar-leaf label="FAQ" icon="bi-question-circle" href="docs/manual.html#faq"></nx-sidebar-leaf>
-			</nx-sidebar>
+					<nex-leaf label="API Reference" icon="bi-journal-code" href="/docs/api.html"></nex-leaf>
+				</nex-sidebar>
 
-			<main>
-				<div class="padded">
+				<div class="docs-content">
 					<h1>User Manual</h1>
-					<p>
-						This page is a working example of the sidebar component next to
-						page content - a second instance of <code>&lt;nx-sidebar&gt;</code>
-						with its own tree of nodes and leafs, reusing the exact same
-						navbar and footer as the home page.
-					</p>
-					<p>
-						Expand a section on the left to reveal its leafs, or shrink the
-						window to see the sidebar collapse into a drawer.
-					</p>
-				</div>
-			</main>
-		</div>
 
-		<nx-footer></nx-footer>
+					<h2 id="installation">Installation</h2>
+					<p>Download the Nexvane Editor for your platform from the Download menu and run the installer. Windows and Linux builds are both x64 and share the same project format.</p>
+
+					<h2 id="quick-start">Quick Start</h2>
+					<p>Create a new project from the launcher, pick a template, and open it in the editor. The editor watches your project folder and hot-reloads assets and Neptune scripts as you save them.</p>
+
+					<h2 id="editor-overview">Interface Overview</h2>
+					<p>The editor is split into a scene view, an inspector, and an asset browser. Panels can be rearranged and docked to match your workflow.</p>
+
+					<h2 id="scene-hierarchy">Scene Hierarchy</h2>
+					<p>Scenes are trees of entities, mirroring this sidebar's own node/leaf structure - parent entities can be expanded to reveal their children, and any entity can be selected directly.</p>
+
+					<h2 id="importing-assets">Importing Assets</h2>
+					<p>Drag files into the asset browser to import them. Nexvane generates a statically typed reference for every asset so missing or renamed files are caught at compile time rather than at runtime.</p>
+
+					<h2 id="static-typing">Static Typing</h2>
+					<p>Every asset reference used in C++ or Neptune code is checked against the project's asset manifest during the build step.</p>
+
+					<h2 id="networking">Networking</h2>
+					<p>Nexvane ships with an authoritative-server networking model and network entity ownership built in, so multiplayer projects don't need a third-party plugin.</p>
+
+					<h2 id="installing-packages">Installing Packages</h2>
+					<p>Packages can be installed from the official registry, a community source, or a local path, and may contain assets, scripts, or editor modules.</p>
+
+					<h2 id="publishing-a-package">Publishing a Package</h2>
+					<p>Run the package export command from the CLI to bundle your assets and scripts into a distributable package manifest.</p>
+				</div>
+			</div>
+		</main>
+
+		<nex-footer></nex-footer>
 	</body>
 
-	<script src="scripts/components/nx-navbar.js"></script>
-	<script src="scripts/components/nx-footer.js"></script>
-	<script src="scripts/components/nx-sidebar.js"></script>
+	<script src="/scripts/theme.js"></script>
 </html>

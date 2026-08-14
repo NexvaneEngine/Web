@@ -58,9 +58,6 @@ body {
 	font-style: normal;
 	font-variation-settings: "wdth" 100;
 }
-nx-navbar, nx-footer, nx-sidebar {
-	display: contents;
-}
 nav {
 	top: 0;
 	z-index: 10000;
@@ -68,31 +65,18 @@ nav {
 	background-color: var(--bg-surface);
 	display: flex;
 	flex-direction: row;
+	justify-content: flex-start;
 	user-select: none;
 }
-.nav-top {
+nav>div {
 	display: flex;
 	flex-direction: row;
 }
-.nav-hamburger {
+.nav-right {
+	margin-left: auto;
+}
+.nav-toggle {
 	display: none;
-	align-items: center;
-	justify-content: center;
-	padding: 0 var(--nav-button-padding);
-	cursor: pointer;
-}
-.nav-hamburger:hover {
-	background-color: var(--bg-hover);
-}
-.nav-links {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	flex: 1;
-}
-.nav-group {
-	display: flex;
-	flex-direction: row;
 }
 
 /* --- LOGO CROSSFADE ---
@@ -290,4 +274,82 @@ footer
 {
 	content: "-";
 	margin-right: 1rem;
+}
+
+/* ============================================================
+   RESPONSIVENESS
+   The design itself (colors, spacing scale, components) is left
+   as-is; these rules only change how it reflows on smaller
+   viewports.
+   ============================================================ */
+@media (max-width: 900px) {
+	nav {
+		flex-wrap: wrap;
+	}
+	.nav-bar-row {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		width: 100%;
+	}
+	.nav-toggle {
+		display: flex;
+	}
+	.nav-links,
+	.nav-right {
+		display: none;
+		flex-direction: column;
+		width: 100%;
+		margin-left: 0;
+	}
+	nav.nav-open .nav-links,
+	nav.nav-open .nav-right {
+		display: flex;
+	}
+	.dropdown-content {
+		display: none !important;
+		position: static;
+		box-shadow: none;
+		padding-left: 2.5rem;
+		min-width: 0;
+	}
+	.dropdown.dropdown-open .dropdown-content {
+		display: flex !important;
+	}
+
+	:root {
+		--content-pad: 1.5rem;
+		--padded-gap: 2rem;
+	}
+	.banner {
+		height: 50vh;
+	}
+	.banner-title {
+		font-size: 2.75rem;
+	}
+	.banner-subheading {
+		font-size: 1.25rem;
+	}
+	.card {
+		height: auto;
+	}
+	.card-top {
+		min-height: 220px;
+	}
+	h1 {
+		font-size: 1.85rem;
+	}
+}
+
+@media (max-width: 480px) {
+	:root {
+		--content-pad: 1rem;
+	}
+	.banner-title {
+		font-size: 2rem;
+	}
+	.banner-subheading {
+		font-size: 1rem;
+	}
 }
