@@ -81,7 +81,7 @@ nav {
 .nav-right > :first-child {
 	margin-left: auto;
 }
-.nav-hamburger {
+nav .nav-hamburger {
 	display: none;
 }
 
@@ -311,7 +311,7 @@ footer
 	.nav-topbar {
 		flex-direction: row;
 		justify-content: space-between;
-		align-items: center;
+		align-items: stretch;
 		width: 100%;
 		flex-shrink: 0;
 	}
@@ -338,7 +338,7 @@ footer
 	.nav-right > :first-child {
 		margin-left: 0;
 	}
-	.nav-hamburger {
+	nav .nav-hamburger {
 		display: flex;
 		background: none;
 		border: none;
@@ -347,6 +347,10 @@ footer
 		font: inherit;
 		font-size: 1.4rem;
 		appearance: none;
+	}
+	nav .nav-hamburger::-moz-focus-inner {
+		border: 0;
+		padding: 0;
 	}
 	/* Only the items inside the collapsible menu should become
 	   full-width stacked rows — the topbar's logo and hamburger stay
