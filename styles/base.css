@@ -340,21 +340,18 @@ footer
 	}
 	.nav-hamburger {
 		display: flex;
-		align-items: center;
-		justify-content: center;
 		background: none;
 		border: none;
-		color: var(--fg);
+		margin: 0;
+		color: inherit;
+		font: inherit;
 		font-size: 1.4rem;
-		font-family: inherit;
-		padding: 0 var(--nav-button-padding);
-		height: 100%;
-		cursor: pointer;
+		appearance: none;
 	}
-	.nav-hamburger:hover {
-		background-color: var(--bg-hover);
-	}
-	.nav-button {
+	/* Only the items inside the collapsible menu should become
+	   full-width stacked rows — the topbar's logo and hamburger stay
+	   their natural inline size. */
+	.nav-menu .nav-button {
 		width: 100%;
 		box-sizing: border-box;
 		padding-top: .9rem;
@@ -415,7 +412,12 @@ footer
 	.card {
 		flex: 0 1 min(100%, 320px);
 		box-sizing: border-box;
-		height: 60vh;
+		/* A fixed-height image row + an auto text row means the image
+		   is always the same size no matter how long the card's text
+		   is, and the card itself grows to fit the text instead of
+		   squeezing the image to make room for it. */
+		height: auto;
+		grid-template-rows: 190px auto;
 	}
 	.card-title {
 		font-size: 1.25rem;
@@ -446,7 +448,7 @@ footer
 		font-size: 1.05rem;
 	}
 	.card {
-		height: 55vh;
+		grid-template-rows: 160px auto;
 	}
 	h1 {
 		font-size: 1.6rem;
