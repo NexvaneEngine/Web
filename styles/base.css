@@ -73,6 +73,7 @@ nav {
    like direct flex children of <nav>, reproducing the original layout
    pixel-for-pixel. They only become real boxes on mobile (see media query). */
 .nav-topbar,
+.nav-menu,
 .nav-links,
 .nav-right {
 	display: contents;
@@ -302,6 +303,7 @@ footer
 		align-items: stretch;
 	}
 	.nav-topbar,
+	.nav-menu,
 	.nav-links,
 	.nav-right {
 		display: flex;
@@ -311,21 +313,30 @@ footer
 		justify-content: space-between;
 		align-items: center;
 		width: 100%;
+		flex-shrink: 0;
+	}
+	/* .nav-menu is the single collapsible/scrollable region below the
+	   always-visible topbar, so the hamburger stays reachable and no
+	   nav content can ever end up taller than the viewport with no way
+	   to reach it. */
+	.nav-menu {
+		flex-direction: column;
+		width: 100%;
+		max-height: 0;
+		overflow-y: hidden;
+		transition: max-height 0.25s ease;
+	}
+	nav.nav-open .nav-menu {
+		max-height: calc(100vh - 4.5rem);
+		overflow-y: auto;
 	}
 	.nav-links,
 	.nav-right {
 		flex-direction: column;
 		width: 100%;
-		max-height: 0;
-		overflow: hidden;
-		transition: max-height 0.25s ease;
 	}
 	.nav-right > :first-child {
 		margin-left: 0;
-	}
-	nav.nav-open .nav-links,
-	nav.nav-open .nav-right {
-		max-height: 1000px;
 	}
 	.nav-hamburger {
 		display: flex;
@@ -348,6 +359,9 @@ footer
 		box-sizing: border-box;
 		padding-top: .9rem;
 		padding-bottom: .9rem;
+		/* Let the dropdown-content (width 100%) drop onto its own line
+		   below the label instead of sitting beside it. */
+		flex-wrap: wrap;
 	}
 	/* Hover-triggered dropdowns don't work well on touch; disable hover
 	   opening on mobile and rely on the .open class toggled by nav.js */
@@ -364,6 +378,7 @@ footer
 		min-width: 0;
 		width: 100%;
 		background-color: var(--bg-hover);
+		margin-top: .5rem;
 	}
 	.dropdown-content a {
 		padding-left: calc(var(--nav-button-padding) * 2);
@@ -385,7 +400,13 @@ footer
 		font-size: 1.9rem;
 	}
 
-	/* --- CARDS --- */
+	/* --- CARDS ---
+	   A single column avoids the CSS Grid "orphan" case where a
+	   leftover card in an incomplete last row sits flush left instead
+	   of centered. */
+	.card-container {
+		grid-template-columns: 1fr;
+	}
 	.card {
 		height: 60vh;
 	}
@@ -394,16 +415,13 @@ footer
 		margin: .75rem 0;
 	}
 
-	/* --- FOOTER --- */
+	/* --- FOOTER ---
+	   Stays a horizontal row; it only wraps onto a second line if it
+	   truly can't fit, it never stacks fully vertical. */
 	.dashed-text-div {
-		flex-direction: column;
-		align-items: center;
-		gap: .35rem;
+		flex-wrap: wrap;
+		justify-content: center;
 		text-align: center;
-	}
-	.dashed-text-div > * + *::before {
-		content: none;
-		margin-right: 0;
 	}
 	footer {
 		padding: 1.5rem 0;
