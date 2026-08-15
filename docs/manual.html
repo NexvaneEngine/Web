@@ -1,0 +1,156 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+		<link rel="stylesheet" href="/styles/base.css"/>
+
+		<title>User Manual — Nexvane</title>
+	</head>
+
+	<body>
+		<nexvane-nav></nexvane-nav>
+
+		<div class="doc-layout">
+			<aside class="doc-sidebar">
+				<div class="doc-search">
+					<i class="bi bi-search"></i>
+					<input type="search" placeholder="Search the manual..." aria-label="Search the manual">
+				</div>
+
+				<nav class="doc-tree" aria-label="Manual sections">
+					<ul class="doc-tree-list">
+						<li>
+							<button class="nav-button doc-tree-toggle" aria-expanded="true">
+								<i class="bi bi-chevron-right doc-tree-chevron"></i>
+								<span>Getting Started</span>
+							</button>
+							<ul class="doc-tree-list">
+								<li><a class="nav-button doc-tree-leaf" href="#installation"><i class="bi bi-file-earmark-text"></i><span>Installation</span></a></li>
+								<li><a class="nav-button doc-tree-leaf" href="#quick-start"><i class="bi bi-file-earmark-text"></i><span>Quick Start</span></a></li>
+								<li><a class="nav-button doc-tree-leaf" href="#requirements"><i class="bi bi-file-earmark-text"></i><span>System Requirements</span></a></li>
+							</ul>
+						</li>
+
+						<li>
+							<button class="nav-button doc-tree-toggle" aria-expanded="true">
+								<i class="bi bi-chevron-right doc-tree-chevron"></i>
+								<span>Editor</span>
+							</button>
+							<ul class="doc-tree-list">
+								<li><a class="nav-button doc-tree-leaf" href="#scene-hierarchy"><i class="bi bi-file-earmark-text"></i><span>Scene Hierarchy</span></a></li>
+								<li><a class="nav-button doc-tree-leaf" href="#asset-pipeline"><i class="bi bi-file-earmark-text"></i><span>Asset Pipeline</span></a></li>
+							</ul>
+						</li>
+
+						<li>
+							<button class="nav-button doc-tree-toggle" aria-expanded="true">
+								<i class="bi bi-chevron-right doc-tree-chevron"></i>
+								<span>Scripting</span>
+							</button>
+							<ul class="doc-tree-list">
+								<li><a class="nav-button doc-tree-leaf" href="#cpp-scripting"><i class="bi bi-file-earmark-text"></i><span>C++ Scripting</span></a></li>
+								<li>
+									<button class="nav-button doc-tree-toggle" aria-expanded="false">
+										<i class="bi bi-chevron-right doc-tree-chevron"></i>
+										<span>Neptune</span>
+									</button>
+									<ul class="doc-tree-list" hidden>
+										<li><a class="nav-button doc-tree-leaf" href="#neptune-syntax"><i class="bi bi-file-earmark-text"></i><span>Syntax Basics</span></a></li>
+										<li><a class="nav-button doc-tree-leaf" href="#neptune-interop"><i class="bi bi-file-earmark-text"></i><span>Interop with C++</span></a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+
+						<li>
+							<button class="nav-button doc-tree-toggle" aria-expanded="false">
+								<i class="bi bi-chevron-right doc-tree-chevron"></i>
+								<span>Networking</span>
+							</button>
+							<ul class="doc-tree-list" hidden>
+								<li><a class="nav-button doc-tree-leaf" href="#auth-server"><i class="bi bi-file-earmark-text"></i><span>Authoritative Server</span></a></li>
+								<li><a class="nav-button doc-tree-leaf" href="#entity-ownership"><i class="bi bi-file-earmark-text"></i><span>Network Entity Ownership</span></a></li>
+							</ul>
+						</li>
+
+						<li><a class="nav-button doc-tree-leaf" href="#faq"><i class="bi bi-file-earmark-text"></i><span>FAQ</span></a></li>
+					</ul>
+				</nav>
+			</aside>
+
+			<div class="doc-main">
+				<main class="doc-content">
+					<h1>User Manual</h1>
+
+					<section id="installation">
+						<h1>Installation</h1>
+						<p class="card-text">Nexvane is available for Windows and Linux with a x64 architecture. Download the installer from the <a class="button" href="/download/windows.html">Downloads</a> page, or build it from source on any supported platform.</p>
+					</section>
+
+					<section id="quick-start">
+						<h1>Quick Start</h1>
+						<p class="card-text">Create a new project from the launcher, pick a template, and the editor opens straight into the scene view. From there you can drag assets in, wire up a scene hierarchy, and hit play to run your project directly inside the editor.</p>
+					</section>
+
+					<section id="requirements">
+						<h1>System Requirements</h1>
+						<p class="card-text">A x64 CPU, a GPU with modern graphics API support, and at least 8GB of RAM are recommended for a comfortable editing experience on larger projects.</p>
+					</section>
+
+					<section id="scene-hierarchy">
+						<h1>Scene Hierarchy</h1>
+						<p class="card-text">The editor's scene panel mirrors your project's object hierarchy in real time, including changes made while the project is running — reparent, rename, or duplicate objects without stopping playback.</p>
+					</section>
+
+					<section id="asset-pipeline">
+						<h1>Asset Pipeline</h1>
+						<p class="card-text">Assets are statically reflected into code, so a renamed or missing asset reference is caught at compile time instead of failing silently at runtime.</p>
+					</section>
+
+					<section id="cpp-scripting">
+						<h1>C++ Scripting</h1>
+						<p class="card-text">Nexvane exposes its engine APIs natively to C++, giving you full control over performance-critical systems without a scripting-layer overhead.</p>
+					</section>
+
+					<section id="neptune-syntax">
+						<h1>Neptune: Syntax Basics</h1>
+						<p class="card-text">Neptune is Nexvane's own DSL, designed to read close to C++ while trimming the boilerplate that gameplay scripting doesn't need day to day.</p>
+					</section>
+
+					<section id="neptune-interop">
+						<h1>Neptune: Interop with C++</h1>
+						<p class="card-text">Neptune scripts can call into C++ systems and vice versa, so you can prototype gameplay quickly in Neptune and drop down to C++ for the parts that need it.</p>
+					</section>
+
+					<section id="auth-server">
+						<h1>Authoritative Server</h1>
+						<p class="card-text">Multiplayer projects run on an authoritative-server model by default, so gameplay-critical decisions are validated server-side rather than trusted from clients.</p>
+					</section>
+
+					<section id="entity-ownership">
+						<h1>Network Entity Ownership</h1>
+						<p class="card-text">Every networked entity has a clearly defined owner, controlling who is allowed to replicate state changes for it across the network.</p>
+					</section>
+
+					<section id="faq">
+						<h1>FAQ</h1>
+						<p class="card-text">Can't find what you're looking for here? Check the <a class="button" href="/docs/api.html">API Reference</a> for lower-level details, or reach out through the community links in the footer.</p>
+					</section>
+				</main>
+
+				<nexvane-footer></nexvane-footer>
+			</div>
+		</div>
+	</body>
+
+	<script src="/scripts/components.js"></script>
+	<script src="/scripts/theme.js"></script>
+	<script src="/scripts/nav.js"></script>
+	<script src="/scripts/doc-tree.js"></script>
+</html>

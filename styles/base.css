@@ -31,6 +31,7 @@ body {
 	--card-border-radius: .5rem;
 	--button-padding: 1rem;
 	--button-border-radius: .6rem;
+	--nav-height: 4rem; /* corrected at runtime by nav.js to the real value */
 }
 :root[data-theme="light"] {
 	color-scheme: light;
@@ -291,6 +292,120 @@ footer
 }
 
 /* =========================================================
+   DOC LAYOUT (sidebar + content + footer)
+   A reusable two-column layout for docs-style pages: a
+   navbar-styled sidebar (search box + collapsible node/leaf
+   tree) sticks below the navbar and scrolls independently,
+   next to a content column that ends in the footer — the
+   footer sits under the content only, not full-bleed, and is
+   in normal document flow (not sticky).
+   ========================================================= */
+
+.doc-layout {
+	display: flex;
+	align-items: flex-start;
+}
+
+.doc-sidebar {
+	position: sticky;
+	top: var(--nav-height);
+	flex-shrink: 0;
+	width: 280px;
+	height: calc(100vh - var(--nav-height));
+	display: flex;
+	flex-direction: column;
+	background-color: var(--bg-surface);
+}
+
+.doc-search {
+	display: flex;
+	align-items: center;
+	gap: var(--nav-button-inside-gap);
+	padding: 0 var(--nav-button-padding);
+	height: 3.5rem;
+	flex-shrink: 0;
+	color: var(--fg-mute);
+}
+.doc-search input {
+	flex: 1;
+	min-width: 0;
+	background: none;
+	border: none;
+	outline: none;
+	color: var(--fg);
+	font: inherit;
+	font-size: .95rem;
+}
+.doc-search input::placeholder {
+	color: var(--fg-mute);
+}
+
+.doc-tree {
+	flex: 1;
+	overflow-y: auto;
+	padding: .5rem 0;
+}
+.doc-tree-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+/* Only nested lists indent — each level of nesting shifts its
+   own children further right, giving nodes/leafs indentation
+   proportional to depth. */
+.doc-tree-list .doc-tree-list {
+	padding-left: 1rem;
+}
+
+.doc-tree-toggle,
+.doc-tree-leaf {
+	width: 100%;
+	box-sizing: border-box;
+	padding-top: .55rem;
+	padding-bottom: .55rem;
+	font-size: .95rem;
+}
+.doc-tree-toggle {
+	background: none;
+	border: none;
+	font: inherit;
+	color: var(--fg);
+	text-align: left;
+}
+.doc-tree-leaf {
+	color: var(--fg);
+	text-decoration: none;
+}
+.doc-tree-leaf.active {
+	color: var(--bg-accent);
+	background-color: var(--bg-hover);
+}
+.doc-tree-chevron {
+	font-size: .75rem;
+	flex-shrink: 0;
+	transition: transform 0.15s ease;
+}
+.doc-tree-toggle[aria-expanded="true"] .doc-tree-chevron {
+	transform: rotate(90deg);
+}
+
+.doc-main {
+	flex: 1;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+}
+.doc-content {
+	display: flex;
+	flex-direction: column;
+	gap: var(--padded-gap);
+	padding: var(--content-pad);
+}
+.doc-content section {
+	scroll-margin-top: calc(var(--nav-height) + 1rem);
+}
+
+/* =========================================================
    RESPONSIVE / MOBILE OVERRIDES
    Everything above this point defines the desktop (and base)
    appearance and is left untouched. Everything below only
@@ -446,6 +561,24 @@ footer
 	}
 	footer {
 		padding: 1.5rem 0;
+	}
+
+	/* --- DOC LAYOUT ---
+	   The sticky/independently-scrolling sidebar only makes sense next
+	   to a wide content column. On mobile it stacks above the content
+	   as a normal (non-sticky) block instead, capped in height with
+	   its own scroll so a long tree doesn't push the content way down. */
+	.doc-layout {
+		flex-direction: column;
+	}
+	.doc-sidebar {
+		position: static;
+		width: 100%;
+		height: auto;
+		max-height: 50vh;
+	}
+	.doc-content {
+		padding: 1.25rem;
 	}
 }
 

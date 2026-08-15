@@ -66,6 +66,18 @@ if (nav && hamburger) {
 	mobileQuery.addEventListener('change', () => {
 		closeMenu();
 	});
+
+	// Expose the navbar's real rendered height as --nav-height so other
+	// page layouts (e.g. a sticky docs sidebar) can sit flush beneath it
+	// instead of hardcoding a guessed value. Kept live since the mobile
+	// nav's own height changes a lot between its closed/open states.
+	const setNavHeightVar = () => {
+		document.documentElement.style.setProperty('--nav-height', `${nav.offsetHeight}px`);
+	};
+	setNavHeightVar();
+	window.addEventListener('resize', setNavHeightVar);
+	mobileQuery.addEventListener('change', setNavHeightVar);
+	new MutationObserver(setNavHeightVar).observe(nav, { attributes: true, attributeFilter: ['class'] });
 } else {
 	console.warn('nav.js: #site-nav / #nav-hamburger not found — make sure <nexvane-nav> and scripts/components.js are on the page, loaded before scripts/nav.js.');
 }
