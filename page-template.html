@@ -1,0 +1,53 @@
+<!--
+	Starter template for new pages.
+
+	The nav and footer are defined ONCE in scripts/components.js — every
+	page just drops in <nexvane-nav></nexvane-nav> and
+	<nexvane-footer></nexvane-footer> and gets the exact same header/footer,
+	dark-mode toggle, and mobile hamburger menu behavior for free. To
+	change the nav or footer site-wide, edit scripts/components.js only.
+
+	Requirements for any new page:
+	  1. Link styles/base.css (shared layout/nav/footer/card styles).
+	  2. Include the three scripts at the end of <body>, in this order:
+	     components.js -> theme.js -> nav.js. (components.js must load
+	     first so the nav/footer markup exists before the other two
+	     scripts look for it.)
+	  3. Put <nexvane-nav></nexvane-nav> where the header should go, and
+	     <nexvane-footer></nexvane-footer> where the footer should go.
+
+	Copy this file, rename it, and replace the <main> content below.
+-->
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+		<link rel="stylesheet" href="/styles/base.css"/>
+		<!-- Add a page-specific stylesheet here if this page needs one,
+		     the same way index.html links styles/index.css. -->
+	</head>
+
+	<body>
+		<nexvane-nav></nexvane-nav>
+
+		<main>
+			<div class="padded">
+				<h1>Page title</h1>
+				<p>Page content goes here.</p>
+			</div>
+		</main>
+
+		<nexvane-footer></nexvane-footer>
+
+	</body>
+
+	<script src="/scripts/components.js"></script>
+	<script src="/scripts/theme.js"></script>
+	<script src="/scripts/nav.js"></script>
+</html>

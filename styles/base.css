@@ -58,6 +58,14 @@ body {
 	font-style: normal;
 	font-variation-settings: "wdth" 100;
 }
+/* Reusable <nexvane-nav>/<nexvane-footer> wrapper tags (see
+   scripts/components.js) should be invisible to layout — the real <nav>
+   and <footer> they render stay direct visual children of <body>. */
+nexvane-nav,
+nexvane-footer {
+	display: contents;
+}
+
 nav {
 	top: 0;
 	z-index: 10000;
