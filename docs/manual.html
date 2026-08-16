@@ -17,76 +17,12 @@
 		<nexvane-nav></nexvane-nav>
 
 		<div class="doc-layout">
-			<doc-sidebar id="manual-sidebar" search-placeholder="Search the manual..."></doc-sidebar>
+			<nexvane-sidebar id="manual-sidebar" search-placeholder="Search the manual..."></nexvane-sidebar>
 
 			<div class="doc-main">
 				<main class="doc-content">
 					<h1>User Manual</h1>
-
-					<section id="getting-started">
-						<h1>Getting Started</h1>
-						<p class="card-text">New to Nexvane? Start with installing the engine, then walk through the quick start below to get a project running end to end.</p>
-					</section>
-
-					<section id="installation">
-						<h1>Installation</h1>
-						<p class="card-text">Nexvane is available for Windows and Linux with a x64 architecture. Download the installer from the <a class="button" href="/download/windows.html">Downloads</a> page, or build it from source on any supported platform.</p>
-					</section>
-
-					<section id="quick-start">
-						<h1>Quick Start</h1>
-						<p class="card-text">Create a new project from the launcher, pick a template, and the editor opens straight into the scene view. From there you can drag assets in, wire up a scene hierarchy, and hit play to run your project directly inside the editor.</p>
-					</section>
-
-					<section id="requirements">
-						<h1>System Requirements</h1>
-						<p class="card-text">A x64 CPU, a GPU with modern graphics API support, and at least 8GB of RAM are recommended for a comfortable editing experience on larger projects.</p>
-					</section>
-
-					<section id="scene-hierarchy">
-						<h1>Scene Hierarchy</h1>
-						<p class="card-text">The editor's scene panel mirrors your project's object hierarchy in real time, including changes made while the project is running — reparent, rename, or duplicate objects without stopping playback.</p>
-					</section>
-
-					<section id="asset-pipeline">
-						<h1>Asset Pipeline</h1>
-						<p class="card-text">Assets are statically reflected into code, so a renamed or missing asset reference is caught at compile time instead of failing silently at runtime.</p>
-					</section>
-
-					<section id="scripting">
-						<h1>Scripting</h1>
-						<p class="card-text">Nexvane supports two ways to script gameplay: native C++ for performance-critical systems, or Neptune, Nexvane's own DSL, for faster iteration.</p>
-					</section>
-
-					<section id="cpp-scripting">
-						<h1>C++ Scripting</h1>
-						<p class="card-text">Nexvane exposes its engine APIs natively to C++, giving you full control over performance-critical systems without a scripting-layer overhead.</p>
-					</section>
-
-					<section id="neptune-syntax">
-						<h1>Neptune: Syntax Basics</h1>
-						<p class="card-text">Neptune is Nexvane's own DSL, designed to read close to C++ while trimming the boilerplate that gameplay scripting doesn't need day to day.</p>
-					</section>
-
-					<section id="neptune-interop">
-						<h1>Neptune: Interop with C++</h1>
-						<p class="card-text">Neptune scripts can call into C++ systems and vice versa, so you can prototype gameplay quickly in Neptune and drop down to C++ for the parts that need it.</p>
-					</section>
-
-					<section id="auth-server">
-						<h1>Authoritative Server</h1>
-						<p class="card-text">Multiplayer projects run on an authoritative-server model by default, so gameplay-critical decisions are validated server-side rather than trusted from clients.</p>
-					</section>
-
-					<section id="entity-ownership">
-						<h1>Network Entity Ownership</h1>
-						<p class="card-text">Every networked entity has a clearly defined owner, controlling who is allowed to replicate state changes for it across the network.</p>
-					</section>
-
-					<section id="faq">
-						<h1>FAQ</h1>
-						<p class="card-text">Can't find what you're looking for here? Check the <a class="button" href="/docs/api.html">API Reference</a> for lower-level details, or reach out through the community links in the footer.</p>
-					</section>
+					<p class="card-text">This page hosts the manual's sidebar — try the search box, or expand a section on the left. The sidebar's structure lives entirely in <code>scripts/sidebar-user-manual.js</code>; every node and leaf there links to its own page, most of which don't exist yet.</p>
 				</main>
 
 				<nexvane-footer></nexvane-footer>
@@ -97,76 +33,7 @@
 	<script src="/scripts/components.js"></script>
 	<script src="/scripts/theme.js"></script>
 	<script src="/scripts/nav.js"></script>
-	<script src="/scripts/doc-search.js"></script>
-	<script src="/scripts/doc-sidebar.js"></script>
-	<script>
-		document.getElementById('manual-sidebar').tree = [
-			{
-				title: 'Getting Started',
-				href: '#getting-started', // node AND link: label goes to the overview, chevron just toggles the list
-				expanded: true,
-				children: [
-					{ title: 'Installation', href: '#installation', description: 'Windows and Linux, x64.', keywords: ['setup', 'download', 'x64'] },
-					{ title: 'Quick Start', href: '#quick-start', description: 'Create a project and hit play.', keywords: ['tutorial', 'begin'] },
-					{ title: 'System Requirements', href: '#requirements', keywords: ['cpu', 'gpu', 'ram'] },
-				],
-			},
-			{
-				title: 'Editor',
-				expanded: true,
-				children: [
-					{ title: 'Scene Hierarchy', href: '#scene-hierarchy', keywords: ['objects', 'reparent'] },
-					{ title: 'Asset Pipeline', href: '#asset-pipeline', keywords: ['assets', 'import'] },
-				],
-			},
-			{
-				title: 'Scripting',
-				href: '#scripting', // another node+link example
-				expanded: true,
-				children: [
-					{ title: 'C++ Scripting', href: '#cpp-scripting', keywords: ['c++', 'native'] },
-					{
-						title: 'Neptune',
-						children: [
-							{ title: 'Syntax Basics', href: '#neptune-syntax', description: "Nexvane's own DSL.", keywords: ['dsl', 'language'] },
-							{ title: 'Interop with C++', href: '#neptune-interop', keywords: ['interop', 'c++'] },
-						],
-					},
-				],
-			},
-			{
-				title: 'Networking',
-				children: [
-					{ title: 'Authoritative Server', href: '#auth-server', keywords: ['multiplayer', 'server'] },
-					{ title: 'Network Entity Ownership', href: '#entity-ownership', keywords: ['multiplayer', 'ownership'] },
-				],
-			},
-			{ title: 'FAQ', href: '#faq' },
-		];
-
-		// Demo: pull in search entries for OTHER pages from a JSON file
-		// sitting next to this one (docs/manual.json), so searching here
-		// also suggests Downloads, the API Reference, etc. — not just
-		// this page's own sections. See scripts/doc-search.js for the
-		// DocSearch.index() shape.
-		//
-		// Note: fetch() needs an actual HTTP server (e.g. `python3 -m
-		// http.server`) — opening this file directly via file:// will
-		// have the browser block the request (CORS), so this part of
-		// the demo silently no-ops there; the tree's own sections stay
-		// searchable regardless, since those are indexed directly above.
-		fetch('/docs/manual.json')
-			.then((response) => response.json())
-			.then((pages) => {
-				window.DocSearch.index(pages.map((page) => ({
-					title: page.title,
-					href: page.href,
-					description: page.description,
-					keywords: page.keyphrases,
-				})));
-			})
-			.catch((error) => {
-				console.warn('manual.json search demo not loaded (needs a local server, not file://):', error);
-			});
-	</script>
+	<script src="/scripts/search.js"></script>
+	<script src="/scripts/sidebar.js"></script>
+	<script src="/scripts/sidebar-user-manual.js"></script>
 </html>

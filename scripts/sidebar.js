@@ -1,25 +1,25 @@
 /*
- * <doc-sidebar> — a reusable, data-driven docs sidebar: a search box
- * (wired to DocSearch, see scripts/doc-search.js) plus a collapsible
+ * <nexvane-sidebar> — a generic, reusable, data-driven sidebar: a search
+ * box (wired to SiteSearch, see scripts/search.js) plus a collapsible
  * tree of nodes and leafs, indented by depth and styled to match the
- * navbar. Write the structure once as plain data; the DOM/behavior is
- * generated from it, so nothing has to be hand-copied between pages.
+ * navbar. It has nothing docs-specific in it — any page can drop one in
+ * and feed it whatever tree it needs via its own small script (see e.g.
+ * scripts/sidebar-user-manual.js for the user manual page's tree).
  *
  * Usage:
- *   <doc-sidebar id="manual-sidebar" search-placeholder="Search the manual..."></doc-sidebar>
+ *   <nexvane-sidebar id="my-sidebar" search-placeholder="Search..."></nexvane-sidebar>
  *   <script>
- *     document.getElementById('manual-sidebar').tree = [
+ *     document.getElementById('my-sidebar').tree = [
  *       {
  *         title: 'Getting Started',
  *         href: '/docs/getting-started.html',   // optional — see below
  *         description: 'Install and get running.', // optional, used by search
  *         keywords: ['setup', 'install'],           // optional, used by search
  *         children: [
- *           { title: 'Installation', href: '#installation' },
- *           { title: 'Quick Start', href: '#quick-start' },
+ *           { title: 'Installation', href: '/docs/installation.html' },
  *         ],
  *       },
- *       { title: 'FAQ', href: '#faq' }, // no children => rendered as a leaf
+ *       { title: 'FAQ', href: '/faq.html' }, // no children => rendered as a leaf
  *     ];
  *   </script>
  *
@@ -32,30 +32,30 @@
  *        label also toggles (the whole row is one hit target).
  *  - `expanded: true` starts that node open (default: closed).
  *
- * Any entry with an `href` gets registered with DocSearch automatically,
- * so this page's own tree is searchable with no extra wiring. Load
- * scripts/doc-search.js before this file.
+ * Any entry with an `href` gets registered with SiteSearch automatically,
+ * so this sidebar's own tree is searchable with no extra wiring. Load
+ * scripts/search.js before this file.
  */
-class DocSidebar extends HTMLElement {
+class NexvaneSidebar extends HTMLElement {
 	connectedCallback() {
 		if (this._built) return;
 		this._built = true;
-		this.classList.add('doc-sidebar');
+		this.classList.add('sidebar');
+		this.setAttribute('role', 'complementary');
 
 		const placeholder = this.getAttribute('search-placeholder') || 'Search...';
-		this.setAttribute('role', 'complementary');
 		this.innerHTML = `
-			<div class="doc-search">
+			<div class="sidebar-search">
 				<i class="bi bi-search"></i>
 				<input type="search" placeholder="${placeholder}" aria-label="${placeholder}">
 			</div>
-			<div class="doc-tree" role="navigation" aria-label="Sections"></div>
+			<div class="sidebar-tree" role="navigation" aria-label="Sections"></div>
 		`;
 
-		this._treeEl = this.querySelector('.doc-tree');
+		this._treeEl = this.querySelector('.sidebar-tree');
 
-		if (window.DocSearch) {
-			window.DocSearch.attach(this.querySelector('.doc-search input'));
+		if (window.SiteSearch) {
+			window.SiteSearch.attach(this.querySelector('.sidebar-search input'));
 		}
 
 		window.addEventListener('hashchange', () => this._highlightActive());
@@ -85,17 +85,17 @@ class DocSidebar extends HTMLElement {
 
 	_buildList(entries) {
 		const ul = document.createElement('ul');
-		ul.className = 'doc-tree-list';
+		ul.className = 'sidebar-tree-list';
 		entries.forEach((entry) => ul.appendChild(this._buildItem(entry)));
 		return ul;
 	}
 
 	_buildItem(entry) {
 		const li = document.createElement('li');
-		li.className = 'doc-tree-item';
+		li.className = 'sidebar-tree-item';
 
 		const row = document.createElement('div');
-		row.className = 'doc-tree-row';
+		row.className = 'sidebar-tree-row';
 		li.appendChild(row);
 
 		const hasChildren = Array.isArray(entry.children) && entry.children.length > 0;
@@ -104,10 +104,10 @@ class DocSidebar extends HTMLElement {
 		if (hasChildren) {
 			chevronBtn = document.createElement('button');
 			chevronBtn.type = 'button';
-			chevronBtn.className = 'doc-tree-chevron-hit';
+			chevronBtn.className = 'sidebar-tree-chevron-hit';
 			chevronBtn.setAttribute('aria-label', `Toggle ${entry.title}`);
 			chevronBtn.setAttribute('aria-expanded', entry.expanded ? 'true' : 'false');
-			chevronBtn.innerHTML = '<i class="bi bi-chevron-right doc-tree-chevron"></i>';
+			chevronBtn.innerHTML = '<i class="bi bi-chevron-right sidebar-tree-chevron"></i>';
 			row.appendChild(chevronBtn);
 		} else {
 			// Rows without a chevron still reserve its width, so every
@@ -116,7 +116,7 @@ class DocSidebar extends HTMLElement {
 			// parent node's label (which has one), making a child look
 			// less indented than its parent instead of more.
 			const spacer = document.createElement('span');
-			spacer.className = 'doc-tree-spacer';
+			spacer.className = 'sidebar-tree-spacer';
 			spacer.setAttribute('aria-hidden', 'true');
 			row.appendChild(spacer);
 		}
@@ -127,9 +127,9 @@ class DocSidebar extends HTMLElement {
 		} else {
 			label.type = 'button';
 		}
-		label.className = 'doc-tree-link' + (hasChildren ? '' : ' doc-tree-leaf');
+		label.className = 'sidebar-tree-link' + (hasChildren ? '' : ' sidebar-tree-leaf');
 		const icon = document.createElement('i');
-		icon.className = `bi ${hasChildren ? 'bi-folder2' : 'bi-file-earmark-text'} doc-tree-icon`;
+		icon.className = `bi ${hasChildren ? 'bi-folder2' : 'bi-file-earmark-text'} sidebar-tree-icon`;
 		const text = document.createElement('span');
 		text.textContent = entry.title;
 		label.appendChild(icon);
@@ -158,8 +158,8 @@ class DocSidebar extends HTMLElement {
 			}
 		}
 
-		if (entry.href && window.DocSearch) {
-			window.DocSearch.index([{
+		if (entry.href && window.SiteSearch) {
+			window.SiteSearch.index([{
 				title: entry.title,
 				href: entry.href,
 				description: entry.description,
@@ -172,10 +172,10 @@ class DocSidebar extends HTMLElement {
 
 	_highlightActive() {
 		const hash = window.location.hash;
-		this.querySelectorAll('.doc-tree-leaf').forEach((leaf) => {
+		this.querySelectorAll('.sidebar-tree-leaf').forEach((leaf) => {
 			leaf.classList.toggle('active', hash !== '' && leaf.getAttribute('href') === hash);
 		});
 	}
 }
 
-customElements.define('doc-sidebar', DocSidebar);
+customElements.define('nexvane-sidebar', NexvaneSidebar);

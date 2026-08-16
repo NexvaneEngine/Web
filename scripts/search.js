@@ -1,36 +1,37 @@
 /*
- * Small, dependency-free search index for docs pages.
+ * Small, dependency-free search index. Not tied to docs pages — anything
+ * with a title and a URL can be indexed here.
  *
- * DocSearch.index([entry, ...])
+ * SiteSearch.index([entry, ...])
  *   Register entries. Each entry: { title, href, description?, keywords? }.
  *   Entries are deduplicated by href — indexing the same href again just
  *   replaces the earlier entry, so it's safe to call this repeatedly
- *   (e.g. once per page, or once per fetched lang.json).
+ *   (e.g. once per page, or once per fetched JSON file).
  *
- * DocSearch.search(query, limit = 8)
+ * SiteSearch.search(query, limit = 8)
  *   Returns matching entries, best match first. Title matches score
  *   highest, then keyword matches, then description matches.
  *
- * DocSearch.attach(inputEl, { limit, container, onSelect })
+ * SiteSearch.attach(inputEl, { limit, container, onSelect })
  *   Wires a text input to a live suggestions dropdown: renders results as
  *   the user types, closes on outside click / Escape, and lets you hook
  *   selection (e.g. to close a mobile menu) via onSelect(entry, event).
  *
- * DocSearch.clear()
+ * SiteSearch.clear()
  *   Empties the index (rarely needed — mostly for tests/hot-reload).
  *
- * <doc-sidebar> (scripts/doc-sidebar.js) already indexes its own tree
+ * <nexvane-sidebar> (scripts/sidebar.js) already indexes its own tree
  * automatically and calls attach() on its own search box. Use
- * DocSearch.index() directly to add entries from elsewhere, e.g. your
- * own lang.json files:
+ * SiteSearch.index() directly to add entries from elsewhere, e.g. a
+ * page's own JSON file of related pages:
  *
- *   fetch('/docs/manual.lang.json')
+ *   fetch('/docs/manual.json')
  *     .then((r) => r.json())
- *     .then((pages) => DocSearch.index(pages.map((p) => ({
+ *     .then((pages) => SiteSearch.index(pages.map((p) => ({
  *       title: p.title,
- *       href: p.url,
- *       description: p.summary,
- *       keywords: p.tags,
+ *       href: p.href,
+ *       description: p.description,
+ *       keywords: p.keyphrases,
  *     }))));
  */
 (function () {
@@ -86,10 +87,10 @@
 		if (!input) return;
 		const opts = options || {};
 		const limit = opts.limit || 8;
-		const container = opts.container || input.closest('.doc-search') || input.parentElement;
+		const container = opts.container || input.closest('.sidebar-search') || input.parentElement;
 
 		const results = document.createElement('div');
-		results.className = 'doc-search-results';
+		results.className = 'sidebar-search-results';
 		results.hidden = true;
 		container.appendChild(results);
 
@@ -101,17 +102,17 @@
 			}
 			list.forEach((item) => {
 				const a = document.createElement('a');
-				a.className = 'doc-search-result';
+				a.className = 'sidebar-search-result';
 				a.href = item.href;
 
 				const title = document.createElement('span');
-				title.className = 'doc-search-result-title';
+				title.className = 'sidebar-search-result-title';
 				title.textContent = item.title;
 				a.appendChild(title);
 
 				if (item.description) {
 					const desc = document.createElement('span');
-					desc.className = 'doc-search-result-desc';
+					desc.className = 'sidebar-search-result-desc';
 					desc.textContent = item.description;
 					a.appendChild(desc);
 				}
@@ -144,5 +145,5 @@
 		});
 	}
 
-	window.DocSearch = { index, search, clear, attach };
+	window.SiteSearch = { index, search, clear, attach };
 })();
