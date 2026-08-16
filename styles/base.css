@@ -318,6 +318,7 @@ footer
 }
 
 .doc-search {
+	position: relative;
 	display: flex;
 	align-items: center;
 	gap: var(--nav-button-inside-gap);
@@ -339,12 +340,61 @@ footer
 .doc-search input::placeholder {
 	color: var(--fg-mute);
 }
+/* Suggestions float below the search box instead of pushing the tree
+   down, so results can come from any registered DocSearch entries —
+   not just this page's own tree. */
+.doc-search-results {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	right: 0;
+	z-index: 20;
+	background-color: var(--bg-elevated);
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+	max-height: 60vh;
+	overflow-y: auto;
+}
+.doc-search-result {
+	display: flex;
+	flex-direction: column;
+	gap: .15rem;
+	padding: .6rem var(--nav-button-padding);
+	color: var(--fg);
+	text-decoration: none;
+}
+.doc-search-result:hover {
+	background-color: var(--bg-hover);
+}
+.doc-search-result-title {
+	font-size: .9rem;
+}
+.doc-search-result-desc {
+	font-size: .8rem;
+	color: var(--fg-mute);
+}
 
 .doc-tree {
 	flex: 1;
 	overflow-y: auto;
 	padding: .5rem 0;
+	/* Reserve the scrollbar's own space up front (rather than only once
+	   the tree is tall enough to need it) so rows never have to resize
+	   or sit flush against a track that just popped in. */
+	scrollbar-gutter: stable;
+	scrollbar-width: thin;
+	scrollbar-color: var(--bg-hover) transparent;
 }
+.doc-tree::-webkit-scrollbar {
+	width: 8px;
+}
+.doc-tree::-webkit-scrollbar-track {
+	background: transparent;
+}
+.doc-tree::-webkit-scrollbar-thumb {
+	background-color: var(--bg-hover);
+	border-radius: 4px;
+}
+
 .doc-tree-list {
 	list-style: none;
 	margin: 0;
@@ -357,36 +407,65 @@ footer
 	padding-left: 1rem;
 }
 
-.doc-tree-toggle,
-.doc-tree-leaf {
+/* Each row is chevron-hit (toggle) + link (navigate), side by side, so
+   a node can both expand/collapse AND go to its own page — the chevron
+   is a small dedicated hit target, the label is the rest of the row.
+   Hover is on the row so either half lights up the whole row. */
+.doc-tree-row {
+	display: flex;
+	align-items: stretch;
 	width: 100%;
-	box-sizing: border-box;
-	padding-top: .55rem;
-	padding-bottom: .55rem;
-	font-size: .95rem;
 }
-.doc-tree-toggle {
+.doc-tree-row:hover {
+	background-color: var(--bg-hover);
+}
+.doc-tree-chevron-hit {
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 2rem;
+	background: none;
+	border: none;
+	color: var(--fg-mute);
+	cursor: pointer;
+}
+.doc-tree-chevron {
+	font-size: .7rem;
+	transition: transform 0.15s ease;
+}
+.doc-tree-chevron-hit[aria-expanded="true"] .doc-tree-chevron {
+	transform: rotate(90deg);
+}
+.doc-tree-link {
+	flex: 1;
+	min-width: 0;
+	display: flex;
+	align-items: center;
+	gap: var(--nav-button-inside-gap);
+	padding: .55rem var(--nav-button-padding) .55rem .25rem;
+	color: var(--fg);
+	text-decoration: none;
 	background: none;
 	border: none;
 	font: inherit;
-	color: var(--fg);
+	font-size: .95rem;
 	text-align: left;
+	cursor: pointer;
 }
-.doc-tree-leaf {
-	color: var(--fg);
-	text-decoration: none;
-}
-.doc-tree-leaf.active {
-	color: var(--bg-accent);
-	background-color: var(--bg-hover);
-}
-.doc-tree-chevron {
-	font-size: .75rem;
+.doc-tree-icon {
 	flex-shrink: 0;
-	transition: transform 0.15s ease;
+	font-size: .9rem;
+	color: var(--fg-mute);
 }
-.doc-tree-toggle[aria-expanded="true"] .doc-tree-chevron {
-	transform: rotate(90deg);
+/* Leafs have no chevron sibling, so the link is the row's only flex
+   child — its own background fills the whole row. */
+.doc-tree-leaf.active {
+	background-color: var(--bg-hover);
+	color: var(--bg-accent);
+}
+.doc-tree-leaf.active .doc-tree-icon {
+	color: var(--bg-accent);
 }
 
 .doc-main {

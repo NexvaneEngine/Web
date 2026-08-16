@@ -17,72 +17,7 @@
 		<nexvane-nav></nexvane-nav>
 
 		<div class="doc-layout">
-			<aside class="doc-sidebar">
-				<div class="doc-search">
-					<i class="bi bi-search"></i>
-					<input type="search" placeholder="Search the manual..." aria-label="Search the manual">
-				</div>
-
-				<nav class="doc-tree" aria-label="Manual sections">
-					<ul class="doc-tree-list">
-						<li>
-							<button class="nav-button doc-tree-toggle" aria-expanded="true">
-								<i class="bi bi-chevron-right doc-tree-chevron"></i>
-								<span>Getting Started</span>
-							</button>
-							<ul class="doc-tree-list">
-								<li><a class="nav-button doc-tree-leaf" href="#installation"><i class="bi bi-file-earmark-text"></i><span>Installation</span></a></li>
-								<li><a class="nav-button doc-tree-leaf" href="#quick-start"><i class="bi bi-file-earmark-text"></i><span>Quick Start</span></a></li>
-								<li><a class="nav-button doc-tree-leaf" href="#requirements"><i class="bi bi-file-earmark-text"></i><span>System Requirements</span></a></li>
-							</ul>
-						</li>
-
-						<li>
-							<button class="nav-button doc-tree-toggle" aria-expanded="true">
-								<i class="bi bi-chevron-right doc-tree-chevron"></i>
-								<span>Editor</span>
-							</button>
-							<ul class="doc-tree-list">
-								<li><a class="nav-button doc-tree-leaf" href="#scene-hierarchy"><i class="bi bi-file-earmark-text"></i><span>Scene Hierarchy</span></a></li>
-								<li><a class="nav-button doc-tree-leaf" href="#asset-pipeline"><i class="bi bi-file-earmark-text"></i><span>Asset Pipeline</span></a></li>
-							</ul>
-						</li>
-
-						<li>
-							<button class="nav-button doc-tree-toggle" aria-expanded="true">
-								<i class="bi bi-chevron-right doc-tree-chevron"></i>
-								<span>Scripting</span>
-							</button>
-							<ul class="doc-tree-list">
-								<li><a class="nav-button doc-tree-leaf" href="#cpp-scripting"><i class="bi bi-file-earmark-text"></i><span>C++ Scripting</span></a></li>
-								<li>
-									<button class="nav-button doc-tree-toggle" aria-expanded="false">
-										<i class="bi bi-chevron-right doc-tree-chevron"></i>
-										<span>Neptune</span>
-									</button>
-									<ul class="doc-tree-list" hidden>
-										<li><a class="nav-button doc-tree-leaf" href="#neptune-syntax"><i class="bi bi-file-earmark-text"></i><span>Syntax Basics</span></a></li>
-										<li><a class="nav-button doc-tree-leaf" href="#neptune-interop"><i class="bi bi-file-earmark-text"></i><span>Interop with C++</span></a></li>
-									</ul>
-								</li>
-							</ul>
-						</li>
-
-						<li>
-							<button class="nav-button doc-tree-toggle" aria-expanded="false">
-								<i class="bi bi-chevron-right doc-tree-chevron"></i>
-								<span>Networking</span>
-							</button>
-							<ul class="doc-tree-list" hidden>
-								<li><a class="nav-button doc-tree-leaf" href="#auth-server"><i class="bi bi-file-earmark-text"></i><span>Authoritative Server</span></a></li>
-								<li><a class="nav-button doc-tree-leaf" href="#entity-ownership"><i class="bi bi-file-earmark-text"></i><span>Network Entity Ownership</span></a></li>
-							</ul>
-						</li>
-
-						<li><a class="nav-button doc-tree-leaf" href="#faq"><i class="bi bi-file-earmark-text"></i><span>FAQ</span></a></li>
-					</ul>
-				</nav>
-			</aside>
+			<doc-sidebar id="manual-sidebar" search-placeholder="Search the manual..."></doc-sidebar>
 
 			<div class="doc-main">
 				<main class="doc-content">
@@ -152,5 +87,49 @@
 	<script src="/scripts/components.js"></script>
 	<script src="/scripts/theme.js"></script>
 	<script src="/scripts/nav.js"></script>
-	<script src="/scripts/doc-tree.js"></script>
+	<script src="/scripts/doc-search.js"></script>
+	<script src="/scripts/doc-sidebar.js"></script>
+	<script>
+		document.getElementById('manual-sidebar').tree = [
+			{
+				title: 'Getting Started',
+				expanded: true,
+				children: [
+					{ title: 'Installation', href: '#installation', description: 'Windows and Linux, x64.', keywords: ['setup', 'download', 'x64'] },
+					{ title: 'Quick Start', href: '#quick-start', description: 'Create a project and hit play.', keywords: ['tutorial', 'begin'] },
+					{ title: 'System Requirements', href: '#requirements', keywords: ['cpu', 'gpu', 'ram'] },
+				],
+			},
+			{
+				title: 'Editor',
+				expanded: true,
+				children: [
+					{ title: 'Scene Hierarchy', href: '#scene-hierarchy', keywords: ['objects', 'reparent'] },
+					{ title: 'Asset Pipeline', href: '#asset-pipeline', keywords: ['assets', 'import'] },
+				],
+			},
+			{
+				title: 'Scripting',
+				expanded: true,
+				children: [
+					{ title: 'C++ Scripting', href: '#cpp-scripting', keywords: ['c++', 'native'] },
+					{
+						title: 'Neptune',
+						children: [
+							{ title: 'Syntax Basics', href: '#neptune-syntax', description: "Nexvane's own DSL.", keywords: ['dsl', 'language'] },
+							{ title: 'Interop with C++', href: '#neptune-interop', keywords: ['interop', 'c++'] },
+						],
+					},
+				],
+			},
+			{
+				title: 'Networking',
+				children: [
+					{ title: 'Authoritative Server', href: '#auth-server', keywords: ['multiplayer', 'server'] },
+					{ title: 'Network Entity Ownership', href: '#entity-ownership', keywords: ['multiplayer', 'ownership'] },
+				],
+			},
+			{ title: 'FAQ', href: '#faq' },
+		];
+	</script>
 </html>
