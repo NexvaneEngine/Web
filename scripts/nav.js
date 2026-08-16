@@ -55,7 +55,7 @@ if (nav && hamburger) {
 		}
 	});
 
-	document.querySelectorAll('nav a').forEach((link) => {
+	nav.querySelectorAll('a').forEach((link) => {
 		link.addEventListener('click', () => {
 			if (isMobile()) {
 				closeMenu();

@@ -43,12 +43,13 @@ class DocSidebar extends HTMLElement {
 		this.classList.add('doc-sidebar');
 
 		const placeholder = this.getAttribute('search-placeholder') || 'Search...';
+		this.setAttribute('role', 'complementary');
 		this.innerHTML = `
 			<div class="doc-search">
 				<i class="bi bi-search"></i>
 				<input type="search" placeholder="${placeholder}" aria-label="${placeholder}">
 			</div>
-			<nav class="doc-tree" aria-label="Sections"></nav>
+			<div class="doc-tree" role="navigation" aria-label="Sections"></div>
 		`;
 
 		this._treeEl = this.querySelector('.doc-tree');
@@ -108,6 +109,16 @@ class DocSidebar extends HTMLElement {
 			chevronBtn.setAttribute('aria-expanded', entry.expanded ? 'true' : 'false');
 			chevronBtn.innerHTML = '<i class="bi bi-chevron-right doc-tree-chevron"></i>';
 			row.appendChild(chevronBtn);
+		} else {
+			// Rows without a chevron still reserve its width, so every
+			// row's icon/label lines up at the same offset — otherwise a
+			// leaf's label (no chevron) sits further left than its own
+			// parent node's label (which has one), making a child look
+			// less indented than its parent instead of more.
+			const spacer = document.createElement('span');
+			spacer.className = 'doc-tree-spacer';
+			spacer.setAttribute('aria-hidden', 'true');
+			row.appendChild(spacer);
 		}
 
 		const label = document.createElement(entry.href ? 'a' : 'button');

@@ -23,6 +23,11 @@
 				<main class="doc-content">
 					<h1>User Manual</h1>
 
+					<section id="getting-started">
+						<h1>Getting Started</h1>
+						<p class="card-text">New to Nexvane? Start with installing the engine, then walk through the quick start below to get a project running end to end.</p>
+					</section>
+
 					<section id="installation">
 						<h1>Installation</h1>
 						<p class="card-text">Nexvane is available for Windows and Linux with a x64 architecture. Download the installer from the <a class="button" href="/download/windows.html">Downloads</a> page, or build it from source on any supported platform.</p>
@@ -46,6 +51,11 @@
 					<section id="asset-pipeline">
 						<h1>Asset Pipeline</h1>
 						<p class="card-text">Assets are statically reflected into code, so a renamed or missing asset reference is caught at compile time instead of failing silently at runtime.</p>
+					</section>
+
+					<section id="scripting">
+						<h1>Scripting</h1>
+						<p class="card-text">Nexvane supports two ways to script gameplay: native C++ for performance-critical systems, or Neptune, Nexvane's own DSL, for faster iteration.</p>
 					</section>
 
 					<section id="cpp-scripting">
@@ -93,6 +103,7 @@
 		document.getElementById('manual-sidebar').tree = [
 			{
 				title: 'Getting Started',
+				href: '#getting-started', // node AND link: label goes to the overview, chevron just toggles the list
 				expanded: true,
 				children: [
 					{ title: 'Installation', href: '#installation', description: 'Windows and Linux, x64.', keywords: ['setup', 'download', 'x64'] },
@@ -110,6 +121,7 @@
 			},
 			{
 				title: 'Scripting',
+				href: '#scripting', // another node+link example
 				expanded: true,
 				children: [
 					{ title: 'C++ Scripting', href: '#cpp-scripting', keywords: ['c++', 'native'] },
@@ -131,5 +143,30 @@
 			},
 			{ title: 'FAQ', href: '#faq' },
 		];
+
+		// Demo: pull in search entries for OTHER pages from a JSON file
+		// sitting next to this one (docs/manual.json), so searching here
+		// also suggests Downloads, the API Reference, etc. — not just
+		// this page's own sections. See scripts/doc-search.js for the
+		// DocSearch.index() shape.
+		//
+		// Note: fetch() needs an actual HTTP server (e.g. `python3 -m
+		// http.server`) — opening this file directly via file:// will
+		// have the browser block the request (CORS), so this part of
+		// the demo silently no-ops there; the tree's own sections stay
+		// searchable regardless, since those are indexed directly above.
+		fetch('/docs/manual.json')
+			.then((response) => response.json())
+			.then((pages) => {
+				window.DocSearch.index(pages.map((page) => ({
+					title: page.title,
+					href: page.href,
+					description: page.description,
+					keywords: page.keyphrases,
+				})));
+			})
+			.catch((error) => {
+				console.warn('manual.json search demo not loaded (needs a local server, not file://):', error);
+			});
 	</script>
 </html>

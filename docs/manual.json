@@ -1,0 +1,44 @@
+[
+	{
+		"title": "Windows Download",
+		"href": "/download/windows.html",
+		"description": "Download Nexvane for Windows 10 and 11, x64 architecture.",
+		"keyphrases": ["windows", "download", "installer", "x64", "win10", "win11"]
+	},
+	{
+		"title": "Linux Download",
+		"href": "/download/linux.html",
+		"description": "Download Nexvane for Linux, x64. Compatible with Arch, Fedora and Debian.",
+		"keyphrases": ["linux", "download", "arch", "fedora", "debian", "x64"]
+	},
+	{
+		"title": "Source Code",
+		"href": "/download/source.html",
+		"description": "Download Nexvane's source code, hosted on GitHub.",
+		"keyphrases": ["source", "github", "build from source", "git"]
+	},
+	{
+		"title": "API Reference",
+		"href": "/docs/api.html",
+		"description": "Nexvane's technical API documentation and systems overview.",
+		"keyphrases": ["api", "reference", "systems", "technical docs"]
+	},
+	{
+		"title": "About Nexvane",
+		"href": "/about/engine.html",
+		"description": "Learn more about the Nexvane engine.",
+		"keyphrases": ["about", "engine", "nexvane", "overview"]
+	},
+	{
+		"title": "Fotosop",
+		"href": "/about/fotosop.html",
+		"description": "About Fotosop.",
+		"keyphrases": ["fotosop", "company", "about"]
+	},
+	{
+		"title": "Acrux",
+		"href": "/about/acrux.html",
+		"description": "About Acrux.",
+		"keyphrases": ["acrux", "company", "about"]
+	}
+]
