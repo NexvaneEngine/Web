@@ -1,0 +1,26 @@
+{
+	"lang": {
+		"en": {
+			"page-meta": {
+				"title": "Quick Start",
+				"description": "Create a project and hit play — a fast walkthrough of your first Nexvane project.",
+				"keyphrases": [
+					"quick start",
+					"tutorial",
+					"getting started"
+				]
+			}
+		},
+		"es": {
+			"page-meta": {
+				"title": "Inicio Rápido",
+				"description": "Crea un proyecto y presiona play — un recorrido rápido por tu primer proyecto en Nexvane.",
+				"keyphrases": [
+					"inicio rápido",
+					"tutorial",
+					"primeros pasos"
+				]
+			}
+		}
+	}
+}

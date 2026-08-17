@@ -1,0 +1,30 @@
+{
+	"lang": {
+		"en": {
+			"page-meta": {
+				"title": "Download for Linux",
+				"description": "Download Nexvane for Linux, x64. Compatible with Arch, Fedora and Debian.",
+				"keyphrases": [
+					"linux",
+					"download",
+					"arch",
+					"fedora",
+					"debian"
+				]
+			}
+		},
+		"es": {
+			"page-meta": {
+				"title": "Descargar para Linux",
+				"description": "Descarga Nexvane para Linux, x64. Compatible con Arch, Fedora y Debian.",
+				"keyphrases": [
+					"linux",
+					"descargar",
+					"arch",
+					"fedora",
+					"debian"
+				]
+			}
+		}
+	}
+}

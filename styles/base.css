@@ -474,13 +474,20 @@ footer
 	font-size: .85rem;
 	color: var(--fg-mute);
 }
-/* Leafs have no chevron sibling (just the spacer), so the link is the
-   row's only flex child — its own background fills the whole row. */
-.sidebar-tree-leaf.active {
+/* The exact page you're on: full row highlight (covers the chevron too,
+   when there is one — a leaf's link is the row's only child anyway, so
+   this still just colors that one element for leafs). */
+.sidebar-tree-row.active {
 	background-color: var(--bg-hover);
+}
+.sidebar-tree-row.active .sidebar-tree-link,
+.sidebar-tree-row.active .sidebar-tree-icon {
 	color: var(--bg-accent);
 }
-.sidebar-tree-leaf.active .sidebar-tree-icon {
+/* A section that CONTAINS the active page: a lighter touch (just the
+   icon), so you can see which part of the tree you're in without it
+   competing with the one row that's actually "you are here". */
+.sidebar-tree-row.ancestor-active > .sidebar-tree-link > .sidebar-tree-icon {
 	color: var(--bg-accent);
 }
 

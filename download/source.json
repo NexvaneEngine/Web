@@ -1,0 +1,26 @@
+{
+	"lang": {
+		"en": {
+			"page-meta": {
+				"title": "Download Source Code",
+				"description": "Download Nexvane's source code, hosted on GitHub.",
+				"keyphrases": [
+					"source",
+					"github",
+					"build from source"
+				]
+			}
+		},
+		"es": {
+			"page-meta": {
+				"title": "Descargar Código Fuente",
+				"description": "Descarga el código fuente de Nexvane, alojado en GitHub.",
+				"keyphrases": [
+					"código fuente",
+					"github",
+					"compilar desde el código"
+				]
+			}
+		}
+	}
+}

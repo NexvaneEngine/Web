@@ -1,0 +1,28 @@
+{
+	"lang": {
+		"en": {
+			"page-meta": {
+				"title": "Installation",
+				"description": "Install Nexvane on Windows or Linux, x64 architecture.",
+				"keyphrases": [
+					"install",
+					"setup",
+					"download",
+					"x64"
+				]
+			}
+		},
+		"es": {
+			"page-meta": {
+				"title": "Instalación",
+				"description": "Instala Nexvane en Windows o Linux, arquitectura x64.",
+				"keyphrases": [
+					"instalar",
+					"configuración",
+					"descargar",
+					"x64"
+				]
+			}
+		}
+	}
+}

@@ -3,10 +3,30 @@
  * with a title and a URL can be indexed here.
  *
  * SiteSearch.index([entry, ...])
- *   Register entries. Each entry: { title, href, description?, keywords? }.
+ *   Register entries directly. Each entry: { title, href, description?, keywords? }.
  *   Entries are deduplicated by href — indexing the same href again just
- *   replaces the earlier entry, so it's safe to call this repeatedly
- *   (e.g. once per page, or once per fetched JSON file).
+ *   replaces the earlier entry, so it's safe to call this repeatedly.
+ *
+ * SiteSearch.indexFromManifest(manifestUrl, { lang, fallbackLang })
+ *   The higher-level, convention-driven way to populate the index: fetch
+ *   a manifest — a plain JSON array of page URLs, e.g. manual-search.json:
+ *
+ *     ["/manual/getting-started/installation.html", ...]
+ *
+ *   then for each URL, fetch that PAGE'S OWN JSON sidecar (same path,
+ *   .html swapped for .json — e.g. /manual/getting-started/installation.json)
+ *   and read its page-meta for `lang` (default 'en', falling back to
+ *   `fallbackLang` or the first available language if that's missing):
+ *
+ *     {
+ *       "lang": {
+ *         "en": { "page-meta": { "title": "...", "description": "...", "keyphrases": [...] } },
+ *         "es": { "page-meta": { ... } }
+ *       }
+ *     }
+ *
+ *   Every page indexes independently, so one missing/404ing sidecar
+ *   doesn't stop the rest from loading. Returns a Promise.
  *
  * SiteSearch.search(query, limit = 8)
  *   Returns matching entries, best match first. Title matches score
@@ -21,18 +41,12 @@
  *   Empties the index (rarely needed — mostly for tests/hot-reload).
  *
  * <nexvane-sidebar> (scripts/sidebar.js) already indexes its own tree
- * automatically and calls attach() on its own search box. Use
- * SiteSearch.index() directly to add entries from elsewhere, e.g. a
- * page's own JSON file of related pages:
+ * automatically and calls attach() on its own search box.
  *
- *   fetch('/docs/manual.json')
- *     .then((r) => r.json())
- *     .then((pages) => SiteSearch.index(pages.map((p) => ({
- *       title: p.title,
- *       href: p.href,
- *       description: p.description,
- *       keywords: p.keyphrases,
- *     }))));
+ * Note: both fetch-based methods need an actual HTTP server — opening
+ * pages directly via file:// will have the browser block the requests
+ * (CORS), so manifest/sidecar-driven results silently won't appear
+ * there. A tree's own directly-indexed entries aren't affected.
  */
 (function () {
 	const entriesByHref = new Map();
@@ -47,6 +61,39 @@
 				entriesByHref.set(item.href, item);
 			}
 		});
+	}
+
+	function pickPageMeta(sidecar, lang, fallbackLang) {
+		const byLang = (sidecar && sidecar.lang) || {};
+		const chosen = byLang[lang] || byLang[fallbackLang] || byLang[Object.keys(byLang)[0]];
+		return chosen ? chosen['page-meta'] : null;
+	}
+
+	function indexFromManifest(manifestUrl, options) {
+		const opts = options || {};
+		const lang = opts.lang || 'en';
+		const fallbackLang = opts.fallbackLang || 'en';
+
+		return fetch(manifestUrl)
+			.then((response) => response.json())
+			.then((urls) => Promise.all((urls || []).map((pageUrl) => {
+				const sidecarUrl = pageUrl.replace(/\.html?$/i, '.json');
+				return fetch(sidecarUrl)
+					.then((response) => response.json())
+					.then((sidecar) => {
+						const meta = pickPageMeta(sidecar, lang, fallbackLang);
+						if (!meta || !meta.title) return;
+						index([{
+							title: meta.title,
+							href: pageUrl,
+							description: meta.description,
+							keywords: meta.keyphrases,
+						}]);
+					})
+					.catch((error) => {
+						console.warn(`SiteSearch: couldn't load sidecar for ${pageUrl} (${sidecarUrl}):`, error);
+					});
+			})));
 	}
 
 	function scoreEntry(entry, terms) {
@@ -145,5 +192,5 @@
 		});
 	}
 
-	window.SiteSearch = { index, search, clear, attach };
+	window.SiteSearch = { index, indexFromManifest, search, clear, attach };
 })();

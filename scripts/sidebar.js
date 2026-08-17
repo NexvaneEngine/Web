@@ -12,11 +12,11 @@
  *     document.getElementById('my-sidebar').tree = [
  *       {
  *         title: 'Getting Started',
- *         href: '/docs/getting-started.html',   // optional — see below
+ *         href: '/getting-started.html',   // optional — see below
  *         description: 'Install and get running.', // optional, used by search
  *         keywords: ['setup', 'install'],           // optional, used by search
  *         children: [
- *           { title: 'Installation', href: '/docs/installation.html' },
+ *           { title: 'Installation', href: '/installation.html' },
  *         ],
  *       },
  *       { title: 'FAQ', href: '/faq.html' }, // no children => rendered as a leaf
@@ -35,6 +35,11 @@
  * Any entry with an `href` gets registered with SiteSearch automatically,
  * so this sidebar's own tree is searchable with no extra wiring. Load
  * scripts/search.js before this file.
+ *
+ * The node/leaf whose `href` matches the current page's path is marked
+ * `.active`; any node(s) that CONTAIN it (its ancestors in the tree) get
+ * `.ancestor-active` and are force-expanded so the active item isn't
+ * hidden inside a collapsed section.
  */
 class NexvaneSidebar extends HTMLElement {
 	connectedCallback() {
@@ -58,6 +63,9 @@ class NexvaneSidebar extends HTMLElement {
 			window.SiteSearch.attach(this.querySelector('.sidebar-search input'));
 		}
 
+		// Real page navigations are full page loads (a fresh script run
+		// recomputes this from scratch), so this listener only matters if
+		// a tree mixes in same-page hash links alongside page URLs.
 		window.addEventListener('hashchange', () => this._highlightActive());
 
 		// tree may have been set before connectedCallback ran (e.g. the
@@ -171,9 +179,35 @@ class NexvaneSidebar extends HTMLElement {
 	}
 
 	_highlightActive() {
-		const hash = window.location.hash;
-		this.querySelectorAll('.sidebar-tree-leaf').forEach((leaf) => {
-			leaf.classList.toggle('active', hash !== '' && leaf.getAttribute('href') === hash);
+		const current = window.location.pathname;
+
+		this.querySelectorAll('.sidebar-tree-row.active, .sidebar-tree-row.ancestor-active').forEach((row) => {
+			row.classList.remove('active', 'ancestor-active');
+		});
+
+		this.querySelectorAll('.sidebar-tree-link[href]').forEach((link) => {
+			if (link.getAttribute('href') !== current) return;
+
+			const row = link.closest('.sidebar-tree-row');
+			if (row) row.classList.add('active');
+
+			// Walk up the ancestor nodes (their own <li> wraps the <ul> this
+			// item lives in) so the section(s) containing the active page
+			// are marked too, and expanded if they were collapsed — the
+			// active leaf/node shouldn't be hidden inside a closed parent.
+			let list = link.closest('li').parentElement;
+			while (list && list.classList.contains('sidebar-tree-list')) {
+				const ancestorLi = list.closest('li');
+				if (!ancestorLi) break;
+				const ancestorRow = ancestorLi.querySelector(':scope > .sidebar-tree-row');
+				if (ancestorRow) {
+					ancestorRow.classList.add('ancestor-active');
+					const chevron = ancestorRow.querySelector('.sidebar-tree-chevron-hit');
+					if (chevron) chevron.setAttribute('aria-expanded', 'true');
+				}
+				list.hidden = false;
+				list = ancestorLi.parentElement;
+			}
 		});
 	}
 }

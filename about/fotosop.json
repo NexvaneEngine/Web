@@ -1,0 +1,26 @@
+{
+	"lang": {
+		"en": {
+			"page-meta": {
+				"title": "About Fotosop",
+				"description": "Fotosop is one of the companies behind Nexvane.",
+				"keyphrases": [
+					"fotosop",
+					"company",
+					"about"
+				]
+			}
+		},
+		"es": {
+			"page-meta": {
+				"title": "Acerca de Fotosop",
+				"description": "Fotosop es una de las empresas detrás de Nexvane.",
+				"keyphrases": [
+					"fotosop",
+					"empresa",
+					"acerca de"
+				]
+			}
+		}
+	}
+}

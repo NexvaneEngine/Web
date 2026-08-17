@@ -1,0 +1,26 @@
+{
+	"lang": {
+		"en": {
+			"page-meta": {
+				"title": "About Acrux",
+				"description": "Acrux is one of the companies behind Nexvane.",
+				"keyphrases": [
+					"acrux",
+					"company",
+					"about"
+				]
+			}
+		},
+		"es": {
+			"page-meta": {
+				"title": "Acerca de Acrux",
+				"description": "Acrux es una de las empresas detrás de Nexvane.",
+				"keyphrases": [
+					"acrux",
+					"empresa",
+					"acerca de"
+				]
+			}
+		}
+	}
+}

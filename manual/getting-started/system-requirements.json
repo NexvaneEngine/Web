@@ -1,0 +1,28 @@
+{
+	"lang": {
+		"en": {
+			"page-meta": {
+				"title": "System Requirements",
+				"description": "Recommended CPU, GPU and RAM for a comfortable editing experience.",
+				"keyphrases": [
+					"requirements",
+					"cpu",
+					"gpu",
+					"ram"
+				]
+			}
+		},
+		"es": {
+			"page-meta": {
+				"title": "Requisitos del Sistema",
+				"description": "CPU, GPU y RAM recomendados para una experiencia de edición cómoda.",
+				"keyphrases": [
+					"requisitos",
+					"cpu",
+					"gpu",
+					"ram"
+				]
+			}
+		}
+	}
+}

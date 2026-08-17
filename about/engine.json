@@ -1,0 +1,26 @@
+{
+	"lang": {
+		"en": {
+			"page-meta": {
+				"title": "About Nexvane",
+				"description": "Learn about the Nexvane engine, its design goals and the team behind it.",
+				"keyphrases": [
+					"about",
+					"engine",
+					"nexvane"
+				]
+			}
+		},
+		"es": {
+			"page-meta": {
+				"title": "Acerca de Nexvane",
+				"description": "Conoce el motor Nexvane, sus objetivos de diseño y el equipo detrás de él.",
+				"keyphrases": [
+					"acerca de",
+					"motor",
+					"nexvane"
+				]
+			}
+		}
+	}
+}

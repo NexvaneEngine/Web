@@ -1,0 +1,28 @@
+{
+	"lang": {
+		"en": {
+			"page-meta": {
+				"title": "Nexvane — Game Engine",
+				"description": "Nexvane is a game engine built for performance and flexibility, with native C++ scripting and the Neptune DSL.",
+				"keyphrases": [
+					"game engine",
+					"nexvane",
+					"c++",
+					"neptune"
+				]
+			}
+		},
+		"es": {
+			"page-meta": {
+				"title": "Nexvane — Motor de Videojuegos",
+				"description": "Nexvane es un motor de videojuegos diseñado para el rendimiento y la flexibilidad, con scripting nativo en C++ y el DSL Neptune.",
+				"keyphrases": [
+					"motor de videojuegos",
+					"nexvane",
+					"c++",
+					"neptune"
+				]
+			}
+		}
+	}
+}

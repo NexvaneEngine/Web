@@ -1,0 +1,27 @@
+{
+	"lang": {
+		"en": {
+			"page-meta": {
+				"title": "User Manual",
+				"description": "Browse Nexvane's documentation: installation, the editor, scripting, physics, networking and more.",
+				"keyphrases": [
+					"manual",
+					"documentation",
+					"docs",
+					"guide"
+				]
+			}
+		},
+		"es": {
+			"page-meta": {
+				"title": "Manual de Usuario",
+				"description": "Explora la documentación de Nexvane: instalación, el editor, scripting, física, redes y más.",
+				"keyphrases": [
+					"manual",
+					"documentación",
+					"guía"
+				]
+			}
+		}
+	}
+}

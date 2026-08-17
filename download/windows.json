@@ -1,0 +1,28 @@
+{
+	"lang": {
+		"en": {
+			"page-meta": {
+				"title": "Download for Windows",
+				"description": "Download Nexvane for Windows 10 and 11, x64 architecture.",
+				"keyphrases": [
+					"windows",
+					"download",
+					"installer",
+					"x64"
+				]
+			}
+		},
+		"es": {
+			"page-meta": {
+				"title": "Descargar para Windows",
+				"description": "Descarga Nexvane para Windows 10 y 11, arquitectura x64.",
+				"keyphrases": [
+					"windows",
+					"descargar",
+					"instalador",
+					"x64"
+				]
+			}
+		}
+	}
+}

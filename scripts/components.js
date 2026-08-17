@@ -41,8 +41,8 @@ const NAV_HTML = `
 				<div class="nav-button dropdown">
 					<p>Documentation <i class="bi bi-chevron-down" style="font-size: 0.8em;"></i></p>
 					<div class="dropdown-content">
-						<a href="/docs/manual.html"><i class="bi bi-person-fill-down nav-button-icon"></i>User Manual</a>
-						<a href="/docs/api.html"><i class="bi bi-journal-code nav-button-icon"></i>API Reference</a>
+						<a href="/manual.html"><i class="bi bi-person-fill-down nav-button-icon"></i>User Manual</a>
+						<a href="/manual/api.html"><i class="bi bi-journal-code nav-button-icon"></i>API Reference</a>
 					</div>
 				</div>
 
@@ -61,8 +61,8 @@ const NAV_HTML = `
 					<i class="bi bi-person-circle"></i>
 					<p>Username <i class="bi bi-chevron-down" style="font-size: 0.8em;"></i></p>
 					<div class="dropdown-content dropdown-right">
-						<a href="/profile.html"><i class="bi bi-person-fill nav-button-icon"></i>Profile</a>
-						<a href="/settings.html"><i class="bi bi-gear-fill nav-button-icon"></i>Settings</a>
+						<a href="/user/profile.html"><i class="bi bi-person-fill nav-button-icon"></i>Profile</a>
+						<a href="/user/settings.html"><i class="bi bi-gear-fill nav-button-icon"></i>Settings</a>
 						<a href="#"><i class="bi bi-box-arrow-right nav-button-icon"></i>Log Out</a>
 					</div>
 				</div>

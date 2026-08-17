@@ -1,0 +1,28 @@
+{
+	"lang": {
+		"en": {
+			"page-meta": {
+				"title": "Hub",
+				"description": "The Hub manages your Nexvane installations, SDKs and projects.",
+				"keyphrases": [
+					"hub",
+					"sdk",
+					"installer",
+					"project manager"
+				]
+			}
+		},
+		"es": {
+			"page-meta": {
+				"title": "Hub",
+				"description": "El Hub gestiona tus instalaciones de Nexvane, SDKs y proyectos.",
+				"keyphrases": [
+					"hub",
+					"sdk",
+					"instalador",
+					"gestor de proyectos"
+				]
+			}
+		}
+	}
+}
