@@ -9,7 +9,7 @@
  *
  * SiteSearch.indexFromManifest(manifestUrl, { lang, fallbackLang })
  *   The higher-level, convention-driven way to populate the index: fetch
- *   a manifest — a plain JSON array of page URLs, e.g. manual-search.json:
+ *   a manifest — a plain JSON array of page URLs, e.g. /search/search-manual.json:
  *
  *     ["/manual/getting-started/installation.html", ...]
  *
@@ -40,8 +40,8 @@
  * SiteSearch.clear()
  *   Empties the index (rarely needed — mostly for tests/hot-reload).
  *
- * <nexvane-sidebar> (scripts/sidebar.js) already indexes its own tree
- * automatically and calls attach() on its own search box.
+ * <nexvane-sidebar> (scripts/components/sidebar.js) already indexes its
+ * own tree automatically and calls attach() on its own search box.
  *
  * Note: both fetch-based methods need an actual HTTP server — opening
  * pages directly via file:// will have the browser block the requests

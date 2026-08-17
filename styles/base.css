@@ -60,8 +60,9 @@ body {
 	font-variation-settings: "wdth" 100;
 }
 /* Reusable <nexvane-nav>/<nexvane-footer> wrapper tags (see
-   scripts/components.js) should be invisible to layout — the real <nav>
-   and <footer> they render stay direct visual children of <body>. */
+   scripts/components/nav-footer.js) should be invisible to layout —
+   the real <nav> and <footer> they render stay direct visual children
+   of <body>. */
 nexvane-nav,
 nexvane-footer {
 	display: contents;
@@ -311,10 +312,10 @@ footer
 /* =========================================================
    SIDEBAR (generic — not tied to docs pages)
    A navbar-styled search box + collapsible node/leaf tree.
-   See scripts/sidebar.js (the <nexvane-sidebar> component)
-   and scripts/search.js (the SiteSearch index it's wired to).
+   See scripts/components/sidebar.js (the <nexvane-sidebar> component)
+   and scripts/components/search.js (the SiteSearch index it's wired to).
    A specific page supplies its own tree data via its own
-   script, e.g. scripts/sidebar-user-manual.js.
+   script, e.g. scripts/manual/sidebar.js.
    ========================================================= */
 
 .sidebar {

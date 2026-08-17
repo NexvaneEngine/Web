@@ -1,18 +1,32 @@
 <!--
 	Starter template for new pages.
 
-	The nav and footer are defined ONCE in scripts/components.js — every
-	page just drops in <nexvane-nav></nexvane-nav> and
+	The nav and footer are defined ONCE in scripts/components/nav-footer.js
+	— every page just drops in <nexvane-nav></nexvane-nav> and
 	<nexvane-footer></nexvane-footer> and gets the exact same header/footer,
 	dark-mode toggle, and mobile hamburger menu behavior for free. To
-	change the nav or footer site-wide, edit scripts/components.js only.
+	change the nav or footer site-wide, edit scripts/components/nav-footer.js
+	only.
+
+	scripts/ is split into:
+	  - scripts/*.js            general, not tied to any one component
+	                             (e.g. theme.js)
+	  - scripts/components/*.js generic, reusable pieces (nav, footer,
+	                             sidebar, search) — no page-specific
+	                             content lives here
+	  - scripts/manual/*.js     the User Manual page's OWN concrete data
+	                             (its sidebar tree, its search manifests)
+	                             — this is what "using" a generic
+	                             component looks like; a different page
+	                             with its own sidebar would get its own
+	                             scripts/<page>/ folder the same way
 
 	Requirements for any new page:
 	  1. Link styles/base.css (shared layout/nav/footer/card styles).
-	  2. Include the three scripts at the end of <body>, in this order:
-	     components.js -> theme.js -> nav.js. (components.js must load
-	     first so the nav/footer markup exists before the other two
-	     scripts look for it.)
+	  2. Include these three scripts at the end of <body>, in this order:
+	     components/nav-footer.js -> theme.js -> components/nav.js.
+	     (nav-footer.js must load first so the nav/footer markup exists
+	     before the other two scripts look for it.)
 	  3. Put <nexvane-nav></nexvane-nav> where the header should go, and
 	     <nexvane-footer></nexvane-footer> where the footer should go.
 
@@ -47,7 +61,7 @@
 
 	</body>
 
-	<script src="/scripts/components.js"></script>
+	<script src="/scripts/components/nav-footer.js"></script>
 	<script src="/scripts/theme.js"></script>
-	<script src="/scripts/nav.js"></script>
+	<script src="/scripts/components/nav.js"></script>
 </html>

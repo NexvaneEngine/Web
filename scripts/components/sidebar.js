@@ -1,10 +1,11 @@
 /*
  * <nexvane-sidebar> — a generic, reusable, data-driven sidebar: a search
- * box (wired to SiteSearch, see scripts/search.js) plus a collapsible
- * tree of nodes and leafs, indented by depth and styled to match the
- * navbar. It has nothing docs-specific in it — any page can drop one in
- * and feed it whatever tree it needs via its own small script (see e.g.
- * scripts/sidebar-user-manual.js for the user manual page's tree).
+ * box (wired to SiteSearch, see scripts/components/search.js) plus a
+ * collapsible tree of nodes and leafs, indented by depth and styled to
+ * match the navbar. It has nothing docs-specific in it — any page can
+ * drop one in and feed it whatever tree it needs via its own small
+ * script (see e.g. scripts/manual/sidebar.js for the user manual page's
+ * tree).
  *
  * Usage:
  *   <nexvane-sidebar id="my-sidebar" search-placeholder="Search..."></nexvane-sidebar>
@@ -34,7 +35,7 @@
  *
  * Any entry with an `href` gets registered with SiteSearch automatically,
  * so this sidebar's own tree is searchable with no extra wiring. Load
- * scripts/search.js before this file.
+ * scripts/components/search.js before this file.
  *
  * The node/leaf whose `href` matches the current page's path is marked
  * `.active`; any node(s) that CONTAIN it (its ancestors in the tree) get

@@ -79,5 +79,5 @@ if (nav && hamburger) {
 	mobileQuery.addEventListener('change', setNavHeightVar);
 	new MutationObserver(setNavHeightVar).observe(nav, { attributes: true, attributeFilter: ['class'] });
 } else {
-	console.warn('nav.js: #site-nav / #nav-hamburger not found — make sure <nexvane-nav> and scripts/components.js are on the page, loaded before scripts/nav.js.');
+	console.warn('nav.js: #site-nav / #nav-hamburger not found — make sure <nexvane-nav> and scripts/components/nav-footer.js are on the page, loaded before scripts/components/nav.js.');
 }

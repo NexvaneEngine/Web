@@ -1,7 +1,8 @@
 /*
- * Generates the User Manual page's sidebar tree and hands it to
- * <nexvane-sidebar>. This is the ONLY file that knows about this
- * particular tree — scripts/sidebar.js has no idea "user manual" exists.
+ * Generates the User Manual page's sidebar TREE DATA and hands it to
+ * <nexvane-sidebar> (scripts/components/sidebar.js). This file only
+ * knows about the tree's structure — search discovery for this page is
+ * a separate concern, see scripts/manual/search.js.
  *
  * Every node and leaf gets its own URL under /manual/, auto-derived from
  * its full path in the hierarchy (so uniqueness comes for free — two
@@ -517,26 +518,5 @@
 	const sidebar = document.querySelector('nexvane-sidebar');
 	if (sidebar) {
 		sidebar.tree = withUrls(tree, '/manual');
-	}
-
-	// Discover searchable pages via manifests: a manifest is just a flat
-	// JSON array of page URLs (see manual-search.json at the project
-	// root) — for each URL, SiteSearch fetches that PAGE's OWN JSON
-	// sidecar (e.g. /manual/getting-started/installation.json) and reads
-	// its page-meta for the given language. See scripts/search.js for
-	// the full shape.
-	//
-	// manual-search.json lists this page's own sub-pages; site-search.json
-	// covers the rest of the site (About, Downloads, etc.) so those still
-	// show up in the manual's search suggestions too.
-	//
-	// Note: fetch() needs an actual HTTP server (e.g. `python3 -m
-	// http.server`) — opening this file directly via file:// will have
-	// the browser block the requests (CORS), so manifest-driven results
-	// silently won't appear there; the tree's own entries stay
-	// searchable regardless, since those are indexed directly above.
-	if (window.SiteSearch) {
-		window.SiteSearch.indexFromManifest('/manual-search.json', { lang: 'en' });
-		window.SiteSearch.indexFromManifest('/site-search.json', { lang: 'en' });
 	}
 })();
