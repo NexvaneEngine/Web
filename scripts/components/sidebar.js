@@ -13,14 +13,14 @@
  *     document.getElementById('my-sidebar').tree = [
  *       {
  *         title: 'Getting Started',
- *         href: '/getting-started.html',   // optional — see below
+ *         href: 'getting-started.html',   // optional — see below (relative; see index.html for why)
  *         description: 'Install and get running.', // optional, used by search
  *         keywords: ['setup', 'install'],           // optional, used by search
  *         children: [
- *           { title: 'Installation', href: '/installation.html' },
+ *           { title: 'Installation', href: 'getting-started/installation.html' },
  *         ],
  *       },
- *       { title: 'FAQ', href: '/faq.html' }, // no children => rendered as a leaf
+ *       { title: 'FAQ', href: 'faq.html' }, // no children => rendered as a leaf
  *     ];
  *   </script>
  *
@@ -187,7 +187,11 @@ class NexvaneSidebar extends HTMLElement {
 		});
 
 		this.querySelectorAll('.sidebar-tree-link[href]').forEach((link) => {
-			if (link.getAttribute('href') !== current) return;
+			// link.pathname (unlike getAttribute('href')) is the browser's
+			// own fully-resolved absolute path, so this still matches
+			// correctly now that hrefs are written relative rather than
+			// absolute from the site root.
+			if (link.pathname !== current) return;
 
 			const row = link.closest('.sidebar-tree-row');
 			if (row) row.classList.add('active');

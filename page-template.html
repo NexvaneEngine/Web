@@ -21,13 +21,27 @@
 	                             with its own sidebar would get its own
 	                             scripts/<page>/ folder the same way
 
+	Every path in this project is RELATIVE (never starting with "/"), so
+	the site works regardless of the domain/sub-path it's hosted under,
+	or opened straight from disk. Because of that, the exact paths below
+	depend on WHERE you save this file:
+
 	Requirements for any new page:
-	  1. Link styles/base.css (shared layout/nav/footer/card styles).
-	  2. Include these three scripts at the end of <body>, in this order:
+	  1. Set window.SITE_BASE (see below) to the relative path back to
+	     the project root: '' at the root, '../' one folder down (e.g.
+	     about/team.html), '../../' two folders down, and so on. Nav,
+	     sidebar and search scripts all read this to build correct
+	     links/asset paths — this is the ONE thing you must get right
+	     when relocating this file.
+	  2. Link styles/base.css (shared layout/nav/footer/card styles) and
+	     load the three scripts below, ALL prefixed with the same
+	     relative depth as SITE_BASE — e.g. one level down, both would
+	     start with "../".
+	  3. Include these three scripts at the end of <body>, in this order:
 	     components/nav-footer.js -> theme.js -> components/nav.js.
 	     (nav-footer.js must load first so the nav/footer markup exists
 	     before the other two scripts look for it.)
-	  3. Put <nexvane-nav></nexvane-nav> where the header should go, and
+	  4. Put <nexvane-nav></nexvane-nav> where the header should go, and
 	     <nexvane-footer></nexvane-footer> where the footer should go.
 
 	Copy this file, rename it, and replace the <main> content below.
@@ -36,13 +50,15 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- Adjust this to match this file's actual depth — see above. -->
+		<script>window.SITE_BASE = '';</script>
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
-		<link rel="stylesheet" href="/styles/base.css"/>
+		<link rel="stylesheet" href="styles/base.css"/>
 		<!-- Add a page-specific stylesheet here if this page needs one,
 		     the same way index.html links styles/index.css. -->
 	</head>
@@ -61,7 +77,7 @@
 
 	</body>
 
-	<script src="/scripts/components/nav-footer.js"></script>
-	<script src="/scripts/theme.js"></script>
-	<script src="/scripts/components/nav.js"></script>
+	<script src="scripts/components/nav-footer.js"></script>
+	<script src="scripts/theme.js"></script>
+	<script src="scripts/components/nav.js"></script>
 </html>

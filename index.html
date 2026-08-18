@@ -2,6 +2,15 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- How many directories deep this file lives, as a relative
+		     prefix — '' at the project root, '../' one level down (e.g.
+		     about/engine.html), '../../' two levels down, etc. Every
+		     script that builds a link/asset path (nav, sidebar, search)
+		     reads this instead of assuming the site is hosted at a
+		     domain's root, so the same scripts work unmodified whether
+		     this is served from a root domain, a sub-path, or opened
+		     straight from disk. -->
+		<script>window.SITE_BASE = '';</script>
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -104,7 +113,7 @@
 						<div class="card-bottom">
 							<p class="card-title">User Manual</p>
 							<p class="card-text">Nexvane's user-friendly guide, from installation to coding.</p>
-							<a class="button" href="/manual.html">Read Manual</a>
+							<a class="button" href="manual.html">Read Manual</a>
 						</div>
 					</div>
 					<div class="card">
@@ -112,7 +121,7 @@
 						<div class="card-bottom">
 							<p class="card-title">API Reference</p>
 							<p class="card-text">Nexvane's technical API code documentation and systems overview.</p>
-							<a class="button" href="/manual/api.html">Read Reference</a>
+							<a class="button" href="manual/api.html">Read Reference</a>
 						</div>
 					</div>
 				</div>
@@ -123,7 +132,7 @@
 
 	</body>
 
-	<script src="/scripts/components/nav-footer.js"></script>
-	<script src="/scripts/theme.js"></script>
-	<script src="/scripts/components/nav.js"></script>
+	<script src="scripts/components/nav-footer.js"></script>
+	<script src="scripts/theme.js"></script>
+	<script src="scripts/components/nav.js"></script>
 </html>

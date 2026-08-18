@@ -9,14 +9,18 @@
  *
  * SiteSearch.indexFromManifest(manifestUrl, { lang, fallbackLang })
  *   The higher-level, convention-driven way to populate the index: fetch
- *   a manifest — a plain JSON array of page URLs, e.g. /search/search-manual.json:
+ *   a manifest — a plain JSON array of page URLs, written relative to
+ *   the SITE ROOT (never a leading "/"), e.g. search/search-manual.json:
  *
- *     ["/manual/getting-started/installation.html", ...]
+ *     ["manual/getting-started/installation.html", ...]
  *
- *   then for each URL, fetch that PAGE'S OWN JSON sidecar (same path,
- *   .html swapped for .json — e.g. /manual/getting-started/installation.json)
- *   and read its page-meta for `lang` (default 'en', falling back to
- *   `fallbackLang` or the first available language if that's missing):
+ *   Each entry gets combined with window.SITE_BASE (the current page's
+ *   own relative depth — see index.html) to resolve correctly regardless
+ *   of how deep the current page lives, then for each URL, fetch that
+ *   PAGE'S OWN JSON sidecar (same path, .html swapped for .json — e.g.
+ *   manual/getting-started/installation.json) and read its page-meta for
+ *   `lang` (default 'en', falling back to `fallbackLang` or the first
+ *   available language if that's missing):
  *
  *     {
  *       "lang": {
@@ -73,10 +77,16 @@
 		const opts = options || {};
 		const lang = opts.lang || 'en';
 		const fallbackLang = opts.fallbackLang || 'en';
+		const base = window.SITE_BASE || '';
 
 		return fetch(manifestUrl)
 			.then((response) => response.json())
-			.then((urls) => Promise.all((urls || []).map((pageUrl) => {
+			.then((urls) => Promise.all((urls || []).map((rawUrl) => {
+				// Manifest entries are written relative to the SITE ROOT
+				// (see the docstring above) — combine with this page's own
+				// SITE_BASE so the result resolves correctly no matter how
+				// deep the current page lives.
+				const pageUrl = base + rawUrl;
 				const sidecarUrl = pageUrl.replace(/\.html?$/i, '.json');
 				return fetch(sidecarUrl)
 					.then((response) => response.json())

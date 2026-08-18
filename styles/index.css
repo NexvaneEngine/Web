@@ -11,7 +11,7 @@
 }
 
 #card-image-editor {
-	background-image: url("/img/engine/editor.png");
+	background-image: url("../img/engine/editor.png");
 }
 
 #card-image-neptune {
@@ -36,30 +36,30 @@
 
 #card-image-windows {
 	background-color: var(--fg);
-	-webkit-mask: url("/img/icons/windows.svg") center / var(--card-icon-size) no-repeat;
-	mask: url("/img/icons/windows.svg") center / var(--card-icon-size) no-repeat;
+	-webkit-mask: url("../img/icons/windows.svg") center / var(--card-icon-size) no-repeat;
+	mask: url("../img/icons/windows.svg") center / var(--card-icon-size) no-repeat;
 }
 
 #card-image-linux {
 	background-color: var(--fg);
-	-webkit-mask: url("/img/icons/linux.svg") center / var(--card-icon-size) no-repeat;
-	mask: url("/img/icons/linux.svg") center / var(--card-icon-size) no-repeat;
+	-webkit-mask: url("../img/icons/linux.svg") center / var(--card-icon-size) no-repeat;
+	mask: url("../img/icons/linux.svg") center / var(--card-icon-size) no-repeat;
 }
 
 #card-image-git {
 	background-color: var(--fg);
-	-webkit-mask: url("/img/icons/git.svg") center / var(--card-icon-size) no-repeat;
-	mask: url("/img/icons/git.svg") center / var(--card-icon-size) no-repeat;
+	-webkit-mask: url("../img/icons/git.svg") center / var(--card-icon-size) no-repeat;
+	mask: url("../img/icons/git.svg") center / var(--card-icon-size) no-repeat;
 }
 
 #card-image-manual-api {
 	background-color: var(--fg);
-	-webkit-mask: url("/img/icons/manual-api.svg") center / var(--card-icon-size) no-repeat;
-	mask: url("/img/icons/manual-api.svg") center / var(--card-icon-size) no-repeat;
+	-webkit-mask: url("../img/icons/manual-api.svg") center / var(--card-icon-size) no-repeat;
+	mask: url("../img/icons/manual-api.svg") center / var(--card-icon-size) no-repeat;
 }
 
 #card-image-manual-user {
 	background-color: var(--fg);
-	-webkit-mask: url("/img/icons/manual-user.svg") center / var(--card-icon-size) no-repeat;
-	mask: url("/img/icons/manual-user.svg") center / var(--card-icon-size) no-repeat;
+	-webkit-mask: url("../img/icons/manual-user.svg") center / var(--card-icon-size) no-repeat;
+	mask: url("../img/icons/manual-user.svg") center / var(--card-icon-size) no-repeat;
 }

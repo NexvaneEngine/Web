@@ -20,7 +20,7 @@ body {
 	--fg-light: #EAEAEA;
 	--fg-dark: #1A1A1A;
 	--fg-mute-light: #5A5A5A;
-	--fg-mute-dark: #DADADA;
+	--fg-mute-dark: #7A7A7A;
 
 	--nav-button-padding: 1rem;
 	--nav-button-inside-gap: .5rem;
@@ -95,40 +95,19 @@ nav .nav-hamburger {
 	display: none;
 }
 
-/* --- LOGO CROSSFADE ---
-   .nav-logo-light stays in normal document flow, so it sets
-   .nav-logo-img's width/height naturally (inline-flex hugs its content).
-   .nav-logo-dark is absolutely positioned directly on top of it,
-   pinned to the same top-left corner, so it perfectly overlaps
-   instead of floating free with no box to constrain it. */
-.nav-logo-img {
-	position: relative;
+/* --- LOGO ---
+   One SVG, colored via CSS mask + background-color (same technique as
+   the download/manual card icons in index.css) instead of two separate
+   light/dark PNGs — background-color inherits the already
+   theme-aware --fg variable, so light/dark mode "just works" without
+   swapping image files or crossfading between them. */
+.nav-logo-mark {
+	width: 2rem;
 	height: 2rem;
-	display: inline-flex;
-	align-items: center;
-}
-.nav-logo-img img {
-	height: 2rem;
-	width: auto;
-	will-change: opacity;
-	backface-visibility: hidden;
-	pointer-events: none;
-}
-.nav-logo-light {
-	opacity: 1;
-	position: relative; /* stays in flow, defines the box size */
-}
-.nav-logo-dark {
-	position: absolute;
-	top: 0;
-	left: 0;
-	opacity: 0;
-}
-:root[data-theme="dark"] .nav-logo-light {
-	opacity: 0;
-}
-:root[data-theme="dark"] .nav-logo-dark {
-	opacity: 1;
+	flex-shrink: 0;
+	background-color: var(--fg);
+	-webkit-mask: url("../img/logo/nexvane-logo.svg") center / contain no-repeat;
+	mask: url("../img/logo/nexvane-logo.svg") center / contain no-repeat;
 }
 
 .nav-button {
@@ -138,6 +117,8 @@ nav .nav-hamburger {
 	gap: var(--nav-button-inside-gap);
 	padding: 0 var(--nav-button-padding);
 	position: relative;
+	color: inherit;
+	text-decoration: none;
 }
 .nav-button:hover {
 	background-color: var(--bg-hover);

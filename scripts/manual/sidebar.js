@@ -4,7 +4,7 @@
  * knows about the tree's structure — search discovery for this page is
  * a separate concern, see scripts/manual/search.js.
  *
- * Every node and leaf gets its own URL under /manual/, auto-derived from
+ * Every node and leaf gets its own URL under manual/, auto-derived from
  * its full path in the hierarchy (so uniqueness comes for free — two
  * items only clash if they have the exact same title AND the exact same
  * parent). None of these pages exist yet; this is scaffolding for the
@@ -517,6 +517,6 @@
 
 	const sidebar = document.querySelector('nexvane-sidebar');
 	if (sidebar) {
-		sidebar.tree = withUrls(tree, '/manual');
+		sidebar.tree = withUrls(tree, `${window.SITE_BASE || ''}manual`);
 	}
 })();
