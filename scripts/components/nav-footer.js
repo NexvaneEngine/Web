@@ -75,7 +75,7 @@ function buildNavHtml() {
 					<i class="bi bi-gear-fill"></i>
 					<div class="dropdown-content dropdown-right">
 						<a href="#" id="theme-toggle"><i class="bi bi-moon-fill nav-button-icon"></i>Dark Mode</a>
-						<a href="#"><i class="bi bi-translate nav-button-icon"></i>Language</a>
+						<a href="#" id="lang-switch"><i class="bi bi-translate nav-button-icon"></i>Language</a>
 					</div>
 				</div>
 			</div>

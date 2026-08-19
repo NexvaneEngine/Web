@@ -10,19 +10,104 @@
 					"c++",
 					"neptune"
 				]
-			}
+			},
+
+			"button-download" : "Download",
+
+			"section-overview": "Overview",
+			"section-downloads": "Downloads",
+
+			"card-editor-title": "Nexvane Editor",
+			"card-editor-description": "The Nexvane editor provides a clean interface to manipulate, create and explore assets, handle scene hierarchies and manipulate the scene on real time as you run your project in the editor.",
+
+			"card-neptune-title": "Neptune Programming Language",
+			"card-neptune-description": "Although Nexvane provides native C++ scripting, We also provide a DSL called <b>Neptune</b> designed to integrate with Nexvane's workflow and features and allows interoperability with other supported languages.",
+
+			"card-sat-title": "Statically Typed Assets",
+			"card-sat-description": "Assets are directly reflected into the code to prevent runtime and mismatch errors. Missing or invalid asset references are caught at compile time.",
+
+			"card-net-title": "Networking",
+			"card-net-description": "Networking was integrated from day one. Build single-player or multi-player games with an <b>Authoritative Server</b> architecture and <b>Network Entity Ownership</b>.",
+
+			"card-packages-title": "Package System",
+			"card-packages-description": "Extend your projects and customize your workflow installing official, community our your own Nexvane packages, including assets, scripts and editor modules.",
+
+			"card-vis-title": "Visual Scripting",
+			"card-vis-description": "Supports block-based visual scripting language that integrates with <b>C++</b> and <b>Neptune</b>.",
+
+			"card-install-windows-title": "Windows",
+			"card-install-windows-description": "Download Nexvane for Windows 10 and 11 with a x64 architecture.",
+
+			"card-install-linux-title": "Linux",
+			"card-install-linux-description": "Download Nexvane for Linux with a x64 architecture. Compatible with Arch, Fedora and Debian.",
+
+			"card-install-source-title": "Source",
+			"card-install-source-description": "Download Nexvane's source code hosted in GitHub.",
+
+			"section-documentation": "Documentation",
+
+			"card-manual-title": "User Manual",
+			"card-manual-description": "Nexvane's user-friendly guide, from installation to coding.",
+			"card-manual-button": "Read Manual",
+
+			"card-reference-title": "API Reference",
+			"card-reference-description": "Nexvane's technical API code documentation and systems overview.",
+			"card-reference-button": "Read Reference"
 		},
+
 		"es": {
 			"page-meta": {
 				"title": "Nexvane — Motor de Videojuegos",
-				"description": "Nexvane es un motor de videojuegos diseñado para el rendimiento y la flexibilidad, con scripting nativo en C++ y el DSL Neptune.",
+				"description": "Nexvane es un motor de videojuegos creado para ofrecer rendimiento y flexibilidad, con scripting nativo en C++ y el DSL Neptune.",
 				"keyphrases": [
 					"motor de videojuegos",
 					"nexvane",
 					"c++",
 					"neptune"
 				]
-			}
+			},
+
+			"button-download" : "Descargar",
+
+			"section-overview": "Descripción general",
+			"section-downloads": "Descargas",
+
+			"card-editor-title": "Editor de Nexvane",
+			"card-editor-description": "El editor de Nexvane proporciona una interfaz limpia para manipular, crear y explorar recursos (assets), manejar jerarquías de escenas y manipular la escena en tiempo real mientras ejecutas tu proyecto en el editor.",
+
+			"card-neptune-title": "Lenguaje de Programación Neptune",
+			"card-neptune-description": "Aunque Nexvane proporciona scripting nativo en C++, también ofrecemos un DSL llamado <b>Neptune</b> diseñado para integrarse con el flujo de trabajo y las características de Nexvane, permitiendo la interoperabilidad con otros lenguajes compatibles.",
+
+			"card-sat-title": "Recursos de Tipado Estático",
+			"card-sat-description": "Los recursos (assets) se reflejan directamente en el código para evitar errores de ejecución y de discrepancia. Las referencias a recursos faltantes o no válidas se detectan en tiempo de compilación.",
+
+			"card-net-title": "Redes",
+			"card-net-description": "El sistema de redes fue integrado desde el primer día. Crea juegos para un solo jugador o multijugador con una arquitectura de <b>Servidor Autoritativo</b> y <b>Propiedad de Entidades de Red</b>.",
+
+			"card-packages-title": "Sistema de Paquetes",
+			"card-packages-description": "Amplía tus proyectos y personaliza tu flujo de trabajo instalando paquetes de Nexvane oficiales, de la comunidad o los tuyos propios, incluyendo recursos, scripts y módulos del editor.",
+
+			"card-vis-title": "Programación Visual",
+			"card-vis-description": "Soporta un lenguaje de programación visual basado en bloques que se integra con <b>C++</b> y <b>Neptune</b>.",
+
+			"card-install-windows-title": "Windows",
+			"card-install-windows-description": "Descarga Nexvane para Windows 10 y 11 con arquitectura x64.",
+
+			"card-install-linux-title": "Linux",
+			"card-install-linux-description": "Descarga Nexvane para Linux con arquitectura x64. Compatible con Arch, Fedora y Debian.",
+
+			"card-install-source-title": "Código Fuente",
+			"card-install-source-description": "Descarga el código fuente de Nexvane alojado en GitHub.",
+
+			"section-documentation": "Documentación",
+
+			"card-manual-title": "Manual de Usuario",
+			"card-manual-description": "La guía amigable de Nexvane, desde la instalación hasta la programación.",
+			"card-manual-button": "Leer Manual",
+
+			"card-reference-title": "Referencia de la API",
+			"card-reference-description": "Documentación técnica del código de la API de Nexvane y descripción general de los sistemas.",
+			"card-reference-button": "Leer Referencia"
 		}
 	}
 }
