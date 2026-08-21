@@ -10,10 +10,10 @@
 
 	scripts/ is split into:
 	  - scripts/*.js            general, not tied to any one component
-	                             (e.g. theme.js)
+	                             (e.g. theme.js, lang.js)
 	  - scripts/components/*.js generic, reusable pieces (nav, footer,
-	                             sidebar, search) — no page-specific
-	                             content lives here
+	                             sidebar, search, the language modal) —
+	                             no page-specific content lives here
 	  - scripts/manual/*.js     the User Manual page's OWN concrete data
 	                             (its sidebar tree, its search manifests)
 	                             — this is what "using" a generic
@@ -34,15 +34,32 @@
 	     links/asset paths — this is the ONE thing you must get right
 	     when relocating this file.
 	  2. Link styles/base.css (shared layout/nav/footer/card styles) and
-	     load the three scripts below, ALL prefixed with the same
-	     relative depth as SITE_BASE — e.g. one level down, both would
+	     load the scripts below, ALL prefixed with the same relative
+	     depth as SITE_BASE — e.g. one level down, all of them would
 	     start with "../".
-	  3. Include these three scripts at the end of <body>, in this order:
-	     components/nav-footer.js -> theme.js -> components/nav.js.
-	     (nav-footer.js must load first so the nav/footer markup exists
-	     before the other two scripts look for it.)
+	  3. Include these scripts at the end of <body>, in this order:
+	     components/nav-footer.js -> theme.js -> lang.js ->
+	     components/lang-modal.js -> components/nav.js. (nav-footer.js
+	     must load first so the nav/footer markup exists before the
+	     other scripts look for it.)
 	  4. Put <nexvane-nav></nexvane-nav> where the header should go, and
 	     <nexvane-footer></nexvane-footer> where the footer should go.
+	  5. For any text this page should show in more than one language,
+	     give the element a lang="some-key" attribute (see the <h1>
+	     below) and add "some-key" to this page's own JSON sidecar
+	     (page.html -> page.json — see index.json or manual.json), once
+	     under lang.en and once under lang.es. If the element ALSO
+	     contains something that isn't translatable (an icon, another
+	     element), wrap ONLY the text portion in its own <span
+	     lang="...">, not the whole element — lang.js replaces an
+	     element's entire innerHTML, so putting lang="..." on a parent
+	     that also has a sibling icon would wipe the icon out. To
+	     translate an ATTRIBUTE (placeholder, aria-label, ...) instead
+	     of the element's content, add data-lang-attr="attributeName"
+	     (space-separated for more than one) alongside lang="...".
+	     Shared component text (nav, footer, sidebar chrome) already has
+	     its own JSON — see scripts/components/nav-footer.lang.json —
+	     you only need to add keys for THIS page's own content.
 
 	Copy this file, rename it, and replace the <main> content below.
 -->
@@ -68,7 +85,7 @@
 
 		<main>
 			<div class="padded">
-				<h1>Page title</h1>
+				<h1 lang="page-title">Page title</h1>
 				<p>Page content goes here.</p>
 			</div>
 		</main>
@@ -79,5 +96,7 @@
 
 	<script src="scripts/components/nav-footer.js"></script>
 	<script src="scripts/theme.js"></script>
+	<script src="scripts/lang.js"></script>
+	<script src="scripts/components/lang-modal.js"></script>
 	<script src="scripts/components/nav.js"></script>
 </html>

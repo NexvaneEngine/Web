@@ -9,8 +9,16 @@
  * items only clash if they have the exact same title AND the exact same
  * parent). None of these pages exist yet; this is scaffolding for the
  * site's information architecture ahead of the actual content.
+ *
+ * Every unique English title used below has a translation in
+ * scripts/manual/sidebar.lang.json (registered as a lang source below),
+ * keyed as sidebar-<slug of the title> — see scripts/components/sidebar.js
+ * for how that key gets attached to each rendered item.
  */
 (function () {
+	(window.LANG_SOURCES = window.LANG_SOURCES || [])
+		.push(`${window.SITE_BASE || ''}scripts/manual/sidebar.lang.json`);
+
 	// item(title) -> a leaf. item(title, [children]) -> a node.
 	function item(title, children) {
 		return children && children.length ? { title, children } : { title };

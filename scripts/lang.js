@@ -1,54 +1,124 @@
+/*
+ * Basic client-side localization.
+ *
+ * Each page has its own JSON sidecar (page.html -> page.json) holding
+ * page-specific text under lang.<code>.<key>. Shared UI text that
+ * appears on every page (the nav, the manual sidebar's chrome, ...)
+ * lives in its OWN JSON file instead of being copied into every page's
+ * sidecar — whichever script renders that UI registers its own JSON as
+ * an extra source by pushing onto window.LANG_SOURCES, e.g.:
+ *
+ *   (window.LANG_SOURCES = window.LANG_SOURCES || [])
+ *     .push(`${window.SITE_BASE || ''}scripts/components/nav-footer.lang.json`);
+ *
+ * This works regardless of script load order: registering just adds a
+ * URL to a plain array, and lang.js doesn't read that array until
+ * DOMContentLoaded — by which point every script that ran during the
+ * initial parse has already had the chance to register what it needs.
+ *
+ * All sources get merged into one lang.<code> object per language (a
+ * source read later wins on key collisions; the page's own JSON is
+ * always read first, so a page COULD override a shared key if it ever
+ * needed to — in practice key names shouldn't collide if components
+ * and pages use their own prefixes, e.g. "nav-..." vs "card-...").
+ *
+ * Elements opt into translation with a `lang="key"` attribute — this
+ * repurposes the attribute as a lookup key rather than its usual
+ * "this element's content is in language X" meaning. By default the
+ * matching string replaces the element's innerHTML; add
+ * data-lang-attr="attributeName" to set that attribute instead (e.g.
+ * placeholder text, aria-label) — the lookup key still comes from
+ * `lang`. data-lang-attr can list more than one attribute
+ * (space-separated, e.g. "placeholder aria-label") to set all of them
+ * from the same translated value. The actual page language is set
+ * separately, on <html lang="...">, so screen readers/browsers still
+ * see a normal, correct language code there.
+ */
 window.lang = null;
 window.langId = null;
 window.meta = null;
 
-function getMetadataUrl()
-{
-	return document.URL.replaceAll('.html', '.json');
+const SUPPORTED_LANGS = ['en', 'es'];
+const DEFAULT_LANG = 'en';
+
+function getPageMetadataUrl() {
+	// Swap the .html extension for .json, but only at the end of the
+	// path (before any query string or hash), not anywhere .html might
+	// otherwise appear.
+	return document.URL.replace(/\.html(?=$|[?#])/, '.json');
 }
 
-async function loadMeta()
-{
-	const metaUrl = getMetadataUrl();
-	const response = await fetch(metaUrl);
-	if(!response.ok)
-	{
-		console.error("Unable to get page metadata response.");
-		return false;
-	}
+function langSourceUrls() {
+	const urls = [getPageMetadataUrl()];
+	(window.LANG_SOURCES || []).forEach((url) => {
+		if (!urls.includes(url)) urls.push(url);
+	});
+	return urls;
+}
 
-	window.meta = await response.json();
+async function loadMeta() {
+	const merged = { lang: {} };
+	await Promise.all(langSourceUrls().map(async (url) => {
+		try {
+			const response = await fetch(url);
+			if (!response.ok) {
+				console.warn(`lang.js: ${url} responded ${response.status}`);
+				return;
+			}
+			const data = await response.json();
+			Object.entries(data.lang || {}).forEach(([code, entries]) => {
+				merged.lang[code] = Object.assign(merged.lang[code] || {}, entries);
+			});
+		} catch (error) {
+			console.warn(`lang.js: couldn't load ${url}`, error);
+		}
+	}));
+	window.meta = merged;
 	return true;
 }
 
-function elementsWithLangKey(langKey)
-{
+function elementsWithLangKey(langKey) {
 	return document.querySelectorAll(`[lang="${langKey}"]`);
-
 }
 
-async function applyLang()
-{
-	for(langKey in window.lang)
-	{
-		for(element of elementsWithLangKey(langKey))
-		{
-			element.innerHTML = window.lang[langKey];
-		};
+async function applyLang() {
+	for (const langKey in window.lang) {
+		const value = window.lang[langKey];
+		if (typeof value !== 'string') continue; // skip page-meta and other non-string entries
+		for (const element of elementsWithLangKey(langKey)) {
+			const attrList = element.getAttribute('data-lang-attr');
+			if (attrList) {
+				attrList.split(/\s+/).forEach((attrName) => element.setAttribute(attrName, value));
+			} else {
+				element.innerHTML = value;
+			}
+		}
 	}
 }
 
-async function setLang(langId)
-{
-	if(!window.meta)
-		await loadMeta();
+async function setLang(langId) {
+	if (!window.meta) await loadMeta();
+
+	if (!window.meta.lang[langId]) {
+		console.warn(`lang.js: no "${langId}" translations found, falling back to "${DEFAULT_LANG}"`);
+		langId = DEFAULT_LANG;
+	}
 
 	window.langId = langId;
-	window.lang = window.meta['lang'][langId];
+	window.lang = window.meta.lang[langId];
+	document.documentElement.setAttribute('lang', langId);
+	localStorage.setItem('langId', langId);
+
 	await applyLang();
+	document.dispatchEvent(new CustomEvent('langchange', { detail: { langId } }));
 }
+window.setLang = setLang;
+window.applyLang = applyLang;
+window.SUPPORTED_LANGS = SUPPORTED_LANGS;
 
 document.addEventListener('DOMContentLoaded', async () => {
-	await setLang('es');
+	const saved = localStorage.getItem('langId');
+	const browserLang = (navigator.language || DEFAULT_LANG).slice(0, 2);
+	const initial = saved || (SUPPORTED_LANGS.includes(browserLang) ? browserLang : DEFAULT_LANG);
+	await setLang(initial);
 });
-

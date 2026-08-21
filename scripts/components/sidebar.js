@@ -41,7 +41,27 @@
  * `.active`; any node(s) that CONTAIN it (its ancestors in the tree) get
  * `.ancestor-active` and are force-expanded so the active item isn't
  * hidden inside a collapsed section.
+ *
+ * Every tree item's label is translatable: it gets lang="sidebar-<slug
+ * of its English title>" (scripts/lang.js), so "Enter" only needs ONE
+ * translation even if it shows up as a dozen different leafs across the
+ * tree — same English title, same key, same translation. Whoever
+ * supplies the tree data owns that translation file (e.g.
+ * scripts/manual/sidebar.lang.json for the manual's tree); this file
+ * only owns its own generic chrome text (the toggle button's label),
+ * registered as its own lang source below.
  */
+(window.LANG_SOURCES = window.LANG_SOURCES || [])
+	.push(`${window.SITE_BASE || ''}scripts/components/sidebar.lang.json`);
+
+function slugify(title) {
+	return title
+		.toLowerCase()
+		.replace(/&/g, 'and')
+		.replace(/[^a-z0-9]+/g, '-')
+		.replace(/^-+|-+$/g, '');
+}
+
 class NexvaneSidebar extends HTMLElement {
 	connectedCallback() {
 		if (this._built) return;
@@ -50,10 +70,15 @@ class NexvaneSidebar extends HTMLElement {
 		this.setAttribute('role', 'complementary');
 
 		const placeholder = this.getAttribute('search-placeholder') || 'Search...';
+		// Instance-specific key (e.g. "manual-sidebar-search-placeholder")
+		// rather than a generic one — different sidebars want different
+		// placeholder text, so whichever page supplies this sidebar's tree
+		// data owns the translation for its own placeholder too.
+		const placeholderLangKey = `${this.id || 'sidebar'}-search-placeholder`;
 		this.innerHTML = `
 			<div class="sidebar-search">
 				<i class="bi bi-search"></i>
-				<input type="search" placeholder="${placeholder}" aria-label="${placeholder}">
+				<input type="search" placeholder="${placeholder}" aria-label="${placeholder}" lang="${placeholderLangKey}" data-lang-attr="placeholder aria-label">
 			</div>
 			<div class="sidebar-tree" role="navigation" aria-label="Sections"></div>
 		`;
@@ -114,7 +139,9 @@ class NexvaneSidebar extends HTMLElement {
 			chevronBtn = document.createElement('button');
 			chevronBtn.type = 'button';
 			chevronBtn.className = 'sidebar-tree-chevron-hit';
-			chevronBtn.setAttribute('aria-label', `Toggle ${entry.title}`);
+			chevronBtn.setAttribute('aria-label', 'Toggle section');
+			chevronBtn.setAttribute('lang', 'sidebar-toggle-section');
+			chevronBtn.setAttribute('data-lang-attr', 'aria-label');
 			chevronBtn.setAttribute('aria-expanded', entry.expanded ? 'true' : 'false');
 			chevronBtn.innerHTML = '<i class="bi bi-chevron-right sidebar-tree-chevron"></i>';
 			row.appendChild(chevronBtn);
@@ -141,6 +168,7 @@ class NexvaneSidebar extends HTMLElement {
 		icon.className = `bi ${hasChildren ? 'bi-folder2' : 'bi-file-earmark-text'} sidebar-tree-icon`;
 		const text = document.createElement('span');
 		text.textContent = entry.title;
+		text.setAttribute('lang', `sidebar-${slugify(entry.title)}`);
 		label.appendChild(icon);
 		label.appendChild(text);
 		row.appendChild(label);

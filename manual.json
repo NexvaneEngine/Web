@@ -10,7 +10,9 @@
 					"docs",
 					"guide"
 				]
-			}
+			},
+			"manual-heading": "User Manual",
+			"manual-intro": "This page hosts the manual's sidebar — try the search box, or expand a section on the left. The sidebar's structure lives in <code>scripts/manual/sidebar.js</code>; every node and leaf there links to its own page, most of which don't exist yet."
 		},
 		"es": {
 			"page-meta": {
@@ -21,7 +23,9 @@
 					"documentación",
 					"guía"
 				]
-			}
+			},
+			"manual-heading": "Manual de Usuario",
+			"manual-intro": "Esta página aloja la barra lateral del manual — prueba el cuadro de búsqueda o expande una sección a la izquierda. La estructura de la barra lateral vive en <code>scripts/manual/sidebar.js</code>; cada nodo y hoja allí enlaza a su propia página, la mayoría de las cuales aún no existen."
 		}
 	}
 }

@@ -1,0 +1,48 @@
+{
+	"lang": {
+		"en": {
+			"nav-download": "Download",
+			"nav-windows": "Windows",
+			"nav-linux": "Linux",
+			"nav-source": "Source",
+			"nav-documentation": "Documentation",
+			"nav-user-manual": "User Manual",
+			"nav-api-reference": "API Reference",
+			"nav-about": "About",
+			"nav-about-nexvane": "Nexvane",
+			"nav-about-fotosop": "Fotosop",
+			"nav-about-acrux": "Acrux",
+			"nav-username": "Username",
+			"nav-profile": "Profile",
+			"nav-settings": "Settings",
+			"nav-logout": "Log Out",
+			"nav-dark-mode": "Dark Mode",
+			"nav-language": "Language",
+			"footer-engine": "Nexvane Engine",
+			"footer-companies": "Acrux &amp; Fotosop",
+			"footer-copyright": "(c) 2026"
+		},
+		"es": {
+			"nav-download": "Descargar",
+			"nav-windows": "Windows",
+			"nav-linux": "Linux",
+			"nav-source": "Código Fuente",
+			"nav-documentation": "Documentación",
+			"nav-user-manual": "Manual de Usuario",
+			"nav-api-reference": "Referencia de la API",
+			"nav-about": "Acerca de",
+			"nav-about-nexvane": "Nexvane",
+			"nav-about-fotosop": "Fotosop",
+			"nav-about-acrux": "Acrux",
+			"nav-username": "Usuario",
+			"nav-profile": "Perfil",
+			"nav-settings": "Configuración",
+			"nav-logout": "Cerrar Sesión",
+			"nav-dark-mode": "Modo Oscuro",
+			"nav-language": "Idioma",
+			"footer-engine": "Nexvane Engine",
+			"footer-companies": "Acrux y Fotosop",
+			"footer-copyright": "(c) 2026"
+		}
+	}
+}
