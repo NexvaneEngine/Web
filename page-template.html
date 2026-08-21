@@ -32,7 +32,11 @@
 	     about/team.html), '../../' two folders down, and so on. Nav,
 	     sidebar and search scripts all read this to build correct
 	     links/asset paths — this is the ONE thing you must get right
-	     when relocating this file.
+	     when relocating this file. Also set window.PAGE_LANG_JSON to
+	     this file's own sidecar name (e.g. 'about/team.json') — this
+	     can't be derived from the URL reliably (a server serving
+	     index.html for a bare directory request leaves nothing in the
+	     URL to detect), so it has to be stated explicitly too.
 	  2. Link styles/base.css (shared layout/nav/footer/card styles) and
 	     load the scripts below, ALL prefixed with the same relative
 	     depth as SITE_BASE — e.g. one level down, all of them would
@@ -67,8 +71,9 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<!-- Adjust this to match this file's actual depth — see above. -->
+		<!-- Adjust these two to match this file's actual name/depth — see above. -->
 		<script>window.SITE_BASE = '';</script>
+		<script>window.PAGE_LANG_JSON = 'page-template.json';</script>
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">

@@ -298,11 +298,20 @@ footer
 	position: fixed;
 	inset: 0;
 	z-index: 20000;
-	display: flex;
+	/* display:none by default; JS toggles the hidden attribute to show
+	   it. This can't just be one unconditional `display: flex` — an
+	   author-level display declaration always overrides the browser's
+	   own [hidden]{display:none} rule (author CSS beats UA stylesheet
+	   regardless of specificity), which would make `hidden = true` a
+	   no-op and the modal impossible to close. */
+	display: none;
 	align-items: center;
 	justify-content: center;
 	background-color: rgba(0, 0, 0, 0.5);
 	padding: 1rem;
+}
+.lang-modal-overlay:not([hidden]) {
+	display: flex;
 }
 .lang-modal {
 	width: 100%;

@@ -50,6 +50,11 @@
  * scripts/manual/sidebar.lang.json for the manual's tree); this file
  * only owns its own generic chrome text (the toggle button's label),
  * registered as its own lang source below.
+ *
+ * Search entries use the CURRENTLY DISPLAYED (translated) title, not
+ * always the raw English one, and get re-indexed on langchange so
+ * switching languages updates search results too, not just the visible
+ * tree labels.
  */
 (window.LANG_SOURCES = window.LANG_SOURCES || [])
 	.push(`${window.SITE_BASE || ''}scripts/components/sidebar.lang.json`);
@@ -94,6 +99,11 @@ class NexvaneSidebar extends HTMLElement {
 		// a tree mixes in same-page hash links alongside page URLs.
 		window.addEventListener('hashchange', () => this._highlightActive());
 
+		// The tree's DOM labels already retranslate via the normal
+		// lang="key" mechanism; this keeps the SEARCH INDEX in sync too,
+		// since it stores a resolved title string rather than a key.
+		document.addEventListener('langchange', () => this._indexSearchEntries(this._data));
+
 		// tree may have been set before connectedCallback ran (e.g. the
 		// element wasn't upgraded yet when the page's inline script ran).
 		if (this._pendingTree) {
@@ -111,10 +121,34 @@ class NexvaneSidebar extends HTMLElement {
 		this._treeEl.innerHTML = '';
 		this._treeEl.appendChild(this._buildList(this._data));
 		this._highlightActive();
+		this._indexSearchEntries(this._data);
 	}
 
 	get tree() {
 		return this._data || [];
+	}
+
+	// Registers every entry with an href for search, using whatever
+	// title is CURRENTLY displayed (the translated one, if lang.js has
+	// already run) rather than always the raw English title — so search
+	// results read in the same language as the rest of the UI. Re-run
+	// this on langchange to keep already-indexed entries in sync; it's
+	// all local data (no network calls), so re-running it is cheap.
+	_indexSearchEntries(entries) {
+		if (!window.SiteSearch) return;
+		(entries || []).forEach((entry) => {
+			if (entry.href) {
+				const langKey = `sidebar-${slugify(entry.title)}`;
+				const title = (window.lang && window.lang[langKey]) || entry.title;
+				window.SiteSearch.index([{
+					title,
+					href: entry.href,
+					description: entry.description,
+					keywords: entry.keywords,
+				}]);
+			}
+			if (entry.children) this._indexSearchEntries(entry.children);
+		});
 	}
 
 	_buildList(entries) {
@@ -193,15 +227,6 @@ class NexvaneSidebar extends HTMLElement {
 					toggle();
 				});
 			}
-		}
-
-		if (entry.href && window.SiteSearch) {
-			window.SiteSearch.index([{
-				title: entry.title,
-				href: entry.href,
-				description: entry.description,
-				keywords: entry.keywords,
-			}]);
 		}
 
 		return li;

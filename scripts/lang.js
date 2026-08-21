@@ -33,6 +33,14 @@
  * from the same translated value. The actual page language is set
  * separately, on <html lang="...">, so screen readers/browsers still
  * see a normal, correct language code there.
+ *
+ * Each page must set window.PAGE_LANG_JSON (alongside window.SITE_BASE
+ * — see index.html) to its own sidecar's relative path, e.g.
+ * 'index.json'. This can't be derived from the URL reliably: a server
+ * serving index.html for a bare directory request (site.com/ instead
+ * of site.com/index.html) leaves document.URL with no ".html" in it to
+ * swap for ".json", so guessing from the URL silently breaks on any
+ * host/setup that does this (which is extremely common).
  */
 window.lang = null;
 window.langId = null;
@@ -42,10 +50,13 @@ const SUPPORTED_LANGS = ['en', 'es'];
 const DEFAULT_LANG = 'en';
 
 function getPageMetadataUrl() {
-	// Swap the .html extension for .json, but only at the end of the
-	// path (before any query string or hash), not anywhere .html might
-	// otherwise appear.
-	return document.URL.replace(/\.html(?=$|[?#])/, '.json');
+	if (window.PAGE_LANG_JSON) return window.PAGE_LANG_JSON;
+	// Best-effort fallback for a page that forgot to set PAGE_LANG_JSON.
+	// Only works if document.URL happens to end in an explicit ".html"
+	// filename — see the note above for why that's not guaranteed.
+	const guessed = document.URL.replace(/\.html(?=$|[?#])/, '.json');
+	console.warn('lang.js: window.PAGE_LANG_JSON is not set on this page — falling back to guessing from the URL, which breaks if the URL omits the .html filename. Set window.PAGE_LANG_JSON explicitly (see index.html).');
+	return guessed;
 }
 
 function langSourceUrls() {
