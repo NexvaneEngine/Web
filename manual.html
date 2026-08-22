@@ -24,10 +24,70 @@
 			<nexvane-sidebar id="manual-sidebar" search-placeholder="Search the manual..."></nexvane-sidebar>
 
 			<div class="doc-main">
-				<main class="doc-content">
-					<h1 lang="manual-heading">User Manual</h1>
-					<p class="card-text" lang="manual-intro">This page hosts the manual's sidebar — try the search box, or expand a section on the left. The sidebar's structure lives in <code>scripts/manual/sidebar.js</code>; every node and leaf there links to its own page, most of which don't exist yet.</p>
-				</main>
+				<div class="doc-content-row">
+					<main class="doc-content">
+						<h1 lang="manual-heading">Welcome</h1>
+						<p lang="manual-intro">Welcome to the Nexvane documentation. Whether you are building your first project or migrating an existing one, these docs cover everything from installation to deployment.</p>
+
+						<doc-callout type="info">
+							<span lang="manual-callout-versions">These docs cover Nexvane 2.0. For Nexvane 1.x documentation, visit <a href="#">v1.docs.nexvane.dev</a>.</span>
+						</doc-callout>
+
+						<h2 lang="manual-what-heading">What is Nexvane?</h2>
+						<p lang="manual-what-body">Nexvane is an open-source, cross-platform game engine written in C++. It renders through its own pipeline, so your project behaves the same on every platform. Script your gameplay in native C++ or Neptune, Nexvane's own DSL, and deploy to:</p>
+						<ul>
+							<li lang="manual-platform-windows"><b>Windows</b> (10, 11)</li>
+							<li lang="manual-platform-macos"><b>macOS</b> (Apple Silicon and Intel)</li>
+							<li lang="manual-platform-linux"><b>Linux</b> (X11 and Wayland)</li>
+							<li lang="manual-platform-mobile"><b>iOS</b> and <b>Android</b></li>
+						</ul>
+						<p lang="manual-what-closing">For exact version and architecture details, see <a href="manual/getting-started/system-requirements.html">System Requirements</a>.</p>
+
+						<h2 lang="manual-path-heading">Choose your path</h2>
+						<h3 lang="manual-path-new-heading">New to Nexvane?</h3>
+						<p lang="manual-path-new-body">Start with Installation, then follow the Quick Start guide to get a project running end to end.</p>
+						<h3 lang="manual-path-unity-heading">Coming from Unity?</h3>
+						<p lang="manual-path-unity-body">Entities map closely to GameObjects, and Components map to Nexvane's own Components — see Entities to get oriented.</p>
+						<h3 lang="manual-path-api-heading">Looking for API details?</h3>
+						<p lang="manual-path-api-body">The API Reference documents every native and Neptune symbol Nexvane exposes.</p>
+
+						<h2 lang="manual-capabilities-heading">Key capabilities</h2>
+						<table>
+							<thead>
+								<tr>
+									<th lang="manual-table-th-capability">Capability</th>
+									<th lang="manual-table-th-description">Description</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td lang="manual-table-row1-name">Cross-platform rendering</td>
+									<td lang="manual-table-row1-desc">Nexvane's own rendering engine produces consistent output on every platform. No native control wrappers, no platform-specific quirks.</td>
+								</tr>
+								<tr>
+									<td lang="manual-table-row2-name">Native and Neptune scripting</td>
+									<td lang="manual-table-row2-desc">Write gameplay in native C++ for full control, or Neptune for faster iteration.</td>
+								</tr>
+								<tr>
+									<td lang="manual-table-row3-name">Entity Component System</td>
+									<td lang="manual-table-row3-desc">Nexvane's ECS keeps gameplay logic and data separate for predictable performance at scale.</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<h2 lang="manual-help-heading">Need help?</h2>
+						<p lang="manual-help-body">Search the sidebar, or reach out through the community links in the footer.</p>
+
+						<h2 lang="manual-see-also-heading">See also</h2>
+						<ul>
+							<li><a href="manual/getting-started/quick-start.html" lang="manual-see-also-quick-start">Quick Start</a></li>
+							<li><a href="manual/getting-started/system-requirements.html" lang="manual-see-also-requirements">System Requirements</a></li>
+							<li><a href="manual/api.html" lang="manual-see-also-api">API Reference</a></li>
+						</ul>
+					</main>
+
+					<doc-toc target=".doc-content"></doc-toc>
+				</div>
 
 				<nexvane-footer></nexvane-footer>
 			</div>
@@ -41,6 +101,8 @@
 	<script src="scripts/components/nav.js"></script>
 	<script src="scripts/components/search.js"></script>
 	<script src="scripts/components/sidebar.js"></script>
+	<script src="scripts/components/doc-callout.js"></script>
+	<script src="scripts/components/doc-toc.js"></script>
 	<script src="scripts/manual/sidebar.js"></script>
 	<script src="scripts/manual/search.js"></script>
 </html>

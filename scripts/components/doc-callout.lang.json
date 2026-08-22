@@ -1,0 +1,16 @@
+{
+	"lang": {
+		"en": {
+			"doc-callout-info": "Info",
+			"doc-callout-tip": "Tip",
+			"doc-callout-warning": "Warning",
+			"doc-callout-danger": "Danger"
+		},
+		"es": {
+			"doc-callout-info": "Info",
+			"doc-callout-tip": "Consejo",
+			"doc-callout-warning": "Advertencia",
+			"doc-callout-danger": "Peligro"
+		}
+	}
+}
