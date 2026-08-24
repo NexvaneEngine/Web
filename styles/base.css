@@ -566,7 +566,6 @@ footer
 .doc-content {
 	display: flex;
 	flex-direction: column;
-	gap: var(--padded-gap);
 	padding: var(--content-pad);
 }
 
@@ -577,10 +576,34 @@ footer
    h1 usage elsewhere on the site).
    ========================================================= */
 
+/* Spacing: a flat `gap` on .doc-content gave every pair of
+   elements the same large space, so a heading looked just as
+   far from ITS OWN paragraph as from the next section entirely
+   — nothing read as "grouped". Margins let that differ: tight
+   right under a heading, roomy before the next h2/h3. */
+.doc-content > * {
+	margin: 0;
+}
+.doc-content > * + * {
+	margin-top: 1.5rem;
+}
+.doc-content > h2 {
+	margin-top: 3rem;
+}
+.doc-content > h3 {
+	margin-top: 2rem;
+}
+.doc-content > h1 + * {
+	margin-top: 1rem;
+}
+.doc-content > h2 + *,
+.doc-content > h3 + * {
+	margin-top: .6rem;
+}
+
 .doc-content h1,
 .doc-content h2,
 .doc-content h3 {
-	margin: 0;
 	scroll-margin-top: calc(var(--nav-height) + 1rem);
 }
 .doc-content h1 {
@@ -594,12 +617,10 @@ footer
 	font-size: 1.2rem;
 }
 .doc-content p {
-	margin: 0;
 	line-height: 1.6;
 }
 .doc-content ul,
 .doc-content ol {
-	margin: 0;
 	padding-left: 1.4rem;
 	line-height: 1.6;
 }
@@ -614,7 +635,11 @@ footer
 	text-decoration: underline;
 }
 
-/* --- Callout / admonition boxes: scripts/components/doc-callout.js --- */
+/* --- Callout / admonition boxes: scripts/components/doc-callout.js ---
+   Blended against --bg-elevated (not "transparent") so the tint stays
+   clearly visible even against a near-black page background — a
+   low-opacity color mixed toward transparent barely shifts anything
+   when the base it's sitting on is already almost black. */
 .doc-callout {
 	--callout-color: var(--bg-accent);
 	display: flex;
@@ -622,8 +647,8 @@ footer
 	gap: .35rem;
 	padding: 1rem 1.25rem;
 	border-radius: var(--card-border-radius);
-	border: 1px solid color-mix(in srgb, var(--callout-color) 40%, transparent);
-	background-color: color-mix(in srgb, var(--callout-color) 12%, transparent);
+	border: 1px solid color-mix(in srgb, var(--callout-color) 50%, transparent);
+	background-color: color-mix(in srgb, var(--callout-color) 18%, var(--bg-elevated));
 }
 .doc-callout[type="tip"] {
 	--callout-color: #1f9d55;
@@ -631,7 +656,7 @@ footer
 .doc-callout[type="warning"] {
 	--callout-color: #c88719;
 }
-.doc-callout[type="danger"] {
+.doc-callout[type="error"] {
 	--callout-color: #d64545;
 }
 .doc-callout-label {
@@ -652,10 +677,18 @@ footer
 	margin-bottom: 0;
 }
 
-/* --- Tables --- */
+/* --- Tables ---
+   border-collapse:collapse fights border-radius (collapsed borders
+   render on a layer the table's own corner-clipping doesn't reliably
+   catch, especially on the last row) — border-collapse:separate with
+   zero spacing gets the same visual seam between rows while keeping
+   the rounded corners intact. Row background uses --bg-elevated, not
+   --bg-surface — the latter is only 5/255 brighter than the page
+   background, which read as no card at all. */
 .doc-content table {
 	width: 100%;
-	border-collapse: collapse;
+	border-collapse: separate;
+	border-spacing: 0;
 	border-radius: var(--card-border-radius);
 	overflow: hidden;
 }
@@ -665,17 +698,16 @@ footer
 	color: var(--fg-mute);
 	font-weight: normal;
 	font-size: .85rem;
-	padding: .75rem 1rem;
+	padding: .9rem 1.1rem;
 }
 .doc-content td {
-	padding: .75rem 1rem;
+	padding: 1.1rem;
 	border-top: 1px solid var(--bg-hover);
-	background-color: var(--bg-surface);
+	background-color: var(--bg-elevated);
 	vertical-align: top;
 }
 .doc-content td:first-child {
 	font-weight: bold;
-	white-space: nowrap;
 }
 
 /* --- "On this page" TOC: scripts/components/doc-toc.js --- */

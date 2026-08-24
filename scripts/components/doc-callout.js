@@ -1,5 +1,5 @@
 /*
- * <doc-callout type="info|tip|warning|danger">...</doc-callout>
+ * <doc-callout type="info|tip|warning|error">...</doc-callout>
  *
  * A documentation admonition box: an icon + bold label above the
  * element's own content. `type` defaults to "info" if omitted or
@@ -19,13 +19,19 @@ const CALLOUT_ICONS = {
 	info: 'bi-info-circle-fill',
 	tip: 'bi-lightbulb-fill',
 	warning: 'bi-exclamation-triangle-fill',
-	danger: 'bi-x-octagon-fill',
+	error: 'bi-x-octagon-fill',
 };
 
 class DocCallout extends HTMLElement {
 	connectedCallback() {
 		if (this._built) return;
 		this._built = true;
+
+		// This is what styles/base.css's .doc-callout rule (background,
+		// border, padding, the --callout-color variable everything else
+		// keys off) actually hooks into — without it the element renders
+		// as bare unstyled content.
+		this.classList.add('doc-callout');
 
 		const requestedType = this.getAttribute('type');
 		const type = CALLOUT_ICONS[requestedType] ? requestedType : 'info';

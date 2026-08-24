@@ -43,15 +43,29 @@
 						</ul>
 						<p lang="manual-what-closing">For exact version and architecture details, see <a href="manual/getting-started/system-requirements.html">System Requirements</a>.</p>
 
+						<doc-callout type="tip">
+							<span lang="manual-callout-tip">Use the Hub to install and switch between multiple Nexvane versions side by side.</span>
+						</doc-callout>
+
 						<h2 lang="manual-path-heading">Choose your path</h2>
 						<h3 lang="manual-path-new-heading">New to Nexvane?</h3>
 						<p lang="manual-path-new-body">Start with Installation, then follow the Quick Start guide to get a project running end to end.</p>
 						<h3 lang="manual-path-unity-heading">Coming from Unity?</h3>
 						<p lang="manual-path-unity-body">Entities map closely to GameObjects, and Components map to Nexvane's own Components — see Entities to get oriented.</p>
+
+						<doc-callout type="warning">
+							<span lang="manual-callout-warning">Nexvane uses a right-handed, Z-up coordinate system by default — double check transform math when porting from a Y-up engine.</span>
+						</doc-callout>
+
 						<h3 lang="manual-path-api-heading">Looking for API details?</h3>
 						<p lang="manual-path-api-body">The API Reference documents every native and Neptune symbol Nexvane exposes.</p>
 
 						<h2 lang="manual-capabilities-heading">Key capabilities</h2>
+
+						<doc-callout type="error">
+							<span lang="manual-callout-error">Calling native C++ APIs directly from a Neptune coroutine without awaiting the interop boundary will crash at runtime, not just fail to compile — always await interop calls.</span>
+						</doc-callout>
+
 						<table>
 							<thead>
 								<tr>

@@ -4,13 +4,13 @@
 			"doc-callout-info": "Info",
 			"doc-callout-tip": "Tip",
 			"doc-callout-warning": "Warning",
-			"doc-callout-danger": "Danger"
+			"doc-callout-error": "Error"
 		},
 		"es": {
 			"doc-callout-info": "Info",
 			"doc-callout-tip": "Consejo",
 			"doc-callout-warning": "Advertencia",
-			"doc-callout-danger": "Peligro"
+			"doc-callout-error": "Error"
 		}
 	}
 }
