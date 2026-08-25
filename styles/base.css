@@ -725,19 +725,33 @@ footer
 .doc-toc {
 	position: sticky;
 	top: calc(var(--nav-height) + 1.5rem);
+	/* Defensively low: sticky elements with no z-index of their own can
+	   behave inconsistently across browsers as they scroll past other
+	   positioned content — this guarantees the nav (z-index 10000)
+	   always wins regardless. */
+	z-index: 1;
 	flex-shrink: 0;
-	width: 220px;
+	width: 260px;
+	box-sizing: border-box;
 	max-height: calc(100vh - var(--nav-height) - 3rem);
 	overflow-y: auto;
-	padding: calc(var(--content-pad) + .5rem) var(--content-pad) 1rem 0;
+	padding: 1.5rem 1.25rem 1.5rem 1.5rem;
+	border-radius: var(--card-border-radius);
+	/* Semi-transparent + blurred rather than fully transparent (content
+	   scrolling underneath would show through unblended, looking like
+	   visual noise) or fully opaque (too heavy for a floating aside) —
+	   a frosted-glass tint reads as "floating over the page" either way. */
+	background-color: color-mix(in srgb, var(--bg-surface) 70%, transparent);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
 }
 .doc-toc-heading {
-	font-size: .75rem;
+	font-size: .8rem;
 	font-weight: bold;
 	letter-spacing: .04em;
 	text-transform: uppercase;
 	color: var(--fg-mute);
-	margin: 0 0 .75rem 0;
+	margin: 0 0 .9rem 0;
 }
 .doc-toc-list {
 	list-style: none;
@@ -746,17 +760,17 @@ footer
 	border-left: 1px solid var(--bg-hover);
 }
 .doc-toc-list .doc-toc-list {
-	margin-left: .75rem;
+	margin-left: .85rem;
 }
 .doc-toc-link {
 	display: block;
-	padding: .3rem 0 .3rem .85rem;
+	padding: .45rem 0 .45rem 1rem;
 	margin-left: -1px;
 	border-left: 1px solid transparent;
 	color: var(--fg-mute);
 	text-decoration: none;
-	font-size: .85rem;
-	line-height: 1.4;
+	font-size: .9rem;
+	line-height: 1.5;
 }
 .doc-toc-link:hover {
 	color: var(--fg);
@@ -774,6 +788,21 @@ footer
    applies at smaller viewport widths and adapts layout,
    spacing and the nav into a collapsible mobile menu.
    ========================================================= */
+
+@media (max-width: 1200px) {
+	/* The right-side "on this page" TOC needs real room alongside
+	   BOTH the left sidebar and the main content — sidebar (280px)
+	   plus TOC (260px) plus padding/gaps eats well over half of an
+	   860px-wide viewport, leaving the content column squeezed down
+	   to almost nothing. That's what actually looked like "the TOC
+	   getting over the navbar" — it wasn't the navbar, it was the
+	   content column collapsing under it. The sidebar alone still
+	   fits comfortably down to the narrower breakpoint below, so only
+	   the TOC needs to drop out this early. */
+	.doc-toc {
+		display: none;
+	}
+}
 
 @media (max-width: 860px) {
 	:root {
