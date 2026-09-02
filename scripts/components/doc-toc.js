@@ -7,6 +7,14 @@
  * it, and highlights whichever section is currently in view while
  * scrolling.
  *
+ * Rebuilt around a single native <details>/<summary> panel instead
+ * of a bare list, so there's exactly one markup shape everywhere.
+ * CSS alone (see base.css) turns it from a sticky aside next to the
+ * content on wide screens into a plain static card ahead of the
+ * content once the viewport is too narrow for that third column —
+ * no separate mobile branch here, no manual open/close state, no
+ * risk of it drifting out of sync with the layout again.
+ *
  * Headings without an id get one auto-assigned (slugified from their
  * own text), so this works even on content that didn't add ids by
  * hand — just write normal <h2>/<h3> tags.
@@ -26,6 +34,12 @@ function slugify(text) {
 		.replace(/^-+|-+$/g, '');
 }
 
+// Matches the breakpoint in base.css where the TOC stops being a
+// third column and drops into the normal document flow. Only used
+// to pick a sensible *initial* open/closed state — someone can still
+// toggle it by hand either way afterwards.
+const WIDE_LAYOUT_QUERY = '(min-width: 1201px)';
+
 class DocToc extends HTMLElement {
 	connectedCallback() {
 		if (this._built) return;
@@ -40,14 +54,21 @@ class DocToc extends HTMLElement {
 			return;
 		}
 
-		this.innerHTML = `
-			<p class="doc-toc-heading" lang="doc-toc-heading">On this page</p>
-			<nav class="doc-toc-nav" aria-label="On this page"></nav>
-		`;
-
 		headings.forEach((heading) => {
 			if (!heading.id) heading.id = slugify(heading.textContent);
 		});
+
+		const startOpen = window.matchMedia(WIDE_LAYOUT_QUERY).matches;
+
+		this.innerHTML = `
+			<details class="doc-toc-panel"${startOpen ? ' open' : ''}>
+				<summary class="doc-toc-summary">
+					<span class="doc-toc-heading" lang="doc-toc-heading">On this page</span>
+					<i class="bi bi-chevron-right doc-toc-chevron"></i>
+				</summary>
+				<nav class="doc-toc-nav" aria-label="On this page"></nav>
+			</details>
+		`;
 
 		this.querySelector('.doc-toc-nav').appendChild(this._buildList(headings));
 		this._links = new Map(headings.map((h) => [h.id, this.querySelector(`a[href="#${h.id}"]`)]));
