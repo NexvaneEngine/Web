@@ -72,7 +72,23 @@ class DocToc extends HTMLElement {
 
 		this.querySelector('.doc-toc-nav').appendChild(this._buildList(headings));
 		this._links = new Map(headings.map((h) => [h.id, this.querySelector(`a[href="#${h.id}"]`)]));
+		this._headings = headings;
 		this._observeHeadings(headings);
+
+		// The heading text on the page re-translates itself via its own
+		// `lang="..."` attribute (see scripts/lang.js) — but the copy we
+		// took of it in _buildLink above is a one-time snapshot, so it
+		// goes stale the moment the language changes. Re-copy each
+		// link's text from its heading once lang.js finishes applying
+		// the new language, instead of re-deriving anything ourselves.
+		document.addEventListener('langchange', () => this._syncLinkText());
+	}
+
+	_syncLinkText() {
+		this._headings.forEach((heading) => {
+			const link = this._links.get(heading.id);
+			if (link) link.textContent = heading.textContent;
+		});
 	}
 
 	// h2s become top-level items; any h3s immediately following an h2

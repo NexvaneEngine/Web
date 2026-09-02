@@ -723,57 +723,65 @@ footer
 }
 
 /* --- "On this page" TOC: scripts/components/doc-toc.js ---
-   Rebuilt from scratch: the whole thing is one native
-   <details>/<summary> panel, so open/close, keyboard support and
-   the little disclosure triangle all come from the browser for
-   free instead of hand-rolled JS state.
+   Mirrors the left <sidebar>'s own layout language (sticky, flush
+   under the nav, full viewport height, internal scroll) rather than
+   floating as a separate rounded card — the two read as one family
+   instead of the sidebar being "real" and the TOC being a tooltip
+   that happens to sit still. The one deliberate difference: the
+   background stays semi-transparent (see .doc-toc-panel below) since
+   an opaque panel this size, this close to the sidebar, reads as a
+   second competing nav rather than a lightweight companion to the
+   content.
 
-   <doc-toc> itself only ever handles POSITION (sticky aside on wide
-   screens, plain static block once things stack — see the
-   responsive overrides below). .doc-toc-panel only ever handles
-   APPEARANCE (the card look: background, border, blur). Keeping
-   those separate is what makes the narrow-viewport version a
-   one-property-at-a-time change instead of a second copy of the
-   whole component. */
+   <doc-toc> itself only ever handles POSITION (sticky column, full
+   height — see the responsive overrides below for how that collapses
+   once there's no room for a third column). .doc-toc-panel only ever
+   handles APPEARANCE (background, borders). Keeping those separate is
+   what makes the narrow-viewport version a one-property-at-a-time
+   change instead of a second copy of the whole component. */
 doc-toc {
 	display: block;
 	position: sticky;
-	top: calc(var(--nav-height) + 1.5rem);
+	top: var(--nav-height);
 	/* Defensively low: sticky elements with no z-index of their own can
 	   behave inconsistently across browsers as they scroll past other
 	   positioned content — this guarantees the nav (z-index 10000)
 	   always wins regardless. */
 	z-index: 1;
 	flex-shrink: 0;
-	width: 260px;
+	width: 220px;
 	box-sizing: border-box;
-	max-height: calc(100vh - var(--nav-height) - 3rem);
+	height: calc(100vh - var(--nav-height));
 }
 .doc-toc-panel {
 	display: flex;
 	flex-direction: column;
 	height: 100%;
-	max-height: inherit;
 	box-sizing: border-box;
-	border-radius: var(--card-border-radius);
-	/* Semi-transparent + blurred rather than fully transparent (content
-	   scrolling underneath would show through unblended, looking like
-	   visual noise) or fully opaque (too heavy for a floating aside) —
-	   a frosted-glass tint reads as "floating over the page" either way. */
-	background-color: color-mix(in srgb, var(--bg-surface) 70%, transparent);
-	backdrop-filter: blur(10px);
-	-webkit-backdrop-filter: blur(10px);
+	border-left: 1px solid var(--bg-hover);
+	/* Semi-transparent rather than a solid fill like the sidebar's —
+	   this column is a secondary, at-a-glance aid, not a second place
+	   to navigate from, so it shouldn't compete at the same visual
+	   weight. Blurred so scrolling content behind it reads as tinted
+	   rather than as raw visual noise through a hard-edged cutout. */
+	background-color: color-mix(in srgb, var(--bg-surface) 40%, transparent);
+	backdrop-filter: blur(6px);
+	-webkit-backdrop-filter: blur(6px);
 	overflow: hidden;
 }
 .doc-toc-summary {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	gap: .75rem;
-	padding: 1.5rem 1.25rem 1.5rem 1.5rem;
+	gap: .5rem;
+	height: 2.85rem;
+	padding: 0 .85rem;
 	cursor: pointer;
 	user-select: none;
 	flex-shrink: 0;
+}
+.doc-toc-summary:hover {
+	background-color: var(--bg-hover);
 }
 /* Hide the browser's own disclosure triangle — the chevron icon
    below is the one and only toggle indicator. */
@@ -784,7 +792,7 @@ doc-toc {
 	content: "";
 }
 .doc-toc-heading {
-	font-size: .8rem;
+	font-size: .75rem;
 	font-weight: bold;
 	letter-spacing: .04em;
 	text-transform: uppercase;
@@ -800,33 +808,47 @@ doc-toc {
 	transform: rotate(90deg);
 }
 .doc-toc-nav {
+	flex: 1;
+	min-height: 0;
 	overflow-y: auto;
-	padding: 0 1.25rem 1.5rem 1.5rem;
+	padding: .25rem 0;
+	scrollbar-gutter: stable;
+	scrollbar-width: thin;
+	scrollbar-color: var(--bg-hover) transparent;
+}
+.doc-toc-nav::-webkit-scrollbar {
+	width: 8px;
+}
+.doc-toc-nav::-webkit-scrollbar-track {
+	background: transparent;
+}
+.doc-toc-nav::-webkit-scrollbar-thumb {
+	background-color: var(--bg-hover);
+	border-radius: 4px;
 }
 .doc-toc-list {
 	list-style: none;
 	margin: 0;
 	padding: 0;
-	border-left: 1px solid var(--bg-hover);
 }
 .doc-toc-list .doc-toc-list {
-	margin-left: .85rem;
+	padding-left: .85rem;
 }
 .doc-toc-link {
 	display: block;
-	padding: .45rem 0 .45rem 1rem;
-	margin-left: -1px;
-	border-left: 1px solid transparent;
+	padding: .4rem .85rem;
+	border-left: 2px solid transparent;
 	color: var(--fg-mute);
 	text-decoration: none;
-	font-size: .9rem;
-	line-height: 1.5;
+	font-size: .85rem;
+	line-height: 1.4;
 }
 .doc-toc-link:hover {
+	background-color: var(--bg-hover);
 	color: var(--fg);
 }
 .doc-toc-link.active {
-	color: var(--fg);
+	color: var(--bg-accent);
 	border-left-color: var(--bg-accent);
 	font-weight: 600;
 }
@@ -858,7 +880,7 @@ doc-toc {
 		display: block;
 		position: static;
 		width: auto;
-		max-height: none;
+		height: auto;
 		/* Comes first in the DOM (after <main> — see manual.html) so
 		   it reads as part of the page's normal top-to-bottom flow;
 		   flexbox is what actually puts it before the content
