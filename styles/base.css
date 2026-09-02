@@ -123,6 +123,13 @@ nav .nav-hamburger {
 	color: inherit;
 	text-decoration: none;
 }
+/* <p> keeps its default user-agent margin otherwise — invisible on
+   desktop where the nav's own fixed height already clips it, but on
+   mobile each stacked row sizes to its content, so that margin turns
+   into a large, obviously-unintended gap between rows. */
+.nav-button p {
+	margin: 0;
+}
 .nav-button:hover {
 	background-color: var(--bg-hover);
 	cursor: pointer;
@@ -872,6 +879,12 @@ doc-toc {
 	   same <details> panel, just no longer pinned to a column. */
 	.doc-content-row {
 		flex-direction: column;
+		/* The row's default align-items:flex-start (needed on desktop so
+		   the TOC column doesn't stretch to the tallest sibling) means a
+		   stacked child sizes to its own content width instead of
+		   filling the line — without this override the TOC panel here
+		   would end up only as wide as its text, not the full column. */
+		align-items: stretch;
 	}
 	.doc-content-row > .doc-content {
 		padding-right: var(--content-pad);
@@ -940,9 +953,18 @@ doc-toc {
 		max-height: calc(100vh - 4.5rem);
 		overflow-y: auto;
 	}
-	.nav-links,
-	.nav-right {
+	.nav-links {
 		flex-direction: column;
+		width: 100%;
+	}
+	/* Unlike .nav-links (Download/Documentation/About, which stay
+	   full-width stacked rows), .nav-right pairs the user menu with the
+	   settings gear side by side on their own row — the gear reads as
+	   "goes with Username", not as a fourth unrelated stacked item. */
+	.nav-right {
+		flex-direction: row;
+		align-items: stretch;
+		justify-content: space-between;
 		width: 100%;
 	}
 	.nav-right > :first-child {
@@ -974,6 +996,14 @@ doc-toc {
 		   below the label instead of sitting beside it. */
 		flex-wrap: wrap;
 	}
+	/* .nav-right's two buttons sit side by side (see above), so they
+	   size to their own content instead of each claiming the full
+	   row — otherwise "Username" and the gear would each still stack
+	   as their own full-width line. */
+	.nav-right > .nav-button {
+		width: auto;
+		flex-wrap: nowrap;
+	}
 	/* Hover-triggered dropdowns don't work well on touch; disable hover
 	   opening on mobile and rely on the .open class toggled by nav.js */
 	.nav-button:hover .dropdown-content {
@@ -982,8 +1012,13 @@ doc-toc {
 	.nav-button.dropdown.open .dropdown-content {
 		display: flex;
 	}
-	.dropdown-content,
-	.dropdown-right {
+	/* .nav-links dropdowns (Download/Documentation/About) drop their
+	   contents inline, full-width, right under the label they belong
+	   to. .nav-right's dropdowns stay the same floating, right-anchored
+	   panels they are on desktop (.dropdown-right, defined further up)
+	   — appropriate now that Username and the gear are compact,
+	   content-sized buttons rather than full-width rows. */
+	.nav-links .dropdown-content {
 		position: static;
 		box-shadow: none;
 		min-width: 0;
@@ -991,7 +1026,7 @@ doc-toc {
 		background-color: var(--bg-hover);
 		margin-top: .5rem;
 	}
-	.dropdown-content a {
+	.nav-links .dropdown-content a {
 		padding-left: calc(var(--nav-button-padding) * 2);
 	}
 
